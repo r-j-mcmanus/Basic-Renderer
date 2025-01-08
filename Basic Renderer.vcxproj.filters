@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{1aece519-63d3-4921-b268-c0e852ea14c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{f440f19b-ff7f-4c2b-933f-7a97e5ab6318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{ae75c9ef-575e-4a3d-a3c3-835665a2fb6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ModelManager">
+      <UniqueIdentifier>{66a00cce-b9d1-4ede-90bf-475ecebbefff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ModelManager">
+      <UniqueIdentifier>{2752b990-6cbb-4d2a-aead-f598f2b2b404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{4874e90e-4b5c-4f0a-8e7c-3f80c667980b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{2fd856d1-3b6f-4f03-a579-af2a809d8b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{92598def-6d88-457d-98ef-c6b8fd2259f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{27044d86-58af-494b-866a-f78f1a712980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{59078c06-0ce4-4440-9a51-8fb9f3caec8a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Errors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightingShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="LightingShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Cemera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingEngine.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelManager.cpp">
+      <Filter>Source Files\ModelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GltfParser.cpp">
+      <Filter>Source Files\ModelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="EventListenerInterface.h">
+      <Filter>Header Files\Events</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelManager.h">
+      <Filter>Header Files\ModelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableBuffer.h">
+      <Filter>Header Files\ModelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GltfParser.h">
+      <Filter>Header Files\ModelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldObject.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformer.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lighting.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Shaders\basic.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Shaders\lighting.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Shaders\mvp_shader.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Shaders\skybox.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Shaders\textured.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Reasources\Models\cube.gltf">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="Reasources\Models\cube_and_sphere.gltf">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="Reasources\Models\Monkey.gltf">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+  </ItemGroup>
+</Project>
