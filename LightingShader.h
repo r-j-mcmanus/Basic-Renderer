@@ -1,5 +1,7 @@
 #pragma once
 
+/*
+
 #include "Shader.h"
 #include "Material.h"
 #include "Light.h"
@@ -14,3 +16,5 @@ public:
 
     void SetUniforms(const glm::mat4 Model, const Camera camera, const Material material, const Light light);
 };
+
+*/

@@ -6,8 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "Shader.h"
 #include "ShaderManager.h"
-#include "shader.h"
 
 
 unsigned int ShaderManager::loadShader(const std::string& name, const std::string& fragAndVertexPath)
@@ -25,16 +25,26 @@ unsigned int ShaderManager::loadShader(const std::string& name, const std::strin
     unsigned int renderID = nextShaderID++;
     shaderMap[renderID] = shader_ptr;
     shaderPathMap[fragAndVertexPath] = renderID;
+    shaderNameMap[name] = renderID;
     return renderID;
 }
 
-// Retrieve a shader by name
+// Retrieve a shader by ID
 std::shared_ptr<Shader> ShaderManager::getShader(const unsigned int shaderId) const {
     auto it = shaderMap.find(shaderId);
     if (it != shaderMap.end()) {
         return it->second;
     }
     return nullptr;  // Return null if shader not found
+}
+
+// Retrieve a shader by Name
+std::shared_ptr<Shader> ShaderManager::getShader(const std::string shaderName) const {
+    auto it = shaderNameMap.find(shaderName);
+    if (it == shaderNameMap.end()) {
+        return nullptr;
+    }
+    return getShader(it->second);
 }
 
 std::shared_ptr<Shader> ShaderManager::operator[](const unsigned int shaderId) const {

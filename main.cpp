@@ -11,6 +11,9 @@
 #include "ModelManager.h"
 #include "RenderingEngine.h"
 #include "World.h"
+#include "UniformBufferManager.h"
+
+#include "Errors.h"
 
 
 static GLFWwindow* InitializeWindow(int width, int height, const char* title) 
@@ -72,6 +75,7 @@ int main(void)
 
     std::shared_ptr<Camera> camera = make_camera();
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
+    std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
 
     EventHandler eventHandler(window);
@@ -83,18 +87,26 @@ int main(void)
     renderingEngine.registerShaderManager(shaderManager);
 
     World world;
-    world.buildWorld(1, modelManager, shaderManager);
+    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager);
 
     double previousTime = glfwGetTime(); // Get the initial time
     GLCall(glEnable(GL_DEPTH_TEST));
 
-    /* Loop until the user closes the window */
+    ///////
+    uniformBufferManager->createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
+    unsigned int shaderID = shaderManager->getShader("basic")->GetId();
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
+    uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
+    
+
+    ///////
+
+    /* Loop until the user closes the window */ 
     while (!glfwWindowShouldClose(window))
     {
         double currentTime = glfwGetTime();
         double dt = currentTime - previousTime;
         previousTime = currentTime;
-
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);

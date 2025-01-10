@@ -155,6 +155,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="UniformBufferManager.h" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <None Include="Reasources\Shaders\mvp_shader.shader" />
     <None Include="Reasources\Shaders\skybox.shader" />
     <None Include="Reasources\Shaders\textured.shader" />
+    <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

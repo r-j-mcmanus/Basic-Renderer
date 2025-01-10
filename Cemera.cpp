@@ -85,6 +85,7 @@ glm::vec3 Camera::getDirectionWithoutUp() const {
 
 void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_W) {
+        std::cout << "W key event" << std::endl;
         glm::vec3 direction = getDirectionWithoutUp();
         if (action == GLFW_PRESS) {
             incrementVelocity(direction);

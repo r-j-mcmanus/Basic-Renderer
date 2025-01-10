@@ -1,12 +1,11 @@
 #pragma once
 
+#include <unordered_map>
 #include <string>
 #include <vector>
 #include <memory>
 
-#include "ShaderManager.h"
 #include "DrawableBuffer.h"
-
 
 class ModelManager {
 public:
@@ -15,6 +14,16 @@ public:
     unsigned int loadModel(const std::string& modelPath);
 
     std::shared_ptr<DrawableBuffer> getBuffer(const unsigned int modelId) const;
+
+    bool draw(const unsigned int id) {
+        auto modelIt = DrawableBufferlMap.find(id);
+        if (modelIt != DrawableBufferlMap.end())
+        {
+            modelIt->second->draw();
+            return true;
+        }
+        return false;
+    };
 
 private:
     // to do use model id as the thing we call things and assign model id to a path so that if we access a model id that doesnt exist we load it.

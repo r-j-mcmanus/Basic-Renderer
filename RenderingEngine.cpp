@@ -1,14 +1,15 @@
-#include "RenderingEngine.h"
-#include "World.h"
-#include "Shader.h"
-#include "WorldObject.h"
+
 #include <memory>
 #include <string>
 
-// Initialize the rendering engine
-bool RenderingEngine::initialize(const std::shared_ptr<GLFWwindow> windowContext) {
-    return true;
-}
+#include "World.h"
+#include "Shader.h"
+#include "WorldObject.h"
+#include "Camera.h"
+#include "ShaderManager.h"
+#include "ModelManager.h"
+
+#include "RenderingEngine.h"
 
 // Main rendering function
 void RenderingEngine::renderFrame(World& world) const
@@ -25,7 +26,7 @@ void RenderingEngine::renderFrame(World& world) const
 
         std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
         std::shared_ptr<Shader> shader = shaderManager->getShader(shaderId);
-        
+
         if (!model || !shader) {
             std::cout << "Model or shader ID does not correspond to a reseource" << std::endl;
             continue;
@@ -38,23 +39,4 @@ void RenderingEngine::renderFrame(World& world) const
 
         model->draw();
 	}
-}
-
-// Cleanup resources
-void RenderingEngine::cleanup() {
-
-}
-
-void RenderingEngine::setActiveCamera(std::shared_ptr<Camera> camera) {
-
-}
-
-void RenderingEngine::registerModelManager(const std::shared_ptr<ModelManager> modelManagerPtr) 
-{
-	modelManager = modelManagerPtr;
-}
-
-void RenderingEngine::registerShaderManager(const std::shared_ptr<ShaderManager> shaderManagerPtr) 
-{
-	shaderManager = shaderManagerPtr;
 }

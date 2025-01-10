@@ -93,6 +93,9 @@
     <ClCompile Include="EventListenerInterface.h">
       <Filter>Header Files\Events</Filter>
     </ClCompile>
+    <ClCompile Include="UniformBufferManager.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Errors.h">
@@ -165,6 +168,9 @@
     </None>
     <None Include="Reasources\Models\Monkey.gltf">
       <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="Resources\Shaders\mvp_uniform_buffer.shader">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,95 +1,45 @@
 #include <string>
 #include <iostream>
 #include <gl/glew.h>
-// docs.gl is a good doc website!
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
+
 #include "errors.h"
-#include "shader.h"
+#include "Shader.h"
 
 Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
 {
-	m_RendererID = CreateShader(vertexSource, fragmentSource);
+	ID = CreateShader(vertexSource, fragmentSource);
 }
 
 Shader::~Shader()
 {
-	GLCall(glDeleteProgram(m_RendererID));
+	GLCall(glDeleteProgram(ID));
 }
 
 void Shader::Bind() const
 {
-	GLCall(glUseProgram(m_RendererID));
+	GLCall(glUseProgram(ID));
 }
 
 void Shader::SetLocation(const GLchar* name)
 {
-	GLCall(m_location = glGetUniformLocation(m_RendererID, name));
+	GLCall(m_location = glGetUniformLocation(ID, name));
 }
 
 
 int Shader::GetLocation(const std::string& name) const
 {
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
+	GLCall(int location = glGetUniformLocation(ID, name.c_str()));
 	if (location == -1)
 		std::cerr << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
 	return location;
 }
 
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) const
-{
-	// get the uniform variable from the shader in the form of its id, and then 
-	// we can set the value by passing the id and the values we wish to use
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform4f(location, v0, v1, v2, v3));
-}
-
-void Shader::SetUniform4f(const std::string& name, const glm::vec4& vector) const
-{
-	// get the uniform variable from the shader in the form of its id, and then 
-	// we can set the value by passing the id and the values we wish to use
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform4fv(location, 1, glm::value_ptr(vector)));
-}
-
-void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2) const
-{
-	// get the uniform variable from the shader in the form of its id, and then 
-	// we can set the value by passing the id and the values we wish to use
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform3f(location, v0, v1, v2));
-}
-
-void Shader::SetUniform3f(const std::string& name, const glm::vec3& vector) const
-{
-	// get the uniform variable from the shader in the form of its id, and then 
-	// we can set the value by passing the id and the values we wish to use
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform3fv(location, 1, glm::value_ptr(vector)));
-}
-
-void Shader::setUniformMat4(const std::string& name, const glm::mat4& matrix) const
-{
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix)));
-}
-
-void Shader::setUniformInt(const std::string& name, const int i) const
-{
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform1i(location, i));
-}
-
-void Shader::setUniformFloat(const std::string& name, const float f) const
-{
-	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	GLCall(glUniform1f(location, f));
-}
-
 
 /*
-5unsigned int type - openGL types are normally unsigned ints so we use this rather than the type to decouple from opengl
+	unsigned int type - openGL types are normally unsigned ints so we use this rather than the type to decouple from opengl
 */
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 {
