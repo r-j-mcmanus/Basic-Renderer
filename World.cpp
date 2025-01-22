@@ -16,7 +16,8 @@ void World::buildWorld(
 	// id will eventually indicate which world to build and the data for it to be stored in a file?
 
 	const std::string modelFilePath = "Resources/Models/monkey.gltf";
-	const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
+	// const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
+	const std::string shaderFilePath = "Resources/Shaders/basic_2.shader";
 	const std::string shaderName = "basic";
 	
 	glm::vec3 position = glm::vec3(0);

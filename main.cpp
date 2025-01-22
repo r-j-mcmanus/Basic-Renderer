@@ -73,6 +73,13 @@ int main(void)
         return -1;
     }
 
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
+        GLsizei length, const GLchar* message, const void* userParam) {
+            std::cerr << "OpenGL Debug: " << message << "\n";
+        }, nullptr);
+
+
     std::shared_ptr<Camera> camera = make_camera();
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
     std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
@@ -93,12 +100,13 @@ int main(void)
     GLCall(glEnable(GL_DEPTH_TEST));
 
     ///////
+    /* Abstract this away */
     uniformBufferManager->createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
-    unsigned int shaderID = shaderManager->getShader("basic")->GetId();
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
-    uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
-    
+    uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
 
+    unsigned int shaderID = shaderManager->getShader("basic")->GetId();
+    uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
     ///////
 
     /* Loop until the user closes the window */ 
@@ -110,6 +118,12 @@ int main(void)
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
+        ///////
+        /* Abstract this away */
+        glm::mat4 view = camera->getViewMatrix();
+        uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
+        ///////
 
         renderingEngine.renderFrame(world);
 

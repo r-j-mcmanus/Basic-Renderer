@@ -2,11 +2,14 @@
 
 #include <gl/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <string>
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+
+#include "Errors.h"
 
 class UniformBufferManager {
 public:
@@ -24,10 +27,11 @@ public:
         }
 
         GLuint bufferID;
-        glGenBuffers(1, &bufferID);
-        glBindBuffer(GL_UNIFORM_BUFFER, bufferID);
-        glBufferData(GL_UNIFORM_BUFFER, size, nullptr, GL_STATIC_DRAW);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+        GLCall(glGenBuffers(1, &bufferID));
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, bufferID));
+        GLCall(glBufferData(GL_UNIFORM_BUFFER, size, nullptr, GL_STATIC_DRAW));
+        GLCall(glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, bufferID));
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
 
         buffers[bufferName] = { bufferID, bindingPoint, size };
     }
@@ -40,13 +44,14 @@ public:
             return;
         }
 
-        GLuint blockIndex = glGetUniformBlockIndex(shaderID, blockName.c_str());
+        GLuint blockIndex;
+        GLCall(blockIndex = glGetUniformBlockIndex(shaderID, blockName.c_str()));
         if (blockIndex == GL_INVALID_INDEX) {
             std::cerr << "Uniform block " << blockName << " not found in shader.\n";
             return;
         }
 
-        glUniformBlockBinding(shaderID, blockIndex, it->second.bindingPoint);
+        GLCall(glUniformBlockBinding(shaderID, blockIndex, it->second.bindingPoint));
     }
 
     // Update data in a uniform buffer
@@ -59,19 +64,19 @@ public:
         }
 
         const BufferInfo& bufferInfo = it->second;
-        if (sizeof(T) > bufferInfo.size - offset) {
+        if (offset + sizeof(T) > bufferInfo.size) {
             std::cerr << "Data size exceeds remaining buffer size for buffer " << bufferName << ".\n";
             return;
         }
 
-        glBindBuffer(GL_UNIFORM_BUFFER, bufferInfo.bufferID);
-        glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), &data);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, bufferInfo.bufferID));
+        GLCall(glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), glm::value_ptr(data)));
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
     }
 
     ~UniformBufferManager() {
         for (const auto& pair : buffers) {
-            glDeleteBuffers(1, &pair.second.bufferID);
+            GLCall(glDeleteBuffers(1, &pair.second.bufferID));
         }
     }
 

@@ -119,7 +119,7 @@ const void GltfParser::setAttribute(int attribArray, int accessorIndex, json dat
             vertexAttribData.componentsPerVertex,
             vertexAttribData.dataType,
             vertexAttribData.byteStride,
-            reinterpret_cast<void*>(vertexAttribData.byteOffset)
+            (void*)(vertexAttribData.byteOffset)
         );
     }
 }

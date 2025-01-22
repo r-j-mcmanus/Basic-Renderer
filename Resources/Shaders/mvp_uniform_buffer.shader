@@ -1,27 +1,35 @@
 #shader vertex
 #version 330 core
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec3 a_Pos;
+layout (location = 1) in vec3 a_Normal;
+
+out vec3 v_FragPos; // so we can use them in the frag shader
+out vec3 v_Normal;
 
 layout (std140) uniform Matrices
 {
-    mat4 projection;
-    mat4 view;
+    mat4 lu_projection;
+    mat4 lu_view;
 };
 
-uniform mat4 model;
+uniform mat4 u_model;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos, 1.0) ;
+    v_FragPos = vec3(u_model * vec4(a_Pos, 1.0));
+    // correctly handle any non-uniform scaling of the model matrix
+    v_Normal = mat3(transpose(inverse(u_model))) * a_Normal; 
+    
+    gl_Position = lu_projection * lu_view * vec4(v_FragPos, 1.0);
 };
 
 #shader fragment
 #version 330 core
-layout(location = 0) out vec4 color;
+out vec4 FragColor;
 
 uniform vec4 u_Color;
 
 void main()
 {
-    color = u_Color;
+    FragColor = u_Color;
 };

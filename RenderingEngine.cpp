@@ -9,7 +9,11 @@
 #include "ShaderManager.h"
 #include "ModelManager.h"
 
+#include "Errors.h"
 #include "RenderingEngine.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // Main rendering function
 void RenderingEngine::renderFrame(World& world) const
@@ -32,10 +36,16 @@ void RenderingEngine::renderFrame(World& world) const
             continue;
         }
 
-        if (shaderId != currentShaderID) {
-            shader->Bind();
-            currentShaderID = shaderId;
-        }
+        shader->Bind();
+        currentShaderID = shaderId;
+
+        /////////
+        glm::mat4 modelM4 = glm::mat4(1.0f);
+        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+        modelM4 = glm::translate(modelM4, position); // move top-left
+        shader->setMat4("u_Model", modelM4);
+        shader->setVec4("u_Color", 0.1, 0.2, 0.3, 0.5);
+        /////////
 
         model->draw();
 	}
