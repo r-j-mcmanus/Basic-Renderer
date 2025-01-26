@@ -27,7 +27,6 @@ glm::mat4 Camera::getViewMatrix() const
     return glm::lookAt(Position, Position + Front, Up);
 }
 
-
 void Camera::setAspectRatio(const int width, const int height) {
     aspectRatio = (float)width / (float)height;
 }
@@ -37,7 +36,11 @@ void Camera::setPosition(const glm::vec3& newPosition) {
 }
 
 void Camera::setTarget(const glm::vec3& target) {
-    viewDirection = glm::normalize(Position - target);
+    // todo
+}
+
+void Camera::setTarget(const float x, const float y, const float z) {
+    // todo
 }
 
 void Camera::setAspectRatio(float newAspectRatio) {
@@ -59,8 +62,8 @@ void Camera::update(float dt) {
 
     Position += dt * MovementSpeed * direction;
 
-    Yaw += deltaYaw;
-    Pitch += deltaPitch;
+    Yaw += deltaYaw * MouseSensitivity;
+    Pitch += deltaPitch * MouseSensitivity;
 
     // clamp amount above and bellow to prevent looking directly up or down
     if (Pitch > 89.0f)
@@ -68,10 +71,12 @@ void Camera::update(float dt) {
     if (Pitch < -89.0f)
         Pitch = -89.0f;
 
+    std::cout << direction.x << ' ' << direction.y << ' ' << direction.z << ' ' << deltaYaw << ' ' << deltaPitch << std::endl;
+
     updateCameraVectors();
 }
 
-void Camera::onMouseMovement(double xpos, double ypos) {
+void Camera::onMouseMovement(int xpos, int ypos) {
 
     if (firstMouse)
     {
@@ -80,19 +85,11 @@ void Camera::onMouseMovement(double xpos, double ypos) {
         firstMouse = false;
     }
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
+    deltaYaw += xpos - lastX;
+    deltaPitch += lastY - ypos;
     lastX = xpos;
     lastY = ypos;
-
-    float sensitivity = 0.5f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    deltaYaw += xoffset;
-    deltaPitch += yoffset;
 }
-
 
 void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
     bool isPressed = (action == GLFW_PRESS || action == GLFW_REPEAT);
@@ -133,7 +130,6 @@ void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
         }
     }
 }
-
 
 // calculates the front vector from the Camera's (updated) Euler Angles
 void Camera::updateCameraVectors()

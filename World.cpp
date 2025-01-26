@@ -15,20 +15,28 @@ void World::buildWorld(
 {
 	// id will eventually indicate which world to build and the data for it to be stored in a file?
 
-	const std::string modelFilePath = "Resources/Models/monkey.gltf";
+	const std::string monkeyFilePath = "Resources/Models/monkey.gltf";
+	const std::string plainFilePath = "Resources/Models/plain.gltf";
 	// const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
 	const std::string shaderFilePath = "Resources/Shaders/basic_2.shader";
 	const std::string shaderName = "basic";
-	
-	glm::vec3 position = glm::vec3(0);
+	unsigned int shaderId = shaderManager->loadShader(shaderName, shaderFilePath);
+
+	glm::vec3 position = glm::vec3(0, 0, 0);
 	glm::vec3 rotation = glm::vec3(0);
 	glm::vec3 scale = glm::vec3(1);
 
-	unsigned int modelId = modelManager->loadModel(modelFilePath);
-	unsigned int shaderId = shaderManager->loadShader(shaderName, shaderFilePath);
+	unsigned int modelId = 0;
 
-	WorldObject wo(position, rotation, scale, modelId, shaderId);
-	worldObjects.push_back(wo);
+	modelId = modelManager->loadModel(monkeyFilePath);
+	WorldObject monkey(position, rotation, scale, modelId, shaderId);
+	worldObjects.push_back(monkey);
+
+	//position = glm::vec3(0);
+	//scale = glm::vec3(1);
+	//modelId = modelManager->loadModel(plainFilePath);
+	//WorldObject plain(position, rotation, scale, modelId, shaderId);
+	//worldObjects.push_back(plain);
 }
 
 void World::update(double dt)

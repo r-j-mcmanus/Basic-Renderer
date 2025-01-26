@@ -48,4 +48,13 @@ public:
         EventHandler* handler = static_cast<EventHandler*>(glfwGetWindowUserPointer(window));
         handler->notifyWindowResize(width, height);
     }
+
+private:
+    bool hasFocus = true; // as a newly created window is given focus
+
+    static void windowFocusCallback(GLFWwindow* window, int focused)
+    {
+        EventHandler* handler = static_cast<EventHandler*>(glfwGetWindowUserPointer(window));
+        handler->hasFocus = focused;
+    }
 };

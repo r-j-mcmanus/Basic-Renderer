@@ -18,6 +18,7 @@ EventHandler::EventHandler(GLFWwindow* window) {
     glfwSetMouseButtonCallback(window, mouseCallback);
     glfwSetCursorPosCallback(window, mouseMovement);
     glfwSetWindowSizeCallback(window, windowResizeCallback);
+    glfwSetWindowFocusCallback(window, windowFocusCallback);
 
 }
 
@@ -38,6 +39,10 @@ void EventHandler::unregisterObserver(std::shared_ptr<EventListenerInterface> ob
 }
 
 void EventHandler::notifyKeyEvent(int key, int scancode, int action, int mods) {
+    if (!hasFocus) {
+        return;
+    }
+
     for (auto observer_wptr_it : observers) {
         if (auto observer_ptr = observer_wptr_it.lock()) {
             observer_ptr->onKeyEvent(key, scancode, action, mods);
@@ -46,6 +51,9 @@ void EventHandler::notifyKeyEvent(int key, int scancode, int action, int mods) {
 }
 
 void EventHandler::notifyMouseEvent(int button, int action, int mods) {
+    if (!hasFocus) {
+        return;
+    }
     for (auto observer_wptr_it : observers) {
         if (auto observer_ptr = observer_wptr_it.lock()) {
             observer_ptr->onMouseEvent(button, action, mods);
@@ -54,6 +62,9 @@ void EventHandler::notifyMouseEvent(int button, int action, int mods) {
 }
 
 void EventHandler::notifyMouseMovement(double xpos, double ypos) {
+    if (!hasFocus) {
+        return;
+    }
     for (auto observer_wptr_it : observers) {
         if (auto observer_ptr = observer_wptr_it.lock()) {
             observer_ptr->onMouseMovement(xpos, ypos);
