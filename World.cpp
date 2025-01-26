@@ -35,5 +35,8 @@ void World::update(double dt)
 {
 	// id will eventually indicate which world to build?
 
+	for (auto wo : worldObjects) {
+		wo.update(dt);
+	}
 
 }

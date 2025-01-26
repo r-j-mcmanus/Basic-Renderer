@@ -40,3 +40,7 @@ void WorldObject::updateModelMatrix() const {
 
     modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 }
+
+void WorldObject::update(float dt) {
+    position += dt * velocity;
+}

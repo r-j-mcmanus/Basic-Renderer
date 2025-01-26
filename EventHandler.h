@@ -23,6 +23,8 @@ public:
 
     void notifyMouseEvent(int button, int action, int mods);
 
+    void notifyMouseMovement(double xpos, double ypos);
+
     void notifyWindowResize(int width, int height);
 
     void cleanExpiredObservers();
@@ -35,6 +37,11 @@ public:
     static void mouseCallback(GLFWwindow* window, int button, int action, int mods) {
         EventHandler* handler = static_cast<EventHandler*>(glfwGetWindowUserPointer(window));
         handler->notifyMouseEvent(button, action, mods);
+    }
+
+    static void mouseMovement(GLFWwindow* window, double xpos, double ypos) {
+        EventHandler* handler = static_cast<EventHandler*>(glfwGetWindowUserPointer(window));
+        handler->notifyMouseMovement(xpos, ypos);
     }
 
     static void windowResizeCallback(GLFWwindow* window, int width, int height) {

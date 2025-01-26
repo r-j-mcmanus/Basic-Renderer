@@ -7,6 +7,7 @@
 class ModelManager;
 class ShaderManager;
 class UniformBufferManager;
+class WorldObject;
 
 class World
 {

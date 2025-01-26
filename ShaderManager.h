@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "shader.h"
+class Shader;
 
 struct ShaderProgramSource
 {

@@ -12,4 +12,10 @@ public:
 
     // Callback for window resize event
     virtual void onWindowResize(int width, int height) {}
+
+    // Callback for window resize event
+    virtual void onMouseMovement(double xpos, double ypos) {}
+
+protected:
+    bool firstMouse;
 };

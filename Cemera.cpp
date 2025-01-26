@@ -15,39 +15,33 @@
 #include "Camera.h"
 
 
-Camera::Camera(const glm::vec3& position, const glm::vec3& viewDirection, const glm::vec3& up, float fov, float aspectRatio, float nearPlane, float farPlane)
-    : Transformer(position), viewDirection(viewDirection), up(glm::normalize(up)), fov(fov), aspectRatio(aspectRatio), nearPlane(nearPlane), farPlane(farPlane)
+Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
+    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM), Position(position), WorldUp(up),
+      Yaw(yaw), Pitch(pitch), Up(up)
 {
-    updateViewMatrix();
-    updateProjectionMatrix();
+    updateCameraVectors();
 }
+
+glm::mat4 Camera::getViewMatrix() const
+{
+    return glm::lookAt(Position, Position + Front, Up);
+}
+
 
 void Camera::setAspectRatio(const int width, const int height) {
     aspectRatio = (float)width / (float)height;
-    updateProjectionMatrix();
 }
 
 void Camera::setPosition(const glm::vec3& newPosition) {
-    Transformer::setPosition(newPosition);
-    updateViewMatrix();
+    Position = newPosition;
 }
 
 void Camera::setTarget(const glm::vec3& target) {
-    viewDirection = glm::normalize(Transformer::getPosition() - target);
-    updateViewMatrix(target);
+    viewDirection = glm::normalize(Position - target);
 }
 
 void Camera::setAspectRatio(float newAspectRatio) {
     aspectRatio = newAspectRatio;
-    updateProjectionMatrix();
-}
-
-glm::mat4 Camera::getViewMatrix() const {
-    return viewMatrix;
-}
-
-glm::mat4 Camera::getDirectionMatrix() const {
-    return glm::lookAt(glm::vec3(0, 0, 0), viewDirection, up);
 }
 
 glm::mat4 Camera::getProjectionMatrix() const {
@@ -55,99 +49,99 @@ glm::mat4 Camera::getProjectionMatrix() const {
 }
 
 void Camera::update(float dt) {
-    Transformer::update(dt);
-    updateViewMatrix();
+    float side = (directionContainer.right && !directionContainer.left) - (!directionContainer.right && directionContainer.left);
+    float forward = (directionContainer.forward && !directionContainer.back) - (!directionContainer.forward && directionContainer.back);
+    glm::vec3 direction = side * Right + forward * Front;
+
+    if (forward != 0) {
+        int a = 1;
+    }
+
+    Position += dt * MovementSpeed * direction;
 }
 
-void Camera::updateViewMatrix() {
-    glm::vec3 position = Transformer::getPosition();
-    glm::vec3 target = position - viewDirection;
+void Camera::onMouseMovement(double xpos, double ypos) {
 
-    viewMatrix = glm::lookAt(Transformer::getPosition(), target, up);
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    Yaw += xoffset;
+    Pitch += yoffset;
+
+    // clamp amount above and bellow to prevent looking directly up or down
+    if (Pitch > 89.0f)
+        Pitch = 89.0f;
+    if (Pitch < -89.0f)
+        Pitch = -89.0f;
+
+    updateCameraVectors();
 }
 
-void Camera::updateViewMatrix(const glm::vec3& target) {
-    viewMatrix = glm::lookAt(Transformer::getPosition(), target, up);
-}
-
-void Camera::updateProjectionMatrix() {
-    projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane);
-}
-
-glm::vec3 Camera::getDirectionWithoutUp() const {
-    // idea would be to get direction parrallel to the floor
-    glm::vec3 projection = glm::dot(viewDirection, up) * up;
-    glm::vec3 result = viewDirection - projection;
-
-    return glm::normalize(result);
-
-}
 
 void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
+    bool isPressed = (action == GLFW_PRESS || action == GLFW_REPEAT);
+
     if (key == GLFW_KEY_W) {
-        std::cout << "W key event" << std::endl;
-        glm::vec3 direction = getDirectionWithoutUp();
         if (action == GLFW_PRESS) {
-            incrementVelocity(direction);
-            return;
+            directionContainer.forward = true;
         }
         else if (action == GLFW_RELEASE) {
-            incrementVelocity(-direction);
-            return;
+            directionContainer.forward = false;
         }
     }
 
     if (key == GLFW_KEY_S) {
-        glm::vec3 direction = getDirectionWithoutUp();
         if (action == GLFW_PRESS) {
-            incrementVelocity(-direction);
-            return;
+            directionContainer.back = true;
         }
         else if (action == GLFW_RELEASE) {
-            incrementVelocity(direction);
-            return;
+            directionContainer.back = false;
         }
     }
 
     if (key == GLFW_KEY_A) {
-        glm::vec3 direction = getDirectionWithoutUp();
-        glm::vec3 perp_direction = glm::cross(direction, up);
         if (action == GLFW_PRESS) {
-            incrementVelocity(-perp_direction);
-            return;
+            directionContainer.left = true;
         }
         else if (action == GLFW_RELEASE) {
-            incrementVelocity(perp_direction);
-            return;
+            directionContainer.left = false;
         }
     }
 
     if (key == GLFW_KEY_D) {
-        glm::vec3 direction = getDirectionWithoutUp();
-        glm::vec3 perp_direction = glm::cross(direction, up);
         if (action == GLFW_PRESS) {
-            incrementVelocity(perp_direction);
-            return;
+            directionContainer.right = true;
         }
         else if (action == GLFW_RELEASE) {
-            incrementVelocity(-perp_direction);
-            return;
+            directionContainer.right = false;
         }
     }
+}
 
-    if (key == GLFW_KEY_UP) {
-        viewDirection = glm::rotate(viewDirection, glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    }
 
-    if (key == GLFW_KEY_DOWN) {
-        viewDirection = glm::rotate(viewDirection, glm::radians(-1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    }
-
-    if (key == GLFW_KEY_LEFT) {
-        viewDirection = glm::rotate(viewDirection, glm::radians(-1.0f), glm::vec3(0.0f, 0.0f, -1.0f));
-    }
-
-    if (key == GLFW_KEY_RIGHT) {
-        viewDirection = glm::rotate(viewDirection, glm::radians(-1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    }
+// calculates the front vector from the Camera's (updated) Euler Angles
+void Camera::updateCameraVectors()
+{
+    // calculate the new Front vector
+    glm::vec3 front;
+    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    front.y = sin(glm::radians(Pitch));
+    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    Front = glm::normalize(front);
+    // also re-calculate the Right and Up vector
+    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+    Up = glm::normalize(glm::cross(Right, Front));
 }

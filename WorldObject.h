@@ -18,6 +18,8 @@ public:
     void setScale(const glm::vec3& scale);
     glm::mat4 getModelMatrix() const;
 
+    void update(float dt);
+
 public:
     // this should be done differently, maybe a manager that links a world object id to the relevant reasorces
     // particularly if the system gets more complex
@@ -30,6 +32,8 @@ private:
     glm::vec3 position;
     glm::vec3 rotation;
     glm::vec3 scale;
+
+    glm::vec3 velocity;
 
     mutable glm::mat4 modelMatrix;
 

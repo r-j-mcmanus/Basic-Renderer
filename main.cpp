@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+#include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
 #include "Camera.h"
 #include "ShaderManager.h"
 #include "EventHandler.h"
@@ -46,20 +47,22 @@ static GLFWwindow* InitializeWindow(int width, int height, const char* title)
     return window;
 }
 
+void centerMouseCursor(GLFWwindow* window) {
+    // todo make this a class that 
+    if (!window) {
+        return; // Ensure the window is valid
+    }
 
-std::shared_ptr<Camera> make_camera()
-{
-    // maybe read from init?
-    glm::vec3 position = glm::vec3(3, 0, 3); // Camera pos in World Space
-    glm::vec3 viewDirection = glm::vec3(0, 0, 0); // and looks at the origin
-    glm::vec3 up = glm::vec3(0, 1, 0);  // Head is up (set to 0,-1,0 to look upside-down)
-    const float fov_deg = 45.0f;
-    const float aspectRatio = (float)640 / (float)480;
-    const float nearPlane = 0.1f;
-    const float farPlane = 100.0f;
-    auto camera = std::make_shared<Camera>(position, viewDirection, up, fov_deg, aspectRatio, nearPlane, farPlane);
-    camera->setTarget(glm::vec3(0, 0, 0));
-    return camera;
+    // Get the window size
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+
+    // Calculate the center of the window
+    double centerX = width / 2.0;
+    double centerY = height / 2.0;
+
+    // Set the cursor position to the center
+    glfwSetCursorPos(window, centerX, centerY);
 }
 
 
@@ -80,7 +83,7 @@ int main(void)
         }, nullptr);
 
 
-    std::shared_ptr<Camera> camera = make_camera();
+    std::shared_ptr<Camera> camera = std::make_shared<Camera>();
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
     std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
@@ -116,6 +119,9 @@ int main(void)
         double dt = currentTime - previousTime;
         previousTime = currentTime;
 
+        camera->update(dt);
+        world.update(dt);
+
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -129,6 +135,8 @@ int main(void)
 
         glfwSwapBuffers(window); // Swap front and back buffers
         glfwPollEvents(); // Poll for and process events
+
+        // centerMouseCursor(window);
     }
 
     glfwTerminate();
