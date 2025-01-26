@@ -98,6 +98,8 @@ private:
     float farPlane;
     float lastX = 0;
     float lastY = 0;
+    float deltaYaw = 0;
+    float deltaPitch = 0;
 
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;

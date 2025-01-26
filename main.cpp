@@ -136,7 +136,7 @@ int main(void)
         glfwSwapBuffers(window); // Swap front and back buffers
         glfwPollEvents(); // Poll for and process events
 
-        // centerMouseCursor(window);
+        centerMouseCursor(window);
     }
 
     glfwTerminate();

@@ -58,6 +58,17 @@ void Camera::update(float dt) {
     }
 
     Position += dt * MovementSpeed * direction;
+
+    Yaw += deltaYaw;
+    Pitch += deltaPitch;
+
+    // clamp amount above and bellow to prevent looking directly up or down
+    if (Pitch > 89.0f)
+        Pitch = 89.0f;
+    if (Pitch < -89.0f)
+        Pitch = -89.0f;
+
+    updateCameraVectors();
 }
 
 void Camera::onMouseMovement(double xpos, double ypos) {
@@ -74,20 +85,12 @@ void Camera::onMouseMovement(double xpos, double ypos) {
     lastX = xpos;
     lastY = ypos;
 
-    float sensitivity = 0.1f;
+    float sensitivity = 0.5f;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
-    Yaw += xoffset;
-    Pitch += yoffset;
-
-    // clamp amount above and bellow to prevent looking directly up or down
-    if (Pitch > 89.0f)
-        Pitch = 89.0f;
-    if (Pitch < -89.0f)
-        Pitch = -89.0f;
-
-    updateCameraVectors();
+    deltaYaw += xoffset;
+    deltaPitch += yoffset;
 }
 
 
