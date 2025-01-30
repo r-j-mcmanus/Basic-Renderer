@@ -29,7 +29,7 @@ glm::mat4 WorldObject::getModelMatrix() const {
     return modelMatrix;
 }
 
-void WorldObject::updateModelMatrix() const {
+void WorldObject::updateModelMatrix() {
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
     glm::mat4 rotationMatrix = (
         glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *

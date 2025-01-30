@@ -33,7 +33,7 @@ private:
     const std::vector<unsigned int> parseBuffers(json& data) const;
 
     const void setAttribute(int attribArray, int accessorIndex, json data, const std::vector<unsigned int> VBOs) const;
-    DrawableBuffer::BufferData setIndices(int indicesAccessorIndex, json data, const std::vector<unsigned int> VBOs) const;
+    DrawableBuffer::BufferData setIndices(int indicesAccessorIndex, json data, const unsigned int VAO, const std::vector<unsigned int> VBOs) const;
 
     const VertexAttribData getVertexAttribData(int accessorIndex, json data) const;
 };

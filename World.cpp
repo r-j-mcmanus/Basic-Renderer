@@ -15,28 +15,34 @@ void World::buildWorld(
 {
 	// id will eventually indicate which world to build and the data for it to be stored in a file?
 
-	const std::string monkeyFilePath = "Resources/Models/monkey.gltf";
-	const std::string plainFilePath = "Resources/Models/plain.gltf";
 	// const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
-	const std::string shaderFilePath = "Resources/Shaders/basic_2.shader";
+	const std::string shaderFilePath = "Resources/Shaders/basic_3.shader";
 	const std::string shaderName = "basic";
 	unsigned int shaderId = shaderManager->loadShader(shaderName, shaderFilePath);
 
-	glm::vec3 position = glm::vec3(0, 0, 0);
+
+
+
+	///
+	const std::string floorFilePath = "Resources/Models/plain.gltf";
+	glm::vec3 position = glm::vec3(0);
 	glm::vec3 rotation = glm::vec3(0);
-	glm::vec3 scale = glm::vec3(1);
+	glm::vec3 scale = glm::vec3(10,0,10);
+	unsigned int modelIdFloor = modelManager->loadModel(floorFilePath);
+	WorldObject plain(position, rotation, scale, modelIdFloor, shaderId);
+	worldObjects.push_back(plain);
+	///
 
-	unsigned int modelId = 0;
-
-	modelId = modelManager->loadModel(monkeyFilePath);
-	WorldObject monkey(position, rotation, scale, modelId, shaderId);
+		//unsigned int modelId = 0;
+	///
+	const std::string monkeyFilePath = "Resources/Models/monkey.gltf";
+	glm::vec3 position2 = glm::vec3(0, 1, 0);
+	glm::vec3 rotation2 = glm::vec3(0);
+	glm::vec3 scale2 = glm::vec3(1);
+	unsigned int modelIdMonkey = modelManager->loadModel(monkeyFilePath);
+	WorldObject monkey(position2, rotation2, scale2, modelIdMonkey, shaderId);
 	worldObjects.push_back(monkey);
-
-	//position = glm::vec3(0);
-	//scale = glm::vec3(1);
-	//modelId = modelManager->loadModel(plainFilePath);
-	//WorldObject plain(position, rotation, scale, modelId, shaderId);
-	//worldObjects.push_back(plain);
+	///
 }
 
 void World::update(double dt)

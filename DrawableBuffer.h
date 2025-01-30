@@ -4,11 +4,14 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 
+#include "Errors.h"
+
 class DrawableBuffer {
 
 public:
     struct BufferData {
         const unsigned int VBO;
+        const unsigned int VAO;
         const int count;
         const int dataType; // the datatype index used in gltf is the same as that in glfw
         int byteOffset;
@@ -18,15 +21,18 @@ public:
     const void draw() const {
         for(auto& buffer : buffers)
         {
-            glBindBuffer(GL_ARRAY_BUFFER, buffer.VBO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.VBO);
+            GLCall(glBindVertexArray(buffer.VAO));
+            GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer.VBO));
+            GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.VBO));
 
-            glDrawElements(
+            GLCall(glDrawElements(
                 GL_TRIANGLES,
                 buffer.count,
                 buffer.dataType,
                 reinterpret_cast<void*>(buffer.byteOffset)
-            );
+            ));
+
+            GLCall(glBindVertexArray(0)); // Unbind the VAO
         }
     }
 

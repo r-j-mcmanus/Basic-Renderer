@@ -37,14 +37,14 @@ void RenderingEngine::renderFrame(World& world) const
         }
 
         shader->Bind();
-        currentShaderID = shaderId;
+        // currentShaderID = shaderId;
 
         /////////
-        glm::mat4 modelM4 = glm::mat4(1.0f);
+        glm::mat4 modelM4 = worldObject.getModelMatrix();
         glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
         modelM4 = glm::translate(modelM4, position); // move top-left
         shader->setMat4("u_Model", modelM4);
-        shader->setVec4("u_Color", 0.1, 0.2, 0.3, 0.5);
+        shader->setVec4("u_Color", float(255) / 255, float(127)/ 255, float(80)/ 255, 1);
         /////////
 
         model->draw();

@@ -39,6 +39,10 @@ std::shared_ptr<DrawableBuffer> GltfParser::parse(const std::string& filename) {
     for (auto mesh : data["meshes"]) {
         std::string name = mesh["name"];
         for (auto primative : mesh["primitives"]) {
+            unsigned int VAO;
+            glGenVertexArrays(1, &VAO); // Generate a VAO for this primitive
+
+
             // the accessor index for each of these properties of the mess
             // todo what if one of these is missing?
             int position = primative["attributes"]["POSITION"];
@@ -46,11 +50,12 @@ std::shared_ptr<DrawableBuffer> GltfParser::parse(const std::string& filename) {
             int texCoord_0 = primative["attributes"]["TEXCOORD_0"];
             int indices = primative["indices"];
             //int material = primative["material"];
-
+            GLCall(glBindVertexArray(VAO));
             setAttribute(0, position, data, VBOs);
             setAttribute(1, normal, data, VBOs);
             setAttribute(3, texCoord_0, data, VBOs);
-            DrawableBuffer::BufferData bufferData = setIndices(indices, data, VBOs);
+            GLCall(glBindVertexArray(0));
+            DrawableBuffer::BufferData bufferData = setIndices(indices, data, VAO, VBOs);
 
             drawableBufer->addBuffer(bufferData);
         }
@@ -99,32 +104,32 @@ const void GltfParser::setAttribute(int attribArray, int accessorIndex, json dat
 
     const unsigned int VBO = VBOs[vertexAttribData.bufferIndex];
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBO));
 
-    glEnableVertexAttribArray(attribArray);
+    GLCall(glEnableVertexAttribArray(attribArray));
     if (vertexAttribData.dataType == GLTF_FLAOT_COMPONENT_TYPE) {
-        glVertexAttribPointer(
+        GLCall(glVertexAttribPointer(
             attribArray,
             vertexAttribData.componentsPerVertex,
             vertexAttribData.dataType,
             vertexAttribData.normalized ? GL_TRUE : GL_FALSE,
             vertexAttribData.byteStride,
             (void*)vertexAttribData.byteOffset
-        );
+        ));
     }
     else {
         // pass int types to the glVertexAttrib I Pointer, prevents casting to flaots
-        glVertexAttribIPointer(
+        GLCall(glVertexAttribIPointer(
             attribArray,
             vertexAttribData.componentsPerVertex,
             vertexAttribData.dataType,
             vertexAttribData.byteStride,
             (void*)(vertexAttribData.byteOffset)
-        );
+        ));
     }
 }
 
-DrawableBuffer::BufferData GltfParser::setIndices(int indicesAccessorIndex, json data, const std::vector<unsigned int> VBOs) const {
+DrawableBuffer::BufferData GltfParser::setIndices(int indicesAccessorIndex, json data, const unsigned int VAO, const std::vector<unsigned int> VBOs) const {
     /*
         Sets the index for the mesh given the accessor index for the indices
     */
@@ -133,7 +138,8 @@ DrawableBuffer::BufferData GltfParser::setIndices(int indicesAccessorIndex, json
     const unsigned int VBO = VBOs[vertexAttribData.bufferIndex];
     
     DrawableBuffer::BufferData bufferData = { 
-        VBO, 
+        VBO,
+        VAO,
         vertexAttribData.count, 
         vertexAttribData.dataType, 
         vertexAttribData.byteOffset 

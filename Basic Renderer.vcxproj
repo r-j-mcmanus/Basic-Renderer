@@ -185,6 +185,8 @@
     <None Include="Reasources\Shaders\mvp_shader.shader" />
     <None Include="Reasources\Shaders\skybox.shader" />
     <None Include="Reasources\Shaders\textured.shader" />
+    <None Include="Resources\Shaders\basic_2.shader" />
+    <None Include="Resources\Shaders\basic_3.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

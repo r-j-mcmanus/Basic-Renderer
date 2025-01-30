@@ -26,7 +26,7 @@ public:
     RenderComponent renderingComponent;
 
 private:
-    void updateModelMatrix() const;
+    void updateModelMatrix();
 
 private:
     glm::vec3 position;

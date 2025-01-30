@@ -71,7 +71,7 @@ void Camera::update(float dt) {
     if (Pitch < -89.0f)
         Pitch = -89.0f;
 
-    std::cout << direction.x << ' ' << direction.y << ' ' << direction.z << ' ' << deltaYaw << ' ' << deltaPitch << std::endl;
+    //std::cout << direction.x << ' ' << direction.y << ' ' << direction.z << ' ' << deltaYaw << ' ' << deltaPitch << std::endl;
 
     updateCameraVectors();
 }
