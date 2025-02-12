@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cemera.cpp" />
+    <ClCompile Include="CircularMovement.cpp" />
     <ClCompile Include="Errors.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventListenerInterface.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="LightingShader.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelManager.cpp" />
+    <ClCompile Include="physics.cpp" />
     <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="RenderingEngine.h" />
     <ClCompile Include="Shader.cpp" />
@@ -161,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircularMovement.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GltfParser.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
+    <ClInclude Include="MovementController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Transformer.h" />
@@ -187,6 +191,8 @@
     <None Include="Reasources\Shaders\textured.shader" />
     <None Include="Resources\Shaders\basic_2.shader" />
     <None Include="Resources\Shaders\basic_3.shader" />
+    <None Include="Resources\Shaders\basic_4.shader" />
+    <None Include="Resources\Shaders\basic_5.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

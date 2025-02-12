@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp> // For glm::translate, glm::rotate, glm::scale, glm::perspective
 
+#include "MovementController.h"
 
 WorldObject::WorldObject(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, unsigned int modelId, unsigned int shaderId)
     : position(position), rotation(rotation), scale(scale), renderingComponent({modelId, shaderId})
@@ -12,20 +13,18 @@ WorldObject::WorldObject(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale
 
 void WorldObject::setPosition(const glm::vec3& position) {
     this->position = position;
-    updateModelMatrix();
 }
 
 void WorldObject::setRotation(const glm::vec3& rotation) {
     this->rotation = rotation;
-    updateModelMatrix();
 }
 
 void WorldObject::setScale(const glm::vec3& scale) {
     this->scale = scale;
-    updateModelMatrix();
 }
 
-glm::mat4 WorldObject::getModelMatrix() const {
+glm::mat4 WorldObject::getModelMatrix() {
+    updateModelMatrix();
     return modelMatrix;
 }
 
@@ -42,5 +41,10 @@ void WorldObject::updateModelMatrix() {
 }
 
 void WorldObject::update(float dt) {
-    position += dt * velocity;
+    if (movementController) movementController->update(*this, dt);
+
+}
+
+void WorldObject::setMovementController(std::unique_ptr<MovementController> controller) {
+    movementController = std::move(controller);
 }

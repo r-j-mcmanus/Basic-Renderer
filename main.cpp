@@ -95,6 +95,7 @@ int main(void)
 
     renderingEngine.registerModelManager(modelManager);
     renderingEngine.registerShaderManager(shaderManager);
+    renderingEngine.setActiveCamera(camera);
 
     World world;
     world.buildWorld(1, modelManager, shaderManager, uniformBufferManager);
@@ -112,31 +113,37 @@ int main(void)
     uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
     ///////
 
+    float dt = 1.0 / 120.0;
+    float current_delta = 0;
+
     /* Loop until the user closes the window */ 
     while (!glfwWindowShouldClose(window))
     {
         double currentTime = glfwGetTime();
-        double dt = currentTime - previousTime;
+        current_delta += currentTime - previousTime;
         previousTime = currentTime;
+        while (current_delta > dt) {
+            current_delta -= dt;
 
-        camera->update(dt);
-        world.update(dt);
+            camera->update(dt);
+            world.update(dt);
 
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+            /* Render here */
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        ///////
-        /* Abstract this away */
-        glm::mat4 view = camera->getViewMatrix();
-        uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
-        ///////
+            ///////
+            /* Abstract this away */
+            glm::mat4 view = camera->getViewMatrix();
+            uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
+            ///////
 
-        renderingEngine.renderFrame(world);
+            renderingEngine.renderFrame(world);
 
-        glfwSwapBuffers(window); // Swap front and back buffers
-        glfwPollEvents(); // Poll for and process events
+            glfwSwapBuffers(window); // Swap front and back buffers
+            glfwPollEvents(); // Poll for and process events
 
-        centerMouseCursor(window);
+            centerMouseCursor(window);
+        }
     }
 
     glfwTerminate();

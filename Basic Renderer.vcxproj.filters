@@ -43,6 +43,9 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{59078c06-0ce4-4440-9a51-8fb9f3caec8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\movement">
+      <UniqueIdentifier>{46af4623-7128-4d40-b32e-3b645b3ea369}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,15 +99,18 @@
     <ClCompile Include="UniformBufferManager.h">
       <Filter>Header Files\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularMovement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Errors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -139,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementController.h">
+      <Filter>Header Files\movement</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularMovement.h">
+      <Filter>Header Files\movement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +191,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\basic_3.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\basic_4.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\basic_5.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
