@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Basic5RenderingController.cpp" />
+    <ClCompile Include="Basic5RenderingController.h" />
     <ClCompile Include="Cemera.cpp" />
     <ClCompile Include="CircularMovement.cpp" />
     <ClCompile Include="Errors.cpp" />
@@ -173,6 +175,7 @@
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MovementController.h" />
+    <ClInclude Include="RenderingController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Transformer.h" />

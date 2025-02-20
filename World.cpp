@@ -4,7 +4,13 @@
 #include "ModelManager.h"
 #include "ShaderManager.h"
 #include "UniformBufferManager.h"
+
+// movement
 #include "CircularMovement.h"
+
+
+// rendering
+#include "Basic5RenderingController.h"
 
 #include "World.h"
 
@@ -35,6 +41,7 @@ void World::buildWorld(
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		32.0f,
 	};
+	plain.setRendererController(std::make_unique<Basic5RenderingController>());
 	worldObjects.push_back(std::move(plain));
 	///
 
@@ -51,6 +58,7 @@ void World::buildWorld(
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		32.0f,
 	};
+	monkey.setRendererController(std::make_unique<Basic5RenderingController>());
 	worldObjects.push_back(std::move(monkey));
 	///
 
@@ -68,6 +76,7 @@ void World::buildWorld(
 	WorldObject cube(position3, rotation3, scale3, cubeIdMonkey, shaderId2);
 
 	cube.setMovementController(std::make_unique<CircularMovement>(1, glm::vec3(0, 2, 0), glm::vec3(0, 0, 1)));
+	cube.setRendererController(std::make_unique<Basic5RenderingController>());
 
 	worldObjects.push_back(std::move(cube));
 	///

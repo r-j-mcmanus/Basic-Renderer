@@ -4,6 +4,9 @@
 #include <glm/gtc/matrix_transform.hpp> // For glm::translate, glm::rotate, glm::scale, glm::perspective
 
 #include "MovementController.h"
+#include "RenderingController.h"
+#include "Camera.h"
+
 
 WorldObject::WorldObject(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, unsigned int modelId, unsigned int shaderId)
     : position(position), rotation(rotation), scale(scale), renderingComponent({modelId, shaderId})
@@ -45,6 +48,15 @@ void WorldObject::update(float dt) {
 
 }
 
+void WorldObject::draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera) {
+    if (renderingController) renderingController->draw(*this, shaderManager, modelManager, activeCamera);
+
+}
+
 void WorldObject::setMovementController(std::unique_ptr<MovementController> controller) {
     movementController = std::move(controller);
+}
+
+void WorldObject::setRendererController(std::unique_ptr<RenderingController> controller) {
+    renderingController = std::move(controller);
 }

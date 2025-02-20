@@ -6,10 +6,15 @@
 #include <glm/gtc/matrix_transform.hpp> // For glm::translate, glm::rotate, glm::scale, glm::perspective
 
 #include "Material.h"
+#include "ShaderManager.h"
+#include "ModelManager.h"
 
 #include "MovementController.h"
+#include "RenderingController.h"
+#include "Camera.h"
 
 class MovementController;
+class RenderingController;
 
 struct RenderComponent {
     unsigned int modelID;
@@ -41,8 +46,10 @@ public:
     glm::mat4 getModelMatrix();
 
     void update(float dt);
+    void draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera);
 
     void setMovementController(std::unique_ptr<MovementController> controller);
+    void setRendererController(std::unique_ptr<RenderingController> controller);
 
 
     Material material;
@@ -65,4 +72,5 @@ private:
 
     mutable glm::mat4 modelMatrix;
     std::unique_ptr<MovementController> movementController;
+    std::unique_ptr<RenderingController> renderingController;
 };
