@@ -11,6 +11,7 @@
 
 // rendering
 #include "Basic5RenderingController.h"
+#include "Basic6RenderingController.h"
 
 #include "World.h"
 
@@ -24,9 +25,8 @@ void World::buildWorld(
 
 	// const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
 	const std::string shaderFilePath = "Resources/Shaders/basic_5.shader";
-	const std::string shaderName = "basic";
+	const std::string shaderName = "basic_5";
 	unsigned int shaderId = shaderManager->loadShader(shaderName, shaderFilePath);
-
 
 	///
 	const std::string floorFilePath = "Resources/Models/plain.gltf";
@@ -76,7 +76,7 @@ void World::buildWorld(
 	WorldObject cube(position3, rotation3, scale3, cubeIdMonkey, shaderId2);
 
 	cube.setMovementController(std::make_unique<CircularMovement>(1, glm::vec3(0, 2, 0), glm::vec3(0, 0, 1)));
-	cube.setRendererController(std::make_unique<Basic5RenderingController>());
+	cube.setRendererController(std::make_unique<Basic6RenderingController>());
 
 	worldObjects.push_back(std::move(cube));
 	///

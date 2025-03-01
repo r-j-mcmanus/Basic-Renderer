@@ -22,7 +22,6 @@ struct RenderComponent {
 };
 
 
-
 class WorldObject {
 public:
     WorldObject(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, unsigned int modelId, unsigned int shaderId);

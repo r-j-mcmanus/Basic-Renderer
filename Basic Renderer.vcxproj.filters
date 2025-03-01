@@ -120,6 +120,9 @@
     <ClCompile Include="Basic5RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Basic6RenderingController.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Errors.h">
@@ -173,6 +176,9 @@
     <ClInclude Include="RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Basic6RenderingController.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">
@@ -215,6 +221,9 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\basic_5.shader">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\basic_6.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

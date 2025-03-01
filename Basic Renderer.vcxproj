@@ -143,6 +143,8 @@
   <ItemGroup>
     <ClCompile Include="Basic5RenderingController.cpp" />
     <ClCompile Include="Basic5RenderingController.h" />
+    <ClCompile Include="Basic6RenderingController.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Cemera.cpp" />
     <ClCompile Include="CircularMovement.cpp" />
     <ClCompile Include="Errors.cpp" />
@@ -154,8 +156,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="RenderableComponent.h" />
     <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="RenderingEngine.h" />
+    <ClCompile Include="SceneNodeBuilder.h" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
     <ClCompile Include="ShaderManager.cpp" />
@@ -164,8 +168,11 @@
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Basic6RenderingController.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CircularMovement.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GltfParser.h" />
@@ -177,6 +184,7 @@
     <ClInclude Include="MovementController.h" />
     <ClInclude Include="RenderingController.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneNode.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Transformer.h" />
     <ClInclude Include="World.h" />
@@ -196,6 +204,7 @@
     <None Include="Resources\Shaders\basic_3.shader" />
     <None Include="Resources\Shaders\basic_4.shader" />
     <None Include="Resources\Shaders\basic_5.shader" />
+    <None Include="Resources\Shaders\basic_6.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

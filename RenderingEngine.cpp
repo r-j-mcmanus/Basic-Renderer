@@ -3,9 +3,7 @@
 #include <string>
 
 #include "World.h"
-#include "Shader.h"
 #include "WorldObject.h"
-#include "Camera.h"
 #include "ShaderManager.h"
 #include "ModelManager.h"
 
@@ -14,7 +12,6 @@
 #include "Light.h"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 // Main rendering function
 void RenderingEngine::renderFrame(World& world) const

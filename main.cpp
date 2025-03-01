@@ -14,6 +14,8 @@
 #include "World.h"
 #include "UniformBufferManager.h"
 
+#include "Light.h"
+
 #include "Errors.h"
 
 
@@ -109,8 +111,16 @@ int main(void)
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
     uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
 
-    unsigned int shaderID = shaderManager->getShader("basic")->GetId();
+    int NUM_LIGHTS = 8;
+    uniformBufferManager->createBuffer("u_lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
+
+    const unsigned int shaderID = shaderManager->getShader("basic_5")->GetId();
     uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
+
+    const unsigned int shaderID2 = shaderManager->getShader("basic_6")->GetId();
+    uniformBufferManager->bindBlockToShader(shaderID2, "Matrices", "ProjectionView");
+    uniformBufferManager->bindBlockToShader(shaderID2, "u_lights", "u_lights");
+     
     ///////
 
     float dt = 1.0 / 120.0;
@@ -135,6 +145,9 @@ int main(void)
             /* Abstract this away */
             glm::mat4 view = camera->getViewMatrix();
             uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
+
+            // std::vector<Light> lights = world.get_lights();
+            // uniformBufferManager->updateBuffer("u_lights", lights, 0);
             ///////
 
             renderingEngine.renderFrame(world);
