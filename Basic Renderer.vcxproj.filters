@@ -55,6 +55,18 @@
     <Filter Include="Header Files\Movement">
       <UniqueIdentifier>{46af4623-7128-4d40-b32e-3b645b3ea369}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\World\SceneNode">
+      <UniqueIdentifier>{fb22b8a9-1d0a-416d-b32c-12d3c1ddef4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\SceneNode">
+      <UniqueIdentifier>{76347220-ae86-4e0b-ae2b-4edf3fcb1279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\SceneNode\Components">
+      <UniqueIdentifier>{91fa35b6-f8e4-4e50-a6c0-fb7de3fbaad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\SceneNode\Components">
+      <UniqueIdentifier>{548b663a-173c-4550-8654-6f571e01f030}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,6 +135,21 @@
     <ClCompile Include="Basic6RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="SceneNodeBuilder.h">
+      <Filter>Header Files\World\SceneNode</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNode.cpp">
+      <Filter>Source Files\World\SceneNode</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNodeBuilder.cpp">
+      <Filter>Source Files\World\SceneNode</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\World\SceneNode\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformerComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Errors.h">
@@ -178,6 +205,21 @@
     </ClInclude>
     <ClInclude Include="Basic6RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNode.h">
+      <Filter>Header Files\World\SceneNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

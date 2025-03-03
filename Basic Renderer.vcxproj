@@ -156,9 +156,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="physics.cpp" />
-    <ClCompile Include="RenderableComponent.h" />
     <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="RenderingEngine.h" />
+    <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="SceneNodeBuilder.cpp" />
     <ClCompile Include="SceneNodeBuilder.h" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="UniformBufferManager.h" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldObject.cpp" />
+    <ClCompile Include="TransformerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic6RenderingController.h" />
@@ -178,10 +180,12 @@
     <ClInclude Include="GltfParser.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="light.h" />
+    <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MovementController.h" />
+    <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="RenderingController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneNode.h" />

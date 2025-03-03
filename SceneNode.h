@@ -9,14 +9,12 @@
 #include "SceneNodeBuilder.h"
 #include "Component.h"
 
-// __ are sub types, e.g. PHYSICS => __TRANSFORMER
 enum NodeType {
 	NONE = 0,
 	RENDERABLE = 1 << 0,
 	LIGHT = 1 << 1,
 	CAMERA = 1 << 2,
 	PHYSICS = 1 << 3,
-	__TRANSFORMER = 1 << 4,
 };
 
 // Base class for all components
@@ -41,6 +39,8 @@ protected:
 
 private:
 	glm::vec3 position;
+	glm::vec3 rotation;
+	glm::vec3 scale;
 	std::vector<std::unique_ptr<SceneNode>> children;
 	int bitmask;
 	std::unordered_map<int, std::shared_ptr<Component>> components;

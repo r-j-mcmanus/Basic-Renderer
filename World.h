@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "WorldObject.h"
+#include "SceneNode.h"
 
 class ModelManager;
 class ShaderManager;
@@ -24,4 +25,6 @@ public:
 public:
 	// probably dont want this to be public
 	std::vector<WorldObject> worldObjects;
+	SceneNode root;
+
 };

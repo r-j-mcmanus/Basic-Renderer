@@ -14,6 +14,7 @@
 #include "Basic6RenderingController.h"
 
 #include "World.h"
+#include "SceneNodeBuilder.h"
 
 void World::buildWorld(
 	unsigned int worldId, 
@@ -21,64 +22,75 @@ void World::buildWorld(
 	const std::shared_ptr<ShaderManager>& shaderManager, 
 	const std::shared_ptr<UniformBufferManager>& uniformBufferManager)
 {
-	// id will eventually indicate which world to build and the data for it to be stored in a file?
 
-	// const std::string shaderFilePath = "Resources/Shaders/mvp_uniform_buffer.shader";
-	const std::string shaderFilePath = "Resources/Shaders/basic_5.shader";
-	const std::string shaderName = "basic_5";
-	unsigned int shaderId = shaderManager->loadShader(shaderName, shaderFilePath);
+	// shaders we will be using
+	const std::string shaderFilePath = "Resources/Shaders/phong.shader";
+	const std::string shaderName = "phong_shader";
+	unsigned int shaderPhongId = shaderManager->loadShader(shaderName, shaderFilePath);
+
+	const std::string shaderFilePath2 = "Resources/Shaders/solid_color.shader";
+	const std::string shaderName2 = "solid_color";
+	unsigned int shaderSolidColorId = shaderManager->loadShader(shaderName, shaderFilePath);
+
+
+
+	// for making nodes to add to our scene graph
+	NodeBuilder builder;
+
 
 	///
 	const std::string floorFilePath = "Resources/Models/plain.gltf";
-	glm::vec3 position = glm::vec3(0);
-	glm::vec3 rotation = glm::vec3(0);
-	glm::vec3 scale = glm::vec3(10,0,10);
 	unsigned int modelIdFloor = modelManager->loadModel(floorFilePath);
-	WorldObject plain(position, rotation, scale, modelIdFloor, shaderId);
-	plain.material = {
+	Material floorMaterial = {
 		glm::vec3(100.0f / 255.0f, 10.0f / 255.0f, 30.0f / 255.0f),
 		glm::vec3(210.0f / 255.0f, 105.0f / 255.0f, 34.0f / 255.0f),
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		32.0f,
 	};
-	plain.setRendererController(std::make_unique<Basic5RenderingController>());
-	worldObjects.push_back(std::move(plain));
+	builder.setTranformationData(glm::vec3(0), glm::vec3(0), glm::vec3(10,0,10))
+		.addRenderableType(std::make_unique<PhongRenderingData>(modelIdFloor, shaderPhongId, floorMaterial), std::make_unique<PhongRenderingController>());
+	root.add_child(builder.build());
 	///
 
 	///
 	const std::string monkeyFilePath = "Resources/Models/monkey.gltf";
-	glm::vec3 position2 = glm::vec3(0, 1, 0);
-	glm::vec3 rotation2 = glm::vec3(0);
-	glm::vec3 scale2 = glm::vec3(1);
 	unsigned int modelIdMonkey = modelManager->loadModel(monkeyFilePath);
-	WorldObject monkey(position2, rotation2, scale2, modelIdMonkey, shaderId);
-	monkey.material = {
+	Material materialMonekey = {
 		glm::vec3(10.0f / 255.0f, 100.0f / 255.0f, 30.0f / 255.0f),
 		glm::vec3(210.0f / 255.0f, 105.0f / 255.0f, 34.0f / 255.0f),
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		32.0f,
 	};
-	monkey.setRendererController(std::make_unique<Basic5RenderingController>());
-	worldObjects.push_back(std::move(monkey));
-	///
+	glm::vec3 position2 = glm::vec3(0, 1, 0);
+	glm::vec3 rotation2 = glm::vec3(0);
+	glm::vec3 scale2 = glm::vec3(1);
+
+	builder.setTranformationData(position2, rotation2, scale2)
+		   .addRenderableType(std::make_unique<PhongRenderingData>(modelIdMonkey, shaderPhongId, materialMonekey), std::make_unique<Basic5RenderingController>());
+	root.add_child(builder.build());
+
 
 	///
-	const std::string shaderFilePath2= "Resources/Shaders/basic_3.shader";
-	const std::string shaderName2 = "solid_color";
-	unsigned int shaderId2 = shaderManager->loadShader(shaderName, shaderFilePath);
 
 
 	const std::string cubeFilePath = "Resources/Models/cube.gltf";
 	glm::vec3 position3 = glm::vec3(2, 2, 0);
 	glm::vec3 rotation3 = glm::vec3(0);
 	glm::vec3 scale3 = glm::vec3(0.1);
-	unsigned int cubeIdMonkey = modelManager->loadModel(cubeFilePath);
-	WorldObject cube(position3, rotation3, scale3, cubeIdMonkey, shaderId2);
+	unsigned int cubeModelId = modelManager->loadModel(cubeFilePath);
+	Light light = {};
 
-	cube.setMovementController(std::make_unique<CircularMovement>(1, glm::vec3(0, 2, 0), glm::vec3(0, 0, 1)));
-	cube.setRendererController(std::make_unique<Basic6RenderingController>());
+	builder.setTranformationData(position3, rotation3, scale3)
+		.addRenderableType(std::make_unique<SolidColorRenderingData>(cubeModelId, shaderSolidColorId, glm::vec3(0, 0, 0)), std::make_unique<SolidColorRenderingController>())
+		.addLightType(light);
+	root.add_child(builder.build());
 
-	worldObjects.push_back(std::move(cube));
+	//WorldObject cube(position3, rotation3, scale3, cubeIdMonkey, shaderId2);
+
+	//cube.setMovementController(std::make_unique<CircularMovement>(1, glm::vec3(0, 2, 0), glm::vec3(0, 0, 1)));
+	//cube.setRendererController(std::make_unique<Basic6RenderingController>());
+
+	//worldObjects.push_back(std::move(cube));
 	///
 }
 
