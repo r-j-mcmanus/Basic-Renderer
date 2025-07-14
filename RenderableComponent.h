@@ -7,15 +7,15 @@
 #include "ShaderManager.h"
 #include "ModelManager.h"
 #include "RenderingController.h"
+#include "Component.h"
 
 
 
-class RanderableComponent {
+class RenderableComponent: public Component {
     void draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera);
-    void setRendererController(RenderingController controller);
+    void setRendererController(RenderingController* controller);
 
 private:
-    RenderComponent renderingComponent;
+    RenderingController* controller;
     Material material;
-
 };

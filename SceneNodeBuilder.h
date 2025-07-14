@@ -4,66 +4,37 @@
 #include <unordered_map>
 #include "SceneNode.h"
 #include "Component.h"
-#include "RenderingControler.h"
-
-#include "CameraComponent.h"
-#include "LightComponent.h"
-#include "RenderingComponent.h"
 
 #include "Material.h"
 
 
 class SceneNode;
 
-class NodeBuilder {
+
+
+class SceneNodeBuilder {
 private:
-    int bitmask;
-    std::unordered_map<int, std::shared_ptr<Component>> components;
-    glm::vec3 position;
-    glm::vec3 rotation;
-    glm::vec3 scale;
+    std::unique_ptr<SceneNode> node;
 
 public:
-    // Constructor with node name
-    NodeBuilder() : bitmask(NodeType::NONE) {
-    }
+    SceneNodeBuilder();
 
-    NodeBuilder& addRenderableType(unsigned int modelId, Material material, std::unique_ptr<RenderingController> renderingControler) {
-        RenderingComponent component;
-        components[NodeType::RENDERABLE] = std::make_shared<Component>(component);
-        bitmask |= NodeType::RENDERABLE;
+    template <typename T, typename... Args>
+    SceneNodeBuilder& addComponent(Args&&... args) {
+        node->addComponent(getNodeTypeBitmask<T>(), std::make_shared<T>(std::forward<Args>(args)...));
+        return *this;
+    }    
+    
+    SceneNodeBuilder& setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
+        node->setTransform(pos, rot, scl);
         return *this;
     }
 
-    NodeBuilder& setTranformationData(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) {
-        this->position = position;
-        this->rotation = rotation;
-        this->scale = scale;
-        return *this;
-    }
+    std::unique_ptr<SceneNode> build();
 
-    NodeBuilder& addLightType(Light light) {
-        bitmask |= NodeType::LIGHT;
-        LightComponent component(light);
-        components[NodeType::CAMERA] = std::make_shared<Component>(component);
-        return *this;
-    }
-
-    NodeBuilder& addCameraType() {
-        bitmask |= NodeType::CAMERA;
-        CameraComponent component;
-        components[NodeType::CAMERA] = std::make_shared<Component>(component);
-
-        return *this;
-    }
-
-    std::shared_ptr<SceneNode> build() {
-        auto node = std::make_shared<SceneNode>(bitmask, components);
-        bitmask = 0;
-        components = std::unordered_map<int, std::shared_ptr<Component>>();
-        position = { 0,0,0 };
-        rotation = { 0,0,0 };
-        scale = { 0,0,0 };
-        return node;
+private:
+    template <typename T>
+    uint64_t getNodeTypeBitmask() {
+        return 1;
     }
 };

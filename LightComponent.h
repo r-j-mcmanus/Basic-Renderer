@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "light.h"
 
-class LightComponent {
+class LightComponent: public Component {
 public:
 	LightComponent(const Light& light) : light(light) {}
 private:

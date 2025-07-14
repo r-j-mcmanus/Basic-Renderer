@@ -24,7 +24,7 @@ const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
-class CameraComponent : public EventListenerInterface, Component {
+class CameraComponent : public EventListenerInterface, public Component {
 public:
     CameraComponent(glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 

@@ -164,10 +164,10 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="TransformationComponent.cpp" />
     <ClCompile Include="UniformBufferManager.h" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldObject.cpp" />
-    <ClCompile Include="TransformerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic6RenderingController.h" />
@@ -185,11 +185,13 @@
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MovementController.h" />
+    <ClInclude Include="PhongRenderingData.h" />
     <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="RenderingController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="Transformer.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldObject.h" />
@@ -208,7 +210,7 @@
     <None Include="Resources\Shaders\basic_3.shader" />
     <None Include="Resources\Shaders\basic_4.shader" />
     <None Include="Resources\Shaders\basic_5.shader" />
-    <None Include="Resources\Shaders\basic_6.shader" />
+    <None Include="Resources\Shaders\phong.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

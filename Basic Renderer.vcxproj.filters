@@ -67,6 +67,9 @@
     <Filter Include="Source Files\World\SceneNode\Components">
       <UniqueIdentifier>{548b663a-173c-4550-8654-6f571e01f030}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Shaders\Data">
+      <UniqueIdentifier>{ab17d834-0ec2-45bd-8c49-20721f849cb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,8 +150,8 @@
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformerComponent.h">
-      <Filter>Header Files\World\SceneNode\Components</Filter>
+    <ClCompile Include="TransformationComponent.cpp">
+      <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +224,12 @@
     <ClInclude Include="RenderableComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
+    <ClInclude Include="TransformationComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhongRenderingData.h">
+      <Filter>Header Files\Shaders\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">
@@ -265,7 +274,7 @@
     <None Include="Resources\Shaders\basic_5.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="Resources\Shaders\basic_6.shader">
+    <None Include="Resources\Shaders\phong.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -6,44 +6,43 @@
 
 #include <glm/vec3.hpp>
 
-#include "SceneNodeBuilder.h"
+//#include "SceneNodeBuilder.h"
 #include "Component.h"
 
-enum NodeType {
-	NONE = 0,
-	RENDERABLE = 1 << 0,
-	LIGHT = 1 << 1,
-	CAMERA = 1 << 2,
-	PHYSICS = 1 << 3,
-};
-
-// Base class for all components
+class SceneNodeBuilder;
 
 class SceneNode
 {
 public:
-	SceneNode(int nodeType = NodeType::NONE);
-	SceneNode(int nodeType = NodeType::NONE, std::unordered_map<int, std::shared_ptr<Component>> components);
-
 	void update();
-	void add_child(std::unique_ptr<SceneNode> child);
+	void add_child(std::unique_ptr<SceneNode> child) {
+		children.push_back(std::move(child));
+	}
 	bool hasType(int type) const;
+
+    //
+    void setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
+        position = pos;
+        rotation = rot;
+        scale = scl;
+    }
 
 public:
 	bool isActive = true;
 
 protected:
-	void addComponent(int type, std::shared_ptr<Component> component) {
-		components[type] = component;
+	void addComponent(int typeBitmask, std::shared_ptr<Component> component) {
+		bitmask |= typeBitmask;
+		components[typeBitmask] = component;
 	}
 
 private:
-	glm::vec3 position;
-	glm::vec3 rotation;
-	glm::vec3 scale;
-	std::vector<std::unique_ptr<SceneNode>> children;
-	int bitmask;
-	std::unordered_map<int, std::shared_ptr<Component>> components;
+	glm::vec3 position = glm::vec3(0, 0, 0);
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 scale = glm::vec3(1, 1, 1);
+	std::vector<std::unique_ptr<SceneNode>> children = std::vector<std::unique_ptr<SceneNode>>();
+	int bitmask = 0;
+	std::unordered_map<int, std::shared_ptr<Component>> components = std::unordered_map<int, std::shared_ptr<Component>>();
 
-	friend class NodeBuilder;
+	friend class SceneNodeBuilder;
 };
