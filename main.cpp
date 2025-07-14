@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
+#include "ShaderData.h"
 #include "Camera.h"
 #include "ShaderManager.h"
 #include "EventHandler.h"
@@ -114,10 +115,10 @@ int main(void)
     int NUM_LIGHTS = 8;
     uniformBufferManager->createBuffer("u_lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
 
-    const unsigned int shaderID = shaderManager->getShader("basic_5")->GetId();
+    const unsigned int shaderID = shaderManager->getShader(ShaderName::SolidColor)->GetId();
     uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
 
-    const unsigned int shaderID2 = shaderManager->getShader("basic_6")->GetId();
+    const unsigned int shaderID2 = shaderManager->getShader(ShaderName::PhongShader)->GetId();
     uniformBufferManager->bindBlockToShader(shaderID2, "Matrices", "ProjectionView");
     uniformBufferManager->bindBlockToShader(shaderID2, "u_lights", "u_lights");
      

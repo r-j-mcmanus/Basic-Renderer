@@ -230,6 +230,9 @@
     <ClInclude Include="PhongRenderingData.h">
       <Filter>Header Files\Shaders\Data</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderData.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">

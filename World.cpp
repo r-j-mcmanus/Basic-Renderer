@@ -10,8 +10,10 @@
 
 
 // rendering
-#include "Basic5RenderingController.h"
-#include "Basic6RenderingController.h"
+// #include "Basic5RenderingController.h"
+// #include "Basic6RenderingController.h"
+
+#include "ShaderData.h"
 
 #include "LightComponent.h"
 #include "RenderableComponent.h"
@@ -28,13 +30,8 @@ void World::buildWorld(
 {
 
 	// shaders we will be using
-	const std::string shaderFilePath = "Resources/Shaders/phong.shader";
-	const std::string shaderName = "phong_shader";
-	unsigned int shaderPhongId = shaderManager->loadShader(shaderName, shaderFilePath);
-
-	const std::string shaderFilePath2 = "Resources/Shaders/solid_color.shader";
-	const std::string shaderName2 = "solid_color";
-	unsigned int shaderSolidColorId = shaderManager->loadShader(shaderName, shaderFilePath);
+	unsigned int shaderPhongId = shaderManager->loadShader(ShaderData::PhongShader);
+	unsigned int shaderSolidColorId = shaderManager->loadShader(ShaderData::SolidColor);
 
 
 	// for making nodes to add to our scene graph

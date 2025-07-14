@@ -191,6 +191,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="ShaderData.h" />
     <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="Transformer.h" />
     <ClInclude Include="World.h" />

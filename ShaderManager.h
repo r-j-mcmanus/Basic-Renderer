@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "ShaderData.h"
+
 class Shader;
 
 struct ShaderProgramSource
@@ -18,11 +20,10 @@ class ShaderManager {
 
 public:
     // Load and store a new shader
-    //template <typename T>
-    unsigned int loadShader(const std::string& name, const std::string& fragAndVertexPath);
+    unsigned int loadShader(ShaderDataContainer shaderDatacontainer);
 
     std::shared_ptr<Shader> getShader(const unsigned int shaderId) const;
-    std::shared_ptr<Shader> getShader(const std::string shaderName) const;
+    std::shared_ptr<Shader> getShader(const ShaderName shaderName) const;
 
     std::shared_ptr<Shader> operator[](const unsigned int shaderId) const;
 
@@ -31,7 +32,7 @@ private:
 
 private:
     std::unordered_map<std::string, unsigned int> shaderPathMap;
-    std::unordered_map<std::string, unsigned int> shaderNameMap;
+    std::unordered_map<ShaderName, unsigned int> shaderNameMap;
     std::unordered_map<unsigned int, std::shared_ptr<Shader>> shaderMap;
     unsigned int nextShaderID;
 

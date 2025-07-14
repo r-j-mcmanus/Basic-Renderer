@@ -8,24 +8,25 @@
 
 #include "Shader.h"
 #include "ShaderManager.h"
+#include "ShaderData.h"
 
 
-unsigned int ShaderManager::loadShader(const std::string& name, const std::string& fragAndVertexPath)
+unsigned int ShaderManager::loadShader(ShaderDataContainer shaderDataContainer)
 {
     // check if already loaded
-    auto shaderIt = shaderPathMap.find(fragAndVertexPath);
+    auto shaderIt = shaderPathMap.find(shaderDataContainer.filePath);
     if (shaderIt != shaderPathMap.end())
     {
         return shaderIt->second;
     }
 
-    ShaderProgramSource source = PaseShader(fragAndVertexPath);
+    ShaderProgramSource source = PaseShader(shaderDataContainer.filePath);
     std::shared_ptr<Shader> shader_ptr = std::make_shared<Shader>(source.VertexSource, source.FragmentSource);
 
     unsigned int renderID = nextShaderID++;
     shaderMap[renderID] = shader_ptr;
-    shaderPathMap[fragAndVertexPath] = renderID;
-    shaderNameMap[name] = renderID;
+    shaderPathMap[shaderDataContainer.filePath] = renderID;
+    shaderNameMap[shaderDataContainer.name] = renderID;
     return renderID;
 }
 
@@ -39,9 +40,10 @@ std::shared_ptr<Shader> ShaderManager::getShader(const unsigned int shaderId) co
 }
 
 // Retrieve a shader by Name
-std::shared_ptr<Shader> ShaderManager::getShader(const std::string shaderName) const {
+std::shared_ptr<Shader> ShaderManager::getShader(const ShaderName shaderName) const {
     auto it = shaderNameMap.find(shaderName);
     if (it == shaderNameMap.end()) {
+        std::cerr << "[ShaderManager] Error: Shader \"" << shaderName << "\" not found in shaderNameMap.\n";
         return nullptr;
     }
     return getShader(it->second);
