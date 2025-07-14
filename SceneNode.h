@@ -14,7 +14,37 @@ class SceneNodeBuilder;
 class SceneNode
 {
 public:
-	void update();
+	void earlyUpdate() {
+		for (auto& child: children)
+		{
+			child->earlyUpdate();
+		}
+	};
+	void update() {
+		for (auto& child : children)
+		{
+			child->update();
+		}
+	};
+	void fixedUpdate(float fixedDelta) {
+		for (auto& child : children)
+		{
+			child->fixedUpdate(fixedDelta);
+		}
+	};
+	void lateUpdate() {
+		for (auto& child : children)
+		{
+			child->lateUpdate();
+		}
+	};
+	void render() {
+		for (auto& child : children)
+		{
+			child->render();
+		}
+	};
+
 	void add_child(std::unique_ptr<SceneNode> child) {
 		children.push_back(std::move(child));
 	}

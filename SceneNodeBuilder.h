@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include "SceneNode.h"
+#include "EventHandler.h"
 #include "Component.h"
 
 #include "Material.h"
@@ -15,9 +16,10 @@ class SceneNode;
 class SceneNodeBuilder {
 private:
     std::unique_ptr<SceneNode> node;
+    EventHandler* eventHandler;
 
 public:
-    SceneNodeBuilder();
+    SceneNodeBuilder(EventHandler* handler);
 
     template <typename T, typename... Args>
     SceneNodeBuilder& addComponent(Args&&... args) {

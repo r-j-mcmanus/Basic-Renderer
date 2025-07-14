@@ -3,36 +3,35 @@
 #include "Shader.h"
 #include "DrawableBuffer.h"
 #include "Light.h"
-#include "Camera.h"
 
-void Basic6RenderingController::draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera) {
-    const unsigned int modelId = obj.renderingComponent.modelID;
-    const unsigned int shaderId = obj.renderingComponent.shaderID;
+void Basic6RenderingController::draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager) {
+    //const unsigned int modelId = obj.renderingComponent.modelID;
+    //const unsigned int shaderId = obj.renderingComponent.shaderID;
 
-    std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
-    std::shared_ptr<Shader> shader = shaderManager->getShader(shaderId);
+    //std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
+    //std::shared_ptr<Shader> shader = shaderManager->getShader(shaderId);
 
-    if (!model || !shader) {
-        std::cout << "Model or shader ID does not correspond to a reseource" << std::endl;
-        return;
-    }
+    //if (!model || !shader) {
+    //    std::cout << "Model or shader ID does not correspond to a reseource" << std::endl;
+    //    return;
+    //}
 
-    shader->Bind();
+    //shader->Bind();
 
-    /////////
-    shader->setVec3("u_viewPos", activeCamera->Position);
-    /////////
+    ///////////
+    //shader->setVec3("u_viewPos", activeCamera->Position);
+    ///////////
 
-    /////////
-    glm::mat4 modelM4 = obj.getModelMatrix();
-    glm::vec3 position = obj.getPosition(); // glm::vec3(0.0f, 0.0f, 0.0f);
-    modelM4 = glm::translate(modelM4, position); // move top-left
-    shader->setMat4("u_Model", modelM4);
-    shader->setVec3("u_material.ambient", obj.material.ambient);
-    shader->setVec3("u_material.diffuse", obj.material.diffuse);
-    shader->setVec3("u_material.specular", obj.material.specular);
-    shader->setFloat("u_material.shininess", obj.material.shininess);
-    /////////
+    ///////////
+    //glm::mat4 modelM4 = obj.getModelMatrix();
+    //glm::vec3 position = obj.getPosition(); // glm::vec3(0.0f, 0.0f, 0.0f);
+    //modelM4 = glm::translate(modelM4, position); // move top-left
+    //shader->setMat4("u_Model", modelM4);
+    //shader->setVec3("u_material.ambient", obj.material.ambient);
+    //shader->setVec3("u_material.diffuse", obj.material.diffuse);
+    //shader->setVec3("u_material.specular", obj.material.specular);
+    //shader->setFloat("u_material.shininess", obj.material.shininess);
+    ///////////
 
-    model->draw();
+    //model->draw();
 }

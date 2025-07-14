@@ -49,12 +49,6 @@
     <Filter Include="Source Files\Rendering">
       <UniqueIdentifier>{6ab35d4d-5554-4db0-86a6-b7815c69d379}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Movement">
-      <UniqueIdentifier>{4239ee85-38e1-4a1a-a6ca-2de412a4a60e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Movement">
-      <UniqueIdentifier>{46af4623-7128-4d40-b32e-3b645b3ea369}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\World\SceneNode">
       <UniqueIdentifier>{fb22b8a9-1d0a-416d-b32c-12d3c1ddef4c}</UniqueIdentifier>
     </Filter>
@@ -84,9 +78,6 @@
     <ClCompile Include="LightingShader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Cemera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.h">
       <Filter>Header Files\Shaders</Filter>
     </ClCompile>
@@ -101,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="GltfParser.cpp">
       <Filter>Source Files\ModelManager</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldObject.cpp">
-      <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Source Files\World</Filter>
@@ -125,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="RenderingEngine.cpp">
       <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="CircularMovement.cpp">
-      <Filter>Source Files\Movement</Filter>
     </ClCompile>
     <ClCompile Include="Basic5RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
@@ -161,9 +146,6 @@
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -185,9 +167,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="WorldObject.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="Transformer.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
@@ -196,12 +175,6 @@
     </ClInclude>
     <ClInclude Include="light.h">
       <Filter>Header Files\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementController.h">
-      <Filter>Header Files\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="CircularMovement.h">
-      <Filter>Header Files\Movement</Filter>
     </ClInclude>
     <ClInclude Include="RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
@@ -232,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="ShaderData.h">
       <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="InputListenerComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

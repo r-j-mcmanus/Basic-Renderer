@@ -2,8 +2,9 @@
 
 #include <vector>
 
-#include "WorldObject.h"
 #include "SceneNode.h"
+#include "EventHandler.h"
+#include "RenderingEngine.h"
 
 class ModelManager;
 class ShaderManager;
@@ -17,14 +18,17 @@ public:
 		unsigned int worldId, 
 		const std::shared_ptr<ModelManager>& modelManager, 
 		const std::shared_ptr<ShaderManager>& shaderManager, 
-		const std::shared_ptr<UniformBufferManager>& uniformBufferManager
+		const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
+		EventHandler& eventHandler
 	);
 
-	void update(double dt);
+	void fixedUpdate(double dt);
+	void update();
+	void render(RenderingEngine& renderingEngine);
+	void earlyUpdate();
+
+private:
 
 public:
-	// probably dont want this to be public
-	std::vector<WorldObject> worldObjects;
 	SceneNode root;
-
 };

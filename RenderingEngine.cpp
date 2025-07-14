@@ -2,8 +2,6 @@
 #include <memory>
 #include <string>
 
-#include "World.h"
-#include "WorldObject.h"
 #include "ShaderManager.h"
 #include "ModelManager.h"
 
@@ -21,8 +19,5 @@ void RenderingEngine::renderFrame(World& world) const
 
     unsigned int currentShaderID = 0;
 
-	for (WorldObject& worldObject : world.worldObjects)
-	{
-        worldObject.draw(shaderManager, modelManager, activeCamera);
-	}
 }
+

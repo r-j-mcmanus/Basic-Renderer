@@ -10,23 +10,27 @@
 #include "EventListenerInterface.h"
 
 
-struct DirectionContainer {
+struct CameraDirectionContainer {
     bool left;
     bool right;
     bool forward;
     bool back;
 };
 
-// Default camera values
-const float YAW = -90.0f;
-const float PITCH = 0.0f;
-const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
-const float ZOOM = 45.0f;
+namespace CameraDefaultValues {
+    // Default camera values
+    const float YAW = -90.0f;
+    const float PITCH = 0.0f;
+    const float SPEED = 2.5f;
+    const float SENSITIVITY = 0.1f;
+    const float ZOOM = 45.0f;
+    const glm::vec3 UP = glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::vec3 FRONT = glm::vec3(0.0f, 0.0f, -1.0f);
+}
 
 class CameraComponent : public EventListenerInterface, public Component {
 public:
-    CameraComponent(glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    CameraComponent(glm::vec3 up = CameraDefaultValues::UP, float yaw = CameraDefaultValues::YAW, float pitch = CameraDefaultValues::PITCH);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     // glm::mat4 getViewMatrix() const;
@@ -41,7 +45,7 @@ public:
 
     glm::mat4 getProjectionMatrix() const;
 
-    void update(float dt);
+    void fixedUpdate(float dt);
 
 public:
     // camera Attributes
@@ -72,7 +76,7 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
 
-    DirectionContainer directionContainer = { false, false, false, false };
+    CameraDirectionContainer directionContainer = { false, false, false, false };
 
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();

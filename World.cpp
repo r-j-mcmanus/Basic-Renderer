@@ -1,6 +1,5 @@
 #include <string>
 
-#include "WorldObject.h"
 #include "ModelManager.h"
 #include "ShaderManager.h"
 #include "UniformBufferManager.h"
@@ -18,6 +17,8 @@
 #include "LightComponent.h"
 #include "RenderableComponent.h"
 #include "TransformationComponent.h"
+#include "CameraComponent.h"
+#include "EventHandler.h"
 
 #include "World.h"
 #include "SceneNodeBuilder.h"
@@ -26,7 +27,9 @@ void World::buildWorld(
 	unsigned int worldId, 
 	const std::shared_ptr<ModelManager>& modelManager, 
 	const std::shared_ptr<ShaderManager>& shaderManager, 
-	const std::shared_ptr<UniformBufferManager>& uniformBufferManager)
+	const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
+	EventHandler& eventHandler
+	)
 {
 
 	// shaders we will be using
@@ -35,8 +38,15 @@ void World::buildWorld(
 
 
 	// for making nodes to add to our scene graph
-	SceneNodeBuilder builder;
+	SceneNodeBuilder builder(&eventHandler);
 
+	///
+	root.add_child(std::move(
+		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10))
+			.addComponent<CameraComponent>()
+			.build()
+	));
+	///
 
 	///
 	const std::string floorFilePath = "Resources/Models/plain.gltf";
@@ -85,10 +95,23 @@ void World::buildWorld(
 	///
 }
 
-void World::update(double dt)
+void World::fixedUpdate(double dt)
 {
-	// id will eventually indicate which world to build?
-	for (auto& wo : worldObjects) {
-		wo.update(dt);
-	}
+	root.fixedUpdate(dt);
+}
+
+void World::update()
+{
+	root.update();
+	root.lateUpdate();
+}
+
+void World::earlyUpdate()
+{
+	root.earlyUpdate();
+}
+
+void World::render(RenderingEngine& renderingEngine)
+{
+	root.render();
 }

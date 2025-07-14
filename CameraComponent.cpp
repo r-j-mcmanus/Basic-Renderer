@@ -16,8 +16,9 @@
 
 
 CameraComponent::CameraComponent(glm::vec3 up, float yaw, float pitch)
-    : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM), WorldUp(up),
-    Yaw(yaw), Pitch(pitch), Up(up)
+    : Front(CameraDefaultValues::FRONT), MovementSpeed(CameraDefaultValues::SPEED),
+    MouseSensitivity(CameraDefaultValues::SENSITIVITY), Zoom(CameraDefaultValues::ZOOM),
+    WorldUp(up), Yaw(yaw), Pitch(pitch), Up(up)
 {
     updateCameraVectors();
 }
@@ -47,7 +48,7 @@ glm::mat4 CameraComponent::getProjectionMatrix() const {
     return projectionMatrix;
 }
 
-void CameraComponent::update(float dt) {
+void CameraComponent::fixedUpdate(float dt) {
     float side = (directionContainer.right && !directionContainer.left) - (!directionContainer.right && directionContainer.left);
     float forward = (directionContainer.forward && !directionContainer.back) - (!directionContainer.forward && directionContainer.back);
     glm::vec3 direction = side * Right + forward * Front;

@@ -3,9 +3,8 @@
 #include "Shader.h"
 #include "DrawableBuffer.h"
 #include "Light.h"
-#include "Camera.h"
 
-void Basic5RenderingController::draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera) {
+void Basic5RenderingController::draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager) {
     /*
     const unsigned int modelId = obj.renderingComponent.modelID;
     const unsigned int shaderId = obj.renderingComponent.shaderID;

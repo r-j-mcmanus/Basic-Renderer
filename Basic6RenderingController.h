@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RenderingController.h"
-#include "Camera.h"
 
 #include <glm/glm.hpp>
 
@@ -13,5 +12,5 @@ public:
     {
     }
 
-    void draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera);
+    void draw(WorldObject& obj, std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager);
 };

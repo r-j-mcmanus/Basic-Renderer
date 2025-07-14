@@ -7,7 +7,6 @@
 
 #include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
 #include "ShaderData.h"
-#include "Camera.h"
 #include "ShaderManager.h"
 #include "EventHandler.h"
 #include "ModelManager.h"
@@ -86,22 +85,20 @@ int main(void)
         }, nullptr);
 
 
-    std::shared_ptr<Camera> camera = std::make_shared<Camera>();
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
     std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
 
     EventHandler eventHandler(window);
-    eventHandler.registerObserver(camera);
+    // eventHandler.registerObserver(camera);
 
     RenderingEngine renderingEngine;
 
     renderingEngine.registerModelManager(modelManager);
     renderingEngine.registerShaderManager(shaderManager);
-    renderingEngine.setActiveCamera(camera);
 
     World world;
-    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager);
+    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager, eventHandler);
 
     double previousTime = glfwGetTime(); // Get the initial time
     GLCall(glEnable(GL_DEPTH_TEST));
@@ -134,30 +131,33 @@ int main(void)
         current_delta += currentTime - previousTime;
         previousTime = currentTime;
         while (current_delta > dt) {
-            current_delta -= dt;
+            //current_delta -= dt;
 
-            camera->update(dt);
-            world.update(dt);
+            //camera->update(dt);
+            // world.update(dt);
+            world.fixedUpdate(dt);
 
-            /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            ///////
-            /* Abstract this away */
-            glm::mat4 view = camera->getViewMatrix();
-            uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
-
-            // std::vector<Light> lights = world.get_lights();
-            // uniformBufferManager->updateBuffer("u_lights", lights, 0);
-            ///////
-
-            renderingEngine.renderFrame(world);
-
-            glfwSwapBuffers(window); // Swap front and back buffers
-            glfwPollEvents(); // Poll for and process events
-
-            centerMouseCursor(window);
         }
+
+        world.update();
+        world.render(renderingEngine);
+
+        /* Render here */
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ///////
+        /* Abstract this away */
+        //glm::mat4 view = camera->getViewMatrix();
+        //uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
+
+        // std::vector<Light> lights = world.get_lights();
+        // uniformBufferManager->updateBuffer("u_lights", lights, 0);
+        ///////
+
+        glfwSwapBuffers(window); // Swap front and back buffers
+        glfwPollEvents(); // Poll for and process events
+
+        centerMouseCursor(window);
     }
 
     glfwTerminate();

@@ -12,7 +12,7 @@
 
 
 class RenderableComponent: public Component {
-    void draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager, std::shared_ptr<Camera> activeCamera);
+    void draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager);
     void setRendererController(RenderingController* controller);
 
 private:

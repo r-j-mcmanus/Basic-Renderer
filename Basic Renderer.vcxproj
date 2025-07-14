@@ -145,8 +145,6 @@
     <ClCompile Include="Basic5RenderingController.h" />
     <ClCompile Include="Basic6RenderingController.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="Cemera.cpp" />
-    <ClCompile Include="CircularMovement.cpp" />
     <ClCompile Include="Errors.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventListenerInterface.h" />
@@ -167,24 +165,21 @@
     <ClCompile Include="TransformationComponent.cpp" />
     <ClCompile Include="UniformBufferManager.h" />
     <ClCompile Include="World.cpp" />
-    <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic6RenderingController.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="CircularMovement.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GltfParser.h" />
     <ClInclude Include="helper.h" />
+    <ClInclude Include="InputListenerComponent.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
-    <ClInclude Include="MovementController.h" />
     <ClInclude Include="PhongRenderingData.h" />
     <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="RenderingController.h" />
@@ -195,7 +190,6 @@
     <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="Transformer.h" />
     <ClInclude Include="World.h" />
-    <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader" />

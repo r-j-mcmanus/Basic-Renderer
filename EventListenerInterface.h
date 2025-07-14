@@ -13,7 +13,7 @@ public:
     // Callback for window resize event
     virtual void onWindowResize(int width, int height) {}
 
-    // Callback for window resize event
+    // Callback for mouse movement event
     virtual void onMouseMovement(int xpos, int ypos) {}
 
 protected:
