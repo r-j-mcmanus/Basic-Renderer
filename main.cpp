@@ -131,7 +131,7 @@ int main(void)
         current_delta += currentTime - previousTime;
         previousTime = currentTime;
         while (current_delta > dt) {
-            //current_delta -= dt;
+            current_delta -= dt;
 
             //camera->update(dt);
             // world.update(dt);

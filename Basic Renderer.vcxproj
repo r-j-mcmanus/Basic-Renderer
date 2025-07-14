@@ -192,7 +192,9 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fetch_quest.lua" />
     <None Include="lighting.shader" />
+    <None Include="prefabs.lua" />
     <None Include="Reasources\Models\cube.gltf" />
     <None Include="Reasources\Models\cube_and_sphere.gltf" />
     <None Include="Reasources\Models\Monkey.gltf" />
@@ -207,6 +209,10 @@
     <None Include="Resources\Shaders\basic_5.shader" />
     <None Include="Resources\Shaders\phong.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
+    <None Include="village_scene.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

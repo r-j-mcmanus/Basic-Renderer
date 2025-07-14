@@ -64,6 +64,9 @@
     <Filter Include="Header Files\Shaders\Data">
       <UniqueIdentifier>{ab17d834-0ec2-45bd-8c49-20721f849cb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\lua">
+      <UniqueIdentifier>{3ab5c752-377c-4878-a201-97d803dbe391}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -256,5 +259,17 @@
     <None Include="Resources\Shaders\phong.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="prefabs.lua">
+      <Filter>Resource Files\lua</Filter>
+    </None>
+    <None Include="village_scene.lua">
+      <Filter>Resource Files\lua</Filter>
+    </None>
+    <None Include="fetch_quest.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt">
+      <Filter>Resource Files\lua</Filter>
+    </Text>
   </ItemGroup>
 </Project>
