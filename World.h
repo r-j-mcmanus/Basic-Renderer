@@ -26,8 +26,8 @@ public:
 	void update();
 	void earlyUpdate();
 
-private:
 
 public:
 	SceneNode root;
+	SceneNode* activeCameraNode = nullptr; // this is a raw pointer to a node whos lifetime is controlled by the scene graph
 };

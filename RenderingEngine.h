@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Material.h"
+#include "RenderableComponent.h"
 
 class Camera;
 class ShaderManager;
@@ -14,9 +15,8 @@ class GLFWwindow;
 class SceneNode;
 
 struct RenderingQueueEntry {
-    Material material;
-    unsigned int modelID;
-    unsigned int shaderID;
+    RenderData renderData;
+    glm::mat4 modelMatrix;
 };
 
 class RenderingEngine {
@@ -29,19 +29,16 @@ public:
     void addToRenderingQueue(RenderingQueueEntry entry) { renderingQueue.push_back(entry); };
 
     // Set the active camera
-    void setActiveCamera(std::shared_ptr<Camera> camera) { activeCamera = camera; };
     void registerModelManager(const std::shared_ptr<ModelManager> modelManagerPtr) { modelManager = modelManagerPtr; };
     void registerShaderManager(const std::shared_ptr<ShaderManager> shaderManagerPtr) { shaderManager = shaderManagerPtr; };
 
 private:
     void submitRenderRequests(SceneNode* node);
     void getLights(SceneNode* node);
-    void getActiveCamera(SceneNode* node);
 
 private:
     std::shared_ptr<ShaderManager> shaderManager = nullptr;
     std::shared_ptr<ModelManager> modelManager = nullptr;
-    std::shared_ptr<Camera> activeCamera = nullptr;
 
     const float clearColorR = 0.1f;
     const float clearColorG = 0.1f;

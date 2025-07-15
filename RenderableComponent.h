@@ -4,7 +4,13 @@
 
 #include "Material.h"
 #include "Component.h"
-#include "RenderingEngine.h"
+
+
+struct RenderData {
+    Material material;
+    unsigned int modelID;
+    unsigned int shaderID;
+};
 
 
 class RenderableComponent: public Component {
@@ -12,9 +18,9 @@ class RenderableComponent: public Component {
 public:
     RenderableComponent(unsigned int modelID, unsigned int shaderID) : modelID(modelID), shaderID(shaderID) {};
 
-    const void SubmitDrawRequest(RenderingEngine* renderingEngine)
+    const RenderData getDrawRequest()
     {
-        renderingEngine->addToRenderingQueue({ material , modelID, shaderID });
+        return RenderData { material , modelID, shaderID };
     }
 
 private:

@@ -25,10 +25,10 @@ void RenderingEngine::submitRenderRequests(SceneNode* node) {
     // Compute world transform
     //Transform worldTransform = parentTransform * node->localTransform;
 
-    // If node has a RenderableComponent, submit it
     if (std::shared_ptr<RenderableComponent> renderable = node->getComponent<RenderableComponent>()) {
-        renderable->SubmitDrawRequest(this);
-
+        const RenderData renderData = renderable->getDrawRequest();
+        const glm::mat4 modelMatrix = node->GetGlobalMatrix();
+        renderingQueue.push_back(RenderingQueueEntry{ renderData, modelMatrix });
     }
 }
 
@@ -44,6 +44,7 @@ void RenderingEngine::getLights(SceneNode* node) {
     }
 }
 
+
 // Main rendering function
 void RenderingEngine::renderFrame(World& world)
 {
@@ -53,17 +54,15 @@ void RenderingEngine::renderFrame(World& world)
     unsigned int currentShaderID = 0;
 
     SceneNode* sceneRoot = &(world.root);
-    sceneRoot->traverse([this](SceneNode* node) { getActiveCamera(node); });
 
     // todo using the camera we can cull objects
-
     sceneRoot->traverse([this](SceneNode* node) { submitRenderRequests(node); });
     sceneRoot->traverse([this](SceneNode* node) { getLights(node); });
 
 
     for (auto& it : renderingQueue) {
-        const unsigned int modelId = it.modelID;
-        const unsigned int shaderId = it.shaderID;
+        const unsigned int modelId = it.renderData.modelID;
+        const unsigned int shaderId = it.renderData.shaderID;
 
         std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
         std::shared_ptr<Shader> shader = shaderManager->getShader(shaderId);
@@ -90,16 +89,16 @@ void RenderingEngine::renderFrame(World& world)
         /////////
 
         /////////
-        shader->setVec3("u_viewPos", activeCamera->Position);
+        shader->setVec3("u_viewPos", world.activeCameraNode->position);
         /////////
 
         /////////
-        glm::mat4 modelM4 = worldObject.getModelMatrix();
+        glm::mat4 modelM4 = it.modelMatrix;
         shader->setMat4("u_Model", modelM4);
-        shader->setVec3("u_material.ambient", worldObject.material.ambient);
-        shader->setVec3("u_material.diffuse", worldObject.material.diffuse);
-        shader->setVec3("u_material.specular", worldObject.material.specular);
-        shader->setFloat("u_material.shininess", worldObject.material.shininess);
+        shader->setVec3("u_material.ambient", it.renderData.material.ambient);
+        shader->setVec3("u_material.diffuse", it.renderData.material.diffuse);
+        shader->setVec3("u_material.specular", it.renderData.material.specular);
+        shader->setFloat("u_material.shininess", it.renderData.material.shininess);
         /////////
 
         model->draw();

@@ -90,7 +90,6 @@ int main(void)
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
 
     EventHandler eventHandler(window);
-    // eventHandler.registerObserver(camera);
 
     RenderingEngine renderingEngine;
 

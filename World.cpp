@@ -5,7 +5,7 @@
 #include "UniformBufferManager.h"
 
 // movement
-#include "CircularMovement.h"
+// #include "CircularMovement.h"
 
 
 // rendering
@@ -45,11 +45,12 @@ void World::buildWorld(
 	SceneNodeBuilder builder(&eventHandler);
 
 	///
-	root.add_child(std::move(
+	SceneNode* cameraNode = root.add_child(std::move(
 		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10))
 			.addComponent<CameraComponent>()
 			.build()
 	));
+	activeCameraNode = cameraNode;
 	///
 
 	///
