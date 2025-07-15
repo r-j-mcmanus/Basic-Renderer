@@ -36,6 +36,10 @@ void World::buildWorld(
 	unsigned int shaderPhongId = shaderManager->loadShader(ShaderData::PhongShader);
 	unsigned int shaderSolidColorId = shaderManager->loadShader(ShaderData::SolidColor);
 
+	// models we will be using
+	unsigned int modelIdFloor = modelManager->loadModel(std::string("Resources/Models/plain.gltf"));
+	unsigned int modelIdMonkey = modelManager->loadModel(std::string("Resources/Models/monkey.gltf"));
+	unsigned int cubeModelId = modelManager->loadModel(std::string("Resources/Models/cube.gltf"));
 
 	// for making nodes to add to our scene graph
 	SceneNodeBuilder builder(&eventHandler);
@@ -49,8 +53,6 @@ void World::buildWorld(
 	///
 
 	///
-	const std::string floorFilePath = "Resources/Models/plain.gltf";
-	unsigned int modelIdFloor = modelManager->loadModel(floorFilePath);
 	Material floorMaterial = {
 		glm::vec3(100.0f / 255.0f, 10.0f / 255.0f, 30.0f / 255.0f),
 		glm::vec3(210.0f / 255.0f, 105.0f / 255.0f, 34.0f / 255.0f),
@@ -59,14 +61,12 @@ void World::buildWorld(
 	};
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10))
-			.addComponent<RenderableComponent>()
+			.addComponent<RenderableComponent>(modelIdFloor, shaderPhongId)
 			.build()
 	));
 	///
 
 	///
-	const std::string monkeyFilePath = "Resources/Models/monkey.gltf";
-	unsigned int modelIdMonkey = modelManager->loadModel(monkeyFilePath);
 	Material materialMonekey = {
 		glm::vec3(10.0f / 255.0f, 100.0f / 255.0f, 30.0f / 255.0f),
 		glm::vec3(210.0f / 255.0f, 105.0f / 255.0f, 34.0f / 255.0f),
@@ -76,19 +76,17 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0, 1, 0), glm::vec3(0), glm::vec3(1))
-			.addComponent<RenderableComponent>() // std::make_unique<PhongRenderingData>(modelIdMonkey, shaderPhongId, materialMonekey), std::make_unique<Basic5RenderingController>());
+			.addComponent<RenderableComponent>(modelIdMonkey,shaderPhongId)
 			.build()
 	));
 
 
 	///
-	const std::string cubeFilePath = "Resources/Models/cube.gltf";
-	unsigned int cubeModelId = modelManager->loadModel(cubeFilePath);
 	Light light = {};
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(2, 2, 0), glm::vec3(0), glm::vec3(0.1))
-			.addComponent<RenderableComponent>() //  std::make_unique<SolidRenderingData>(cubeModelId, shaderSolidColorId, glm::vec3(0, 0, 0))), std::make_unique<SolidColorRenderingController>())
+			.addComponent<RenderableComponent>(cubeModelId, shaderSolidColorId)
 			.addComponent<LightComponent>(light)
 			.build()
 	));
@@ -111,7 +109,3 @@ void World::earlyUpdate()
 	root.earlyUpdate();
 }
 
-void World::render(RenderingEngine& renderingEngine)
-{
-	root.render();
-}

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
+#include <functional>
 
 #include <glm/vec3.hpp>
 
@@ -48,7 +49,6 @@ public:
 	void add_child(std::unique_ptr<SceneNode> child) {
 		children.push_back(std::move(child));
 	}
-	bool hasType(int type) const;
 
     //
     void setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
@@ -56,6 +56,25 @@ public:
         rotation = rot;
         scale = scl;
     }
+
+	template<typename T>
+	std::shared_ptr<T> getComponent() {
+		for (auto& c : components) {
+			if (auto comp = std::dynamic_pointer_cast<T>(c.second)) // will cast to null if ptr does not exist
+			{
+				return comp;
+			}
+		}
+		return nullptr;
+	}
+
+	template<typename Func>
+	void traverse(Func func) {
+		func(this);
+		for (auto& child : children) {
+			child->traverse(func);
+		}
+	}
 
 public:
 	bool isActive = true;

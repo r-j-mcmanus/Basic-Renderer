@@ -140,7 +140,7 @@ int main(void)
         }
 
         world.update();
-        world.render(renderingEngine);
+        renderingEngine.renderFrame(world);
 
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);

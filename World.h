@@ -24,7 +24,6 @@ public:
 
 	void fixedUpdate(double dt);
 	void update();
-	void render(RenderingEngine& renderingEngine);
 	void earlyUpdate();
 
 private:

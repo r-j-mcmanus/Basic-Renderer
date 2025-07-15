@@ -4,18 +4,21 @@
 
 #include "Material.h"
 #include "Component.h"
-#include "ShaderManager.h"
-#include "ModelManager.h"
-#include "RenderingController.h"
-#include "Component.h"
-
+#include "RenderingEngine.h"
 
 
 class RenderableComponent: public Component {
-    void draw(std::shared_ptr<ShaderManager> shaderManager, std::shared_ptr<ModelManager> modelManager);
-    void setRendererController(RenderingController* controller);
+
+public:
+    RenderableComponent(unsigned int modelID, unsigned int shaderID) : modelID(modelID), shaderID(shaderID) {};
+
+    const void SubmitDrawRequest(RenderingEngine* renderingEngine)
+    {
+        renderingEngine->addToRenderingQueue({ material , modelID, shaderID });
+    }
 
 private:
-    RenderingController* controller;
     Material material;
+    unsigned int modelID;
+    unsigned int shaderID;
 };
