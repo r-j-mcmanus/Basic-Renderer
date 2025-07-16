@@ -107,7 +107,7 @@ private:
 
 
 protected:
-	void addComponent(int typeBitmask, std::shared_ptr<Component> component) {
+	void addComponent(unsigned int typeBitmask, std::shared_ptr<Component> component) {
 		bitmask |= typeBitmask;
 		components[typeBitmask] = component;
 	}
@@ -133,7 +133,7 @@ private:
 	glm::mat4 globalMatrix; // cached global transform
 	SceneNode* pairentNode;
 	std::vector<std::unique_ptr<SceneNode>> children = std::vector<std::unique_ptr<SceneNode>>();
-	int bitmask = 0;
-	std::unordered_map<int, std::shared_ptr<Component>> components = std::unordered_map<int, std::shared_ptr<Component>>();
+	unsigned int bitmask = 0;
+	std::unordered_map<unsigned int, std::shared_ptr<Component>> components = std::unordered_map<unsigned int, std::shared_ptr<Component>>();
 
 };

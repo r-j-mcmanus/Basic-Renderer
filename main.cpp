@@ -123,7 +123,7 @@ int main(void)
     ///////
 
     float dt = 1.0 / 120.0;
-    float current_delta = 0;
+    double current_delta = 0;
 
     /* Loop until the user closes the window */ 
     while (!glfwWindowShouldClose(window))

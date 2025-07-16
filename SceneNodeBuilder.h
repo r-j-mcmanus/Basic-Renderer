@@ -38,7 +38,7 @@ public:
 
 private:
     template <typename T>
-    uint64_t getNodeTypeBitmask() {
+    unsigned int getNodeTypeBitmask() {
         return 1;
     }
 };

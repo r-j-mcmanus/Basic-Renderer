@@ -13,7 +13,7 @@ class ShaderManager;
 class ModelManager;
 class UniformBufferManager;
 class World;
-class GLFWwindow;
+struct GLFWwindow;
 class SceneNode;
 
 struct RenderingQueueEntry {
