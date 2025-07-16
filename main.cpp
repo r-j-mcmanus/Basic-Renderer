@@ -117,7 +117,9 @@ int main(void)
     const unsigned int shaderID2 = shaderManager->getShader(ShaderName::PhongShader)->GetId();
     uniformBufferManager->bindBlockToShader(shaderID2, "Matrices", "ProjectionView");
     uniformBufferManager->bindBlockToShader(shaderID2, "u_lights", "u_lights");
-     
+
+    renderingEngine.registerShaderManager(shaderManager);
+
     ///////
 
     float dt = 1.0 / 120.0;

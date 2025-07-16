@@ -3,12 +3,13 @@ class SceneNode; // Forward declaration
 
 
 class Component {
+friend class SceneNodeBuilder;
+
 public:
     virtual ~Component() = default;
+    virtual void onBuild(SceneNode& node) {}; // Default: do nothing but allows for comonnets to querery the node on build
 
-    // Optional: Called when the component is attached to a node
-    void onAttach(SceneNode& node) {}
 
-    // Optional: Called when the component is detached or node is destroyed
-    void onDetach(SceneNode& node) {}
+protected:
+    SceneNode* parent;
 };

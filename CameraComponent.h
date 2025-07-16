@@ -33,7 +33,7 @@ public:
     CameraComponent(glm::vec3 up = CameraDefaultValues::UP, float yaw = CameraDefaultValues::YAW, float pitch = CameraDefaultValues::PITCH);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
-    // glm::mat4 getViewMatrix() const;
+    glm::mat4 getViewMatrix() const;
 
     void setAspectRatio(const int width, const int height);
 
@@ -46,6 +46,8 @@ public:
     glm::mat4 getProjectionMatrix() const;
 
     void fixedUpdate(float dt);
+
+    void onBuild(SceneNode& node);
 
 public:
     // camera Attributes

@@ -74,6 +74,27 @@ public:
         GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
     }
 
+    // Update data in a uniform buffer with a vector
+    template <typename T>
+    void updateBuffer(const std::string& bufferName, const std::vector<T>& data, size_t offset) {
+        auto it = buffers.find(bufferName);
+        if (it == buffers.end()) {
+            std::cerr << "Buffer with name " << bufferName << " not found.\n";
+            return;
+        }
+
+        const BufferInfo& bufferInfo = it->second;
+        const size_t dataSize = data.size() * sizeof(T);
+        if (offset + dataSize > bufferInfo.size) {
+            std::cerr << "Data size exceeds remaining buffer size for buffer " << bufferName << ".\n";
+            return;
+        }
+
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, bufferInfo.bufferID));
+        GLCall(glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data.data()));
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
+    }
+
     ~UniformBufferManager() {
         for (const auto& pair : buffers) {
             GLCall(glDeleteBuffers(1, &pair.second.bufferID));

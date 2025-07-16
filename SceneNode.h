@@ -17,6 +17,9 @@ class SceneNodeBuilder;
 
 class SceneNode
 {
+friend class SceneNodeBuilder;
+friend class SceneNode;
+
 public:
 	void earlyUpdate() {
 		for (auto& child: children)
@@ -75,11 +78,11 @@ public:
 		}
 	}
 
-	glm::mat4 GetGlobalMatrix() {
+	glm::mat4 getGlobalMatrix() {
 		if (!isDirty) return globalMatrix;
 
 		if (pairentNode) {
-			globalMatrix = pairentNode->GetGlobalMatrix() * TRSMatrix();
+			globalMatrix = pairentNode->getGlobalMatrix() * TRSMatrix();
 		}
 		else {
 			globalMatrix = TRSMatrix();
@@ -90,13 +93,9 @@ public:
 
 	}
 
-public:
-	glm::vec3 position = glm::vec3(0, 0, 0);
-	glm::vec3 rotation = glm::vec3(0, 0, 0);
-	glm::vec3 scale = glm::vec3(1, 1, 1);
-	bool isDirty = true;
-	glm::mat4 localMatrix;  // local TRS transform
-	glm::mat4 globalMatrix; // cached global transform
+	glm::vec3 getGlobalPosition() {
+		return glm::vec3(globalMatrix[3]);
+	}
 
 private:
 	void MarkDirty() {
@@ -126,11 +125,15 @@ protected:
 	}
 
 private:
+	glm::vec3 position = glm::vec3(0, 0, 0);
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 scale = glm::vec3(1, 1, 1);
+	bool isDirty = true;
+	glm::mat4 localMatrix;  // local TRS transform
+	glm::mat4 globalMatrix; // cached global transform
 	SceneNode* pairentNode;
 	std::vector<std::unique_ptr<SceneNode>> children = std::vector<std::unique_ptr<SceneNode>>();
 	int bitmask = 0;
 	std::unordered_map<int, std::shared_ptr<Component>> components = std::unordered_map<int, std::shared_ptr<Component>>();
 
-	friend class SceneNodeBuilder;
-	friend class SceneNode;
 };

@@ -20,6 +20,12 @@ std::unique_ptr<SceneNode> SceneNodeBuilder::build() {
         }
     }
 
+
+    // Call onBuild for each component
+    for (const auto& it : node->components) {
+        it.second->onBuild(*node);
+    }
+
     std::unique_ptr<SceneNode> temp_unique_ptr = std::move(node);
     node = std::make_unique<SceneNode>();
     

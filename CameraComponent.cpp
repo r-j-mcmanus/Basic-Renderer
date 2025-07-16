@@ -13,6 +13,7 @@
 #include "Transformer.h"
 #include "EventListenerInterface.h"
 #include "CameraComponent.h"
+#include "SceneNode.h"
 
 
 CameraComponent::CameraComponent(glm::vec3 up, float yaw, float pitch)
@@ -23,10 +24,15 @@ CameraComponent::CameraComponent(glm::vec3 up, float yaw, float pitch)
     updateCameraVectors();
 }
 
-//glm::mat4 CameraComponent::getViewMatrix() const
-//{
-//    return glm::lookAt(Position, Position + Front, Up);
-//}
+void CameraComponent::onBuild(SceneNode& node) {
+    parent = &node;
+}
+
+glm::mat4 CameraComponent::getViewMatrix() const
+{
+    glm::vec3 position = parent->getGlobalPosition();
+    return glm::lookAt(position, position + Front, Up);
+}
 
 void CameraComponent::setAspectRatio(const int width, const int height) {
     aspectRatio = (float)width / (float)height;

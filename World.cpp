@@ -83,7 +83,12 @@ void World::buildWorld(
 
 
 	///
-	Light light = {};
+	Light light = {
+		glm::vec4(0.2f, 0.2f, 0.2f, 0.0f), // light position
+		glm::vec4(0.7f, 0.7f, 0.7f, 0.0f), // ambient white
+		glm::vec4(0.2f, 0.2f, 0.2f, 0.0f), // diffuse white
+		glm::vec4(1.0f, 0.0f, 1.0f, 0.0f), // specular
+	};
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(2, 2, 0), glm::vec3(0), glm::vec3(0.1))

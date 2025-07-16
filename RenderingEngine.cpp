@@ -5,6 +5,7 @@
 
 #include "ShaderManager.h"
 #include "ModelManager.h"
+#include "UniformBufferManager.h"
 
 #include "Errors.h"
 #include "RenderingEngine.h"
@@ -14,6 +15,7 @@
 #include "SceneNode.h"
 #include "RenderableComponent.h"
 #include "LightComponent.h"
+#include "CameraComponent.h"
 
 #include "World.h"
 
@@ -27,20 +29,16 @@ void RenderingEngine::submitRenderRequests(SceneNode* node) {
 
     if (std::shared_ptr<RenderableComponent> renderable = node->getComponent<RenderableComponent>()) {
         const RenderData renderData = renderable->getDrawRequest();
-        const glm::mat4 modelMatrix = node->GetGlobalMatrix();
+        const glm::mat4 modelMatrix = node->getGlobalMatrix();
         renderingQueue.push_back(RenderingQueueEntry{ renderData, modelMatrix });
     }
 }
 
 
 void RenderingEngine::getLights(SceneNode* node) {
-    // Compute world transform
-    //Transform worldTransform = parentTransform * node->localTransform;
-
-    // If node has a RenderableComponent, submit it
-    if (std::shared_ptr<LightComponent> renderable = node->getComponent<LightComponent>()) {
+    if (std::shared_ptr<LightComponent> lightComponent = node->getComponent<LightComponent>()) {
          // renderable->SubmitDrawRequest(this);
-        int a = 1;
+        activeLights.push_back(lightComponent->getLight());
     }
 }
 
@@ -53,11 +51,9 @@ void RenderingEngine::renderFrame(World& world)
 
     unsigned int currentShaderID = 0;
 
-    SceneNode* sceneRoot = &(world.root);
-
     // todo using the camera we can cull objects
-    sceneRoot->traverse([this](SceneNode* node) { submitRenderRequests(node); });
-    sceneRoot->traverse([this](SceneNode* node) { getLights(node); });
+    world.root.traverse([this](SceneNode* node) { submitRenderRequests(node); });
+    world.root.traverse([this](SceneNode* node) { getLights(node); });
 
 
     for (auto& it : renderingQueue) {
@@ -73,23 +69,16 @@ void RenderingEngine::renderFrame(World& world)
         }
 
         shader->Bind();
-        // currentShaderID = shaderId;
 
         /////////
-        const glm::vec3 lightPosition = glm::vec3(0.2f, 0.2f, 0.2f); // light position
-        Light light = {
-            glm::vec4(0.7f, 0.7f, 0.7f, 0.0f), // ambient white
-            glm::vec4(0.2f, 0.2f, 0.2f, 0.0f), // diffuse white
-            glm::vec4(1.0f, 0.0f, 1.0f, 0.0f), // specular
-        };
-        shader->setVec3("u_light.ambient", light.ambient);
-        shader->setVec3("u_light.diffuse", light.diffuse);
-        shader->setVec3("u_light.specular", light.specular);
-        shader->setVec3("u_light.position", lightPosition);
+         
+        glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
+        uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
+        uniformBufferManager->updateBuffer("u_lights", activeLights, 0);
         /////////
 
         /////////
-        shader->setVec3("u_viewPos", world.activeCameraNode->position);
+        shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition());
         /////////
 
         /////////

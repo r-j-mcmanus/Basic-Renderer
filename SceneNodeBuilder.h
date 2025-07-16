@@ -23,7 +23,9 @@ public:
 
     template <typename T, typename... Args>
     SceneNodeBuilder& addComponent(Args&&... args) {
-        node->addComponent(getNodeTypeBitmask<T>(), std::make_shared<T>(std::forward<Args>(args)...));
+        auto componentPtr = std::make_shared<T>(std::forward<Args>(args)...);
+        componentPtr->parent = node.get();
+        node->addComponent(getNodeTypeBitmask<T>(), componentPtr);
         return *this;
     }    
     

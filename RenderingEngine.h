@@ -5,11 +5,13 @@
 #include <memory>
 
 #include "Material.h"
+#include "Light.h"
 #include "RenderableComponent.h"
 
 class Camera;
 class ShaderManager;
 class ModelManager;
+class UniformBufferManager;
 class World;
 class GLFWwindow;
 class SceneNode;
@@ -31,6 +33,7 @@ public:
     // Set the active camera
     void registerModelManager(const std::shared_ptr<ModelManager> modelManagerPtr) { modelManager = modelManagerPtr; };
     void registerShaderManager(const std::shared_ptr<ShaderManager> shaderManagerPtr) { shaderManager = shaderManagerPtr; };
+    void registerShaderManager(const std::shared_ptr<UniformBufferManager> uniformBufferManagerPtr) { uniformBufferManager = uniformBufferManagerPtr; };
 
 private:
     void submitRenderRequests(SceneNode* node);
@@ -39,6 +42,7 @@ private:
 private:
     std::shared_ptr<ShaderManager> shaderManager = nullptr;
     std::shared_ptr<ModelManager> modelManager = nullptr;
+    std::shared_ptr<UniformBufferManager> uniformBufferManager = nullptr;
 
     const float clearColorR = 0.1f;
     const float clearColorG = 0.1f;
@@ -46,5 +50,5 @@ private:
     const float clearColorA = 1.0f;
 
     std::vector<RenderingQueueEntry> renderingQueue;
-    //std::vector<Light> activeLights;
+    std::vector<Light> activeLights;
 };
