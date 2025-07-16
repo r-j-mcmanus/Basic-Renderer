@@ -48,6 +48,7 @@ public:
 
 	SceneNode* add_child(std::unique_ptr<SceneNode> child) {
 		SceneNode* rawPtr = child.get();
+		child->pairentNode = this;
 		children.push_back(std::move(child));
 		return rawPtr;
 	}
@@ -94,7 +95,7 @@ public:
 	}
 
 	glm::vec3 getGlobalPosition() {
-		return glm::vec3(globalMatrix[3]);
+		return glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
 	}
 
 private:
@@ -124,6 +125,9 @@ protected:
 		return translationMatrix * rotationMatrix * scaleMatrix;
 	}
 
+protected:
+	SceneNode* pairentNode;
+
 private:
 	glm::vec3 position = glm::vec3(0, 0, 0);
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -131,7 +135,6 @@ private:
 	bool isDirty = true;
 	glm::mat4 localMatrix;  // local TRS transform
 	glm::mat4 globalMatrix; // cached global transform
-	SceneNode* pairentNode;
 	std::vector<std::unique_ptr<SceneNode>> children = std::vector<std::unique_ptr<SceneNode>>();
 	unsigned int bitmask = 0;
 	std::unordered_map<unsigned int, std::shared_ptr<Component>> components = std::unordered_map<unsigned int, std::shared_ptr<Component>>();

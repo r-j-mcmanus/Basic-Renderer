@@ -33,7 +33,7 @@ public:
     // Set the active camera
     void registerModelManager(const std::shared_ptr<ModelManager> modelManagerPtr) { modelManager = modelManagerPtr; };
     void registerShaderManager(const std::shared_ptr<ShaderManager> shaderManagerPtr) { shaderManager = shaderManagerPtr; };
-    void registerShaderManager(const std::shared_ptr<UniformBufferManager> uniformBufferManagerPtr) { uniformBufferManager = uniformBufferManagerPtr; };
+    void registerUniformBufferManager(const std::shared_ptr<UniformBufferManager> uniformBufferManagerPtr) { uniformBufferManager = uniformBufferManagerPtr; };
 
 private:
     void submitRenderRequests(SceneNode* node);

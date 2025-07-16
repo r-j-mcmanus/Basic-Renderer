@@ -46,8 +46,8 @@ void World::buildWorld(
 
 	///
 	SceneNode* cameraNode = root.add_child(std::move(
-		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10))
-			.addComponent<CameraComponent>()
+		builder.setTransform(glm::vec3(5, 0, 0), glm::vec3(0), glm::vec3(0))
+			.addComponent<CameraComponent>(glm::vec3(-1, 0, 0))
 			.build()
 	));
 	activeCameraNode = cameraNode;
@@ -61,7 +61,7 @@ void World::buildWorld(
 		32.0f,
 	};
 	root.add_child(std::move(
-		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10))
+		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10)) // we flaten it along the y axis and extend on the x and z
 			.addComponent<RenderableComponent>(modelIdFloor, shaderPhongId)
 			.build()
 	));

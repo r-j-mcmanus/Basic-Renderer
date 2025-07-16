@@ -41,8 +41,8 @@ struct Light {
     vec4 specular;
 };
 
-layout (std140) uniform u_lights {
-    Light lights[NUM_LIGHTS];
+layout (std140) uniform Lights {
+    Light lu_lights[NUM_LIGHTS];
 };
 
 in vec3 v_Normal;
@@ -57,7 +57,7 @@ void main()
     vec3 result = vec3(0.0);
 
     for(int i=0; i<NUM_LIGHTS; i++) {
-        Light light = lights[i];
+        Light light = lu_lights[i];
 
         // ambient
         vec3 ambient = vec3(light.ambient) * u_material.ambient;

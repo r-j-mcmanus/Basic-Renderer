@@ -16,10 +16,10 @@
 #include "SceneNode.h"
 
 
-CameraComponent::CameraComponent(glm::vec3 up, float yaw, float pitch)
-    : Front(CameraDefaultValues::FRONT), MovementSpeed(CameraDefaultValues::SPEED),
+CameraComponent::CameraComponent(glm::vec3 front, float yaw, float pitch)
+    : Front(front), MovementSpeed(CameraDefaultValues::SPEED),
     MouseSensitivity(CameraDefaultValues::SENSITIVITY), Zoom(CameraDefaultValues::ZOOM),
-    WorldUp(up), Yaw(yaw), Pitch(pitch), Up(up)
+    WorldUp(CameraDefaultValues::UP), Yaw(yaw), Pitch(pitch), Up(CameraDefaultValues::UP)
 {
     updateCameraVectors();
 }

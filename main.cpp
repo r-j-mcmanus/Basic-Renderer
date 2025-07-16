@@ -108,17 +108,17 @@ int main(void)
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
     uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
 
-    int NUM_LIGHTS = 8;
-    uniformBufferManager->createBuffer("u_lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
+    unsigned int NUM_LIGHTS = 8;
+    uniformBufferManager->createBuffer("Lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
 
     const unsigned int shaderID = shaderManager->getShader(ShaderName::SolidColor)->GetId();
     uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
 
     const unsigned int shaderID2 = shaderManager->getShader(ShaderName::PhongShader)->GetId();
     uniformBufferManager->bindBlockToShader(shaderID2, "Matrices", "ProjectionView");
-    uniformBufferManager->bindBlockToShader(shaderID2, "u_lights", "u_lights");
+    uniformBufferManager->bindBlockToShader(shaderID2, "Lights", "Lights");
 
-    renderingEngine.registerShaderManager(shaderManager);
+    renderingEngine.registerUniformBufferManager(uniformBufferManager);
 
     ///////
 
@@ -141,19 +141,8 @@ int main(void)
         }
 
         world.update();
+
         renderingEngine.renderFrame(world);
-
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ///////
-        /* Abstract this away */
-        //glm::mat4 view = camera->getViewMatrix();
-        //uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
-
-        // std::vector<Light> lights = world.get_lights();
-        // uniformBufferManager->updateBuffer("u_lights", lights, 0);
-        ///////
 
         glfwSwapBuffers(window); // Swap front and back buffers
         glfwPollEvents(); // Poll for and process events

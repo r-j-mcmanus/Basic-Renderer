@@ -30,7 +30,7 @@ namespace CameraDefaultValues {
 
 class CameraComponent : public EventListenerInterface, public Component {
 public:
-    CameraComponent(glm::vec3 up = CameraDefaultValues::UP, float yaw = CameraDefaultValues::YAW, float pitch = CameraDefaultValues::PITCH);
+    CameraComponent(glm::vec3 front, float yaw = CameraDefaultValues::YAW, float pitch = CameraDefaultValues::PITCH);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 getViewMatrix() const;

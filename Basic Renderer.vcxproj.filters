@@ -269,7 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt">
-      <Filter>Resource Files\lua</Filter>
+      <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
 </Project>

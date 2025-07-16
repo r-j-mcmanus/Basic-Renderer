@@ -18,7 +18,7 @@ public:
     };
 
 public:
-    const void draw() const {
+    void draw() const {
         for(auto& buffer : buffers)
         {
             GLCall(glBindVertexArray(buffer.VAO));

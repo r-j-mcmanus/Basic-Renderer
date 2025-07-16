@@ -52,9 +52,16 @@ void RenderingEngine::renderFrame(World& world)
     unsigned int currentShaderID = 0;
 
     // todo using the camera we can cull objects
+    renderingQueue.clear();
+    activeLights.clear();
+
     world.root.traverse([this](SceneNode* node) { submitRenderRequests(node); });
     world.root.traverse([this](SceneNode* node) { getLights(node); });
 
+    // the buffers are shared between shaders and are linked elsewhere
+    glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
+    uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(glm::mat4));
+    uniformBufferManager->updateBuffer("Lights", activeLights, 0);
 
     for (auto& it : renderingQueue) {
         const unsigned int modelId = it.renderData.modelID;
@@ -68,19 +75,15 @@ void RenderingEngine::renderFrame(World& world)
             continue;
         }
 
+        // bind the shader we are to use for the model
         shader->Bind();
 
-        /////////
-         
-        glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
-        uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(view));
-        uniformBufferManager->updateBuffer("u_lights", activeLights, 0);
-        /////////
+        // set uniforms for the shader
 
         /////////
-        shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition());
+        // these are shader dependent, so we should come up with a better palce for them to live
         /////////
-
+        shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition()); // move to a ubo?
         /////////
         glm::mat4 modelM4 = it.modelMatrix;
         shader->setMat4("u_Model", modelM4);
