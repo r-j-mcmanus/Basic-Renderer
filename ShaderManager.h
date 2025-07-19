@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "ShaderData.h"
+#include "Shader.h"
 
 class Shader;
 

@@ -1,13 +1,9 @@
 #pragma once
 
-#include "Component.h"
-#pragma once
-
+#include <iostream>
 #include <glm/glm.hpp>
 
-#include <iostream>
-
-#include "EventListenerInterface.h"
+#include "Component.h"
 
 
 struct CameraDirectionContainer {
@@ -28,9 +24,9 @@ namespace CameraDefaultValues {
     const glm::vec3 FRONT = glm::vec3(0.0f, 0.0f, -1.0f);
 }
 
-class CameraComponent : public EventListenerInterface, public Component {
+class CameraComponent : public Component {
 public:
-    CameraComponent(glm::vec3 front, float yaw = CameraDefaultValues::YAW, float pitch = CameraDefaultValues::PITCH);
+    CameraComponent(glm::vec3 front);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 getViewMatrix() const;
@@ -43,46 +39,32 @@ public:
 
     void setAspectRatio(float newAspectRatio);
 
-    glm::mat4 getProjectionMatrix() const;
-
     void fixedUpdate(float dt);
 
     void onBuild(SceneNode& node);
 
+    glm::vec3 getForward() const { return front; }
+    glm::vec3 getUp() const { return up; }
+
+    void updateCameraVectors(glm::vec3 rotation);
+
 public:
     // camera Attributes
-    glm::vec3 Front;
-    glm::vec3 Up;
-    glm::vec3 Right;
-    glm::vec3 WorldUp;
-    // euler Angles
-    float Yaw;
-    float Pitch;
+    glm::vec3 front;
+    glm::vec3 up;
     // camera options
-    float MovementSpeed;
-    float MouseSensitivity;
-    float Zoom;
+    float movementSpeed;
+    float mouseSensitivity;
+    float zoom;
 
 
 private:
-    glm::vec3 viewDirection;
     float fov;
     float aspectRatio;
     float nearPlane;
     float farPlane;
-    float lastX = 0;
-    float lastY = 0;
-    float deltaYaw = 0;
-    float deltaPitch = 0;
 
     glm::mat4 viewMatrix;
-    glm::mat4 projectionMatrix;
 
     CameraDirectionContainer directionContainer = { false, false, false, false };
-
-    // calculates the front vector from the Camera's (updated) Euler Angles
-    void updateCameraVectors();
-
-    void onKeyEvent(int key, int scancode, int action, int mods) override;
-    void onMouseMovement(int xpos, int ypos) override;
 };

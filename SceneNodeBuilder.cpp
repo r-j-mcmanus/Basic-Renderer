@@ -5,7 +5,7 @@
 #include "EventListenerInterface.h"
 
 
-SceneNodeBuilder::SceneNodeBuilder(EventHandler* handler): eventHandler(handler) {
+SceneNodeBuilder::SceneNodeBuilder() {
     node = std::make_unique<SceneNode>();
 }
 
@@ -13,17 +13,17 @@ SceneNodeBuilder::SceneNodeBuilder(EventHandler* handler): eventHandler(handler)
 std::unique_ptr<SceneNode> SceneNodeBuilder::build() {
     
 
-    for (const auto& it: node->components) {
-        auto listener = std::dynamic_pointer_cast<EventListenerInterface>(it.second); // will return null if the component does not inherit from EventListenerInterface
-        if (listener && eventHandler) {
-            eventHandler->registerObserver(listener);
-        }
-    }
+    //for (const auto& it: node->components) {
+    //    auto listener = std::dynamic_pointer_cast<EventListenerInterface>(it.second); // will return null if the component does not inherit from EventListenerInterface
+    //    if (listener && eventHandler) {
+    //        eventHandler->registerObserver(listener);
+    //    }
+    //}
 
 
     // Call onBuild for each component
     for (const auto& it : node->components) {
-        it.second->onBuild(*node);
+        it->onBuild(*node);
     }
 
     std::unique_ptr<SceneNode> temp_unique_ptr = std::move(node);

@@ -3,7 +3,6 @@
 #include <memory>
 #include <unordered_map>
 #include "SceneNode.h"
-#include "EventHandler.h"
 #include "Component.h"
 
 #include "Material.h"
@@ -16,16 +15,15 @@ class SceneNode;
 class SceneNodeBuilder {
 private:
     std::unique_ptr<SceneNode> node;
-    EventHandler* eventHandler;
 
 public:
-    SceneNodeBuilder(EventHandler* handler);
+    SceneNodeBuilder();
 
     template <typename T, typename... Args>
     SceneNodeBuilder& addComponent(Args&&... args) {
         auto componentPtr = std::make_shared<T>(std::forward<Args>(args)...);
         componentPtr->parent = node.get();
-        node->addComponent(getNodeTypeBitmask<T>(), componentPtr);
+        node->addComponent(componentPtr);
         return *this;
     }    
     
@@ -36,9 +34,4 @@ public:
 
     std::unique_ptr<SceneNode> build();
 
-private:
-    template <typename T>
-    unsigned int getNodeTypeBitmask() {
-        return 1;
-    }
 };

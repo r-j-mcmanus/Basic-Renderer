@@ -18,7 +18,9 @@
 #include "RenderableComponent.h"
 #include "TransformationComponent.h"
 #include "CameraComponent.h"
-#include "EventHandler.h"
+#include "ControllerComponent.h"
+#include "KeyTracker.h"
+#include "MouseTracker.h"
 
 #include "World.h"
 #include "SceneNodeBuilder.h"
@@ -28,7 +30,8 @@ void World::buildWorld(
 	const std::shared_ptr<ModelManager>& modelManager, 
 	const std::shared_ptr<ShaderManager>& shaderManager, 
 	const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
-	EventHandler& eventHandler
+	std::shared_ptr<KeyTracker>& keyTracker,
+	std::shared_ptr<MouseTracker>& mouseTracker
 	)
 {
 
@@ -42,12 +45,13 @@ void World::buildWorld(
 	unsigned int cubeModelId = modelManager->loadModel(std::string("Resources/Models/cube.gltf"));
 
 	// for making nodes to add to our scene graph
-	SceneNodeBuilder builder(&eventHandler);
+	SceneNodeBuilder builder;
 
 	///
 	SceneNode* cameraNode = root.add_child(std::move(
 		builder.setTransform(glm::vec3(5, 0, 0), glm::vec3(0), glm::vec3(0))
 			.addComponent<CameraComponent>(glm::vec3(-1, 0, 0))
+			.addComponent<ControllerComponent>(keyTracker, mouseTracker)
 			.build()
 	));
 	activeCameraNode = cameraNode;

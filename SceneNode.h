@@ -54,16 +54,40 @@ public:
 	}
 
     //
+	// motion related functions
+	//
     void setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
         position = pos;
         rotation = rot;
         scale = scl;
     }
+	
+	void translate(const glm::vec3& delta) {
+		MarkDirty();
+		position += delta;
+	}
+	
+	void rotate(const float yawDelta, float pitchDelta) {
+		MarkDirty();
+		// Update rotation
+		rotation.y += yawDelta;   // Yaw (left/right)
+		rotation.x += pitchDelta; // Pitch (up/down)
+
+		// Clamp pitch to avoid flipping
+		const float pitchLimit = 89.0f;
+		if (rotation.x > pitchLimit) rotation.x = pitchLimit;
+		if (rotation.x < -pitchLimit) rotation.x = -pitchLimit;
+
+		// Keep yaw within 0-360
+		if (rotation.y > 360) rotation.y -= 360;
+		if (rotation.y < 0) rotation.y += 360;
+	}
+	//
 
 	template<typename T>
 	std::shared_ptr<T> getComponent() {
 		for (auto& c : components) {
-			if (auto comp = std::dynamic_pointer_cast<T>(c.second)) // will cast to null if ptr does not exist
+			if (auto comp = std::dynamic_pointer_cast<T>(c)) // will cast to null if ptr does not exist
 			{
 				return comp;
 			}
@@ -98,6 +122,8 @@ public:
 		return glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
 	}
 
+	glm::vec3 getRotation() const { return rotation; }
+
 private:
 	void MarkDirty() {
 		isDirty = true;
@@ -108,9 +134,8 @@ private:
 
 
 protected:
-	void addComponent(unsigned int typeBitmask, std::shared_ptr<Component> component) {
-		bitmask |= typeBitmask;
-		components[typeBitmask] = component;
+	void addComponent(std::shared_ptr<Component> component) {
+		components.push_back(component);
 	}
 
 	glm::mat4 TRSMatrix() const {
@@ -137,6 +162,6 @@ private:
 	glm::mat4 globalMatrix; // cached global transform
 	std::vector<std::unique_ptr<SceneNode>> children = std::vector<std::unique_ptr<SceneNode>>();
 	unsigned int bitmask = 0;
-	std::unordered_map<unsigned int, std::shared_ptr<Component>> components = std::unordered_map<unsigned int, std::shared_ptr<Component>>();
+	std::vector<std::shared_ptr<Component>> components;
 
 };

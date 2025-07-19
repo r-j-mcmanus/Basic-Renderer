@@ -10,16 +10,19 @@ class ModelManager;
 class ShaderManager;
 class UniformBufferManager;
 class WorldObject;
+class KeyTracker;
+class MouseTracker;
 
 class World
 {
 public:
 	void buildWorld(
-		unsigned int worldId, 
-		const std::shared_ptr<ModelManager>& modelManager, 
-		const std::shared_ptr<ShaderManager>& shaderManager, 
+		unsigned int worldId,
+		const std::shared_ptr<ModelManager>& modelManager,
+		const std::shared_ptr<ShaderManager>& shaderManager,
 		const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
-		EventHandler& eventHandler
+		std::shared_ptr<KeyTracker>& keyTracker,
+		std::shared_ptr<MouseTracker>& mouseTracker
 	);
 
 	void fixedUpdate(double dt);

@@ -5,6 +5,7 @@
 #include <memory>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 #include "Shader.h"
 #include "ShaderManager.h"

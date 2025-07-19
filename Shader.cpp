@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 
 #include "errors.h"
-
 #include "Shader.h"
 
 Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)

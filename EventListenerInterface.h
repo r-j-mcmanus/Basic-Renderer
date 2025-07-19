@@ -1,9 +1,14 @@
 #pragma once
 
+class EventHandler;
+
 class EventListenerInterface {
+    friend class EventHandler;
+
 public:
     virtual ~EventListenerInterface() = default;
 
+protected:
     // Callback for key press event
     virtual void onKeyEvent(int key, int scancode, int action, int mods) {}
 
@@ -15,7 +20,4 @@ public:
 
     // Callback for mouse movement event
     virtual void onMouseMovement(int xpos, int ypos) {}
-
-protected:
-    bool firstMouse;
 };

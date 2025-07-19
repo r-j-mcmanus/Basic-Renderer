@@ -4,11 +4,14 @@
 #include <glm/glm.hpp>
 
 #include <iostream>
+#include <memory>
 
 #include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
 #include "ShaderData.h"
 #include "ShaderManager.h"
 #include "EventHandler.h"
+#include "KeyTracker.h"
+#include "MouseTracker.h"
 #include "ModelManager.h"
 #include "RenderingEngine.h"
 #include "World.h"
@@ -90,6 +93,10 @@ int main(void)
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
 
     EventHandler eventHandler(window);
+    std::shared_ptr<KeyTracker> keyTracker = std::make_shared<KeyTracker>();
+    std::shared_ptr<MouseTracker> mouseTracker = std::make_shared<MouseTracker>();
+    eventHandler.registerObserver(keyTracker);
+    eventHandler.registerObserver(mouseTracker);
 
     RenderingEngine renderingEngine;
 
@@ -97,7 +104,7 @@ int main(void)
     renderingEngine.registerShaderManager(shaderManager);
 
     World world;
-    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager, eventHandler);
+    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager, keyTracker, mouseTracker);
 
     double previousTime = glfwGetTime(); // Get the initial time
     GLCall(glEnable(GL_DEPTH_TEST));

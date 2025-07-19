@@ -81,9 +81,6 @@
     <ClCompile Include="LightingShader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.h">
-      <Filter>Header Files\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
@@ -139,6 +136,9 @@
       <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
     <ClCompile Include="TransformationComponent.cpp">
+      <Filter>Source Files\World\SceneNode\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerComponent.cpp">
       <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,6 +212,18 @@
     <ClInclude Include="InputListenerComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ControllerComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyTracker.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseTracker.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">
@@ -265,7 +277,15 @@
     <None Include="village_scene.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
-    <None Include="fetch_quest.lua" />
+    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.gltf">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.bin">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="fetch_quest.lua">
+      <Filter>Resource Files\lua</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt">

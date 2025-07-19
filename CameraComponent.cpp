@@ -16,12 +16,25 @@
 #include "SceneNode.h"
 
 
-CameraComponent::CameraComponent(glm::vec3 front, float yaw, float pitch)
-    : Front(front), MovementSpeed(CameraDefaultValues::SPEED),
-    MouseSensitivity(CameraDefaultValues::SENSITIVITY), Zoom(CameraDefaultValues::ZOOM),
-    WorldUp(CameraDefaultValues::UP), Yaw(yaw), Pitch(pitch), Up(CameraDefaultValues::UP)
+CameraComponent::CameraComponent(glm::vec3 front): 
+    up(CameraDefaultValues::UP),
+    movementSpeed(CameraDefaultValues::SPEED),
+    mouseSensitivity(CameraDefaultValues::SENSITIVITY), 
+    zoom(CameraDefaultValues::ZOOM)
 {
-    updateCameraVectors();
+    this->front = glm::normalize(front);
+}
+
+void CameraComponent::updateCameraVectors(glm::vec3 rotation)
+{
+    glm::mat4 rotationMatrix = (
+        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f))
+        );
+
+    front = glm::vec3(rotationMatrix * glm::vec4(front, 1.0f));
+    up = glm::vec3(rotationMatrix * glm::vec4(up, 1.0f));
 }
 
 void CameraComponent::onBuild(SceneNode& node) {
@@ -31,7 +44,7 @@ void CameraComponent::onBuild(SceneNode& node) {
 glm::mat4 CameraComponent::getViewMatrix() const
 {
     glm::vec3 position = parent->getGlobalPosition();
-    return glm::lookAt(position, position + Front, Up);
+    return glm::lookAt(position, position + front, up);
 }
 
 void CameraComponent::setAspectRatio(const int width, const int height) {
@@ -48,100 +61,4 @@ void CameraComponent::setTarget(const float x, const float y, const float z) {
 
 void CameraComponent::setAspectRatio(float newAspectRatio) {
     aspectRatio = newAspectRatio;
-}
-
-glm::mat4 CameraComponent::getProjectionMatrix() const {
-    return projectionMatrix;
-}
-
-void CameraComponent::fixedUpdate(float dt) {
-    float side = (directionContainer.right && !directionContainer.left) - (!directionContainer.right && directionContainer.left);
-    float forward = (directionContainer.forward && !directionContainer.back) - (!directionContainer.forward && directionContainer.back);
-    glm::vec3 direction = side * Right + forward * Front;
-
-    if (forward != 0) {
-        int a = 1;
-    }
-
-    Yaw += deltaYaw * MouseSensitivity;
-    Pitch += deltaPitch * MouseSensitivity;
-
-    // clamp amount above and bellow to prevent looking directly up or down
-    if (Pitch > 89.0f)
-        Pitch = 89.0f;
-    if (Pitch < -89.0f)
-        Pitch = -89.0f;
-
-    //std::cout << direction.x << ' ' << direction.y << ' ' << direction.z << ' ' << deltaYaw << ' ' << deltaPitch << std::endl;
-
-    updateCameraVectors();
-}
-
-void CameraComponent::onMouseMovement(int xpos, int ypos) {
-
-    if (firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    deltaYaw += xpos - lastX;
-    deltaPitch += lastY - ypos;
-    lastX = xpos;
-    lastY = ypos;
-}
-
-void CameraComponent::onKeyEvent(int key, int scancode, int action, int mods) {
-    bool isPressed = (action == GLFW_PRESS || action == GLFW_REPEAT);
-
-    if (key == GLFW_KEY_W) {
-        if (action == GLFW_PRESS) {
-            directionContainer.forward = true;
-        }
-        else if (action == GLFW_RELEASE) {
-            directionContainer.forward = false;
-        }
-    }
-
-    if (key == GLFW_KEY_S) {
-        if (action == GLFW_PRESS) {
-            directionContainer.back = true;
-        }
-        else if (action == GLFW_RELEASE) {
-            directionContainer.back = false;
-        }
-    }
-
-    if (key == GLFW_KEY_A) {
-        if (action == GLFW_PRESS) {
-            directionContainer.left = true;
-        }
-        else if (action == GLFW_RELEASE) {
-            directionContainer.left = false;
-        }
-    }
-
-    if (key == GLFW_KEY_D) {
-        if (action == GLFW_PRESS) {
-            directionContainer.right = true;
-        }
-        else if (action == GLFW_RELEASE) {
-            directionContainer.right = false;
-        }
-    }
-}
-
-// calculates the front vector from the Camera's (updated) Euler Angles
-void CameraComponent::updateCameraVectors()
-{
-    // calculate the new Front vector
-    glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
-    // also re-calculate the Right and Up vector
-    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    Up = glm::normalize(glm::cross(Right, Front));
 }

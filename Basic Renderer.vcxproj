@@ -145,6 +145,7 @@
     <ClCompile Include="Basic5RenderingController.h" />
     <ClCompile Include="Basic6RenderingController.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="ControllerComponent.cpp" />
     <ClCompile Include="Errors.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventListenerInterface.h" />
@@ -160,7 +161,6 @@
     <ClCompile Include="SceneNodeBuilder.cpp" />
     <ClCompile Include="SceneNodeBuilder.h" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Shader.h" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="TransformationComponent.cpp" />
     <ClCompile Include="UniformBufferManager.h" />
@@ -170,21 +170,25 @@
     <ClInclude Include="Basic6RenderingController.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ControllerComponent.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GltfParser.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="InputListenerComponent.h" />
+    <ClInclude Include="KeyTracker.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="DrawableBuffer.h" />
     <ClInclude Include="ModelManager.h" />
+    <ClInclude Include="MouseTracker.h" />
     <ClInclude Include="PhongRenderingData.h" />
     <ClInclude Include="RenderableComponent.h" />
     <ClInclude Include="RenderingController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="TransformationComponent.h" />
@@ -192,6 +196,8 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.bin" />
+    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.gltf" />
     <None Include="fetch_quest.lua" />
     <None Include="lighting.shader" />
     <None Include="prefabs.lua" />
