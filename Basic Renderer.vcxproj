@@ -142,28 +142,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Basic5RenderingController.cpp" />
-    <ClCompile Include="Basic5RenderingController.h" />
     <ClCompile Include="Basic6RenderingController.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ControllerComponent.cpp" />
     <ClCompile Include="Errors.cpp" />
     <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="EventListenerInterface.h" />
     <ClCompile Include="GltfParser.cpp" />
     <ClCompile Include="LightingShader.cpp" />
-    <ClCompile Include="LightingShader.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="RenderingEngine.cpp" />
-    <ClCompile Include="RenderingEngine.h" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SceneNodeBuilder.cpp" />
-    <ClCompile Include="SceneNodeBuilder.h" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="TransformationComponent.cpp" />
-    <ClCompile Include="UniformBufferManager.h" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>

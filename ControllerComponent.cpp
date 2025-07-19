@@ -14,7 +14,7 @@ ControllerComponent::ControllerComponent(
 
 void ControllerComponent::fixedUpdate(float dt) 
 {
-    std::cout << "running fixed update\n";
+    std::cout << "running controller component fixed update\n";
 
     glm::vec3 forward = parent->getComponent<CameraComponent>()->getForward();  // based on rotation
     glm::vec3 up = parent->getComponent<CameraComponent>()->getUp();
