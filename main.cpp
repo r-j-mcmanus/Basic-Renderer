@@ -140,11 +140,7 @@ int main(void)
         previousTime = currentTime;
         while (current_delta > dt) {
             current_delta -= dt;
-
-            //camera->update(dt);
-            // world.update(dt);
             world.fixedUpdate(dt);
-
         }
 
         world.update();

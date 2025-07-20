@@ -39,8 +39,6 @@ public:
 
     void setAspectRatio(float newAspectRatio);
 
-    void fixedUpdate(float dt);
-
     void onBuild(SceneNode& node);
 
     glm::vec3 getForward() const { return front; }

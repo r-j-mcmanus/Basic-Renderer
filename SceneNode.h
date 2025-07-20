@@ -34,6 +34,10 @@ public:
 		}
 	};
 	void fixedUpdate(float fixedDelta) {
+		for (auto& component : components)
+		{
+			component->fixedUpdate(fixedDelta);
+		}
 		for (auto& child : children)
 		{
 			child->fixedUpdate(fixedDelta);
@@ -135,6 +139,7 @@ private:
 
 protected:
 	void addComponent(std::shared_ptr<Component> component) {
+		// todo have a list of updatableComponents and allow for the component to add itself to that list if it wants
 		components.push_back(component);
 	}
 

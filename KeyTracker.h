@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <iostream>
 
 #include "EventListenerInterface.h"
 
@@ -16,7 +15,6 @@ private:
 
 protected:
 	void onKeyEvent(int key, int scancode, int action, int mods) {
-		std::cout << "processing key event\n";
 		if (action == GLFW_PRESS) keys[key] = true;
 		if (action == GLFW_RELEASE) keys[key] = false;
 	}

@@ -18,8 +18,12 @@ public:
     void fixedUpdate(float dt);
 
 private:
-    float sensitivity = 0.1;
-    float moveSpeed = 1.0;
+    void fixedUpdateKey(float dt);
+    void fixedUpdateMouse(float dt);
+
+private:
+    float sensitivity = 0.1f;
+    float moveSpeed = 1.0f;
     std::shared_ptr<KeyTracker> keyTracker;
     std::shared_ptr<MouseTracker> mouseTracker;
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <iostream>
 
 #include "EventListenerInterface.h"
 
@@ -14,8 +13,8 @@ public:
 
     // Reset delta after processing (optional)
     void resetDelta() {
-        deltaX = 0.0;
-        deltaY = 0.0;
+        deltaX = 0;
+        deltaY = 0;
     }
 
 private:
@@ -29,7 +28,6 @@ protected:
     void onMouseMovement(int xpos, int ypos) {
         // todo normalise to screen size
 
-        std::cout << "processing mouse event\n";
         if (firstMouse) {
             lastX = xpos;
             lastY = ypos;

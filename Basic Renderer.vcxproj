@@ -169,7 +169,6 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GltfParser.h" />
     <ClInclude Include="helper.h" />
-    <ClInclude Include="InputListenerComponent.h" />
     <ClInclude Include="KeyTracker.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="LightComponent.h" />

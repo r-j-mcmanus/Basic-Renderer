@@ -61,7 +61,7 @@ void EventHandler::notifyMouseEvent(int button, int action, int mods) {
     }
 }
 
-void EventHandler::notifyMouseMovement(double xpos, double ypos) {
+void EventHandler::notifyMouseMovement(int xpos, int ypos) {
     if (!hasFocus) {
         return;
     }

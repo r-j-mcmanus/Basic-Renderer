@@ -22,7 +22,7 @@ public:
 
     void notifyMouseEvent(int button, int action, int mods);
 
-    void notifyMouseMovement(double xpos, double ypos);
+    void notifyMouseMovement(int xpos, int ypos);
 
     void notifyWindowResize(int width, int height);
 
