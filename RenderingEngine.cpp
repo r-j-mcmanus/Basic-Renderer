@@ -19,6 +19,8 @@
 
 #include "World.h"
 
+#include "helper.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -60,6 +62,9 @@ void RenderingEngine::renderFrame(World& world)
 
     // the buffers are shared between shaders and are linked elsewhere
     glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
+
+    printMat4(view, "view matrix");
+
     uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(glm::mat4));
     uniformBufferManager->updateBuffer("Lights", activeLights, 0);
 

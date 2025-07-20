@@ -1,6 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 
@@ -24,4 +28,26 @@ inline  glm::mat4 createRotationMatrix(const glm::vec3& rotation) {
     glm::mat4 rotationMatrix = rotationZ * rotationY * rotationX;
 
     return rotationMatrix;
+}
+
+inline void printVec2(const glm::vec2& vec, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ": ";
+    std::cout << "(" << vec.x << ", " << vec.y << ")" << std::endl;
+}
+
+inline void printVec3(const glm::vec3& vec, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ": ";
+    std::cout << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")" << std::endl;
+}
+
+inline void printMat4(const glm::mat4& mat, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ":" << std::endl;
+    const float* m = glm::value_ptr(mat);
+    for (int i = 0; i < 4; i++) {
+        std::cout << "[ ";
+        for (int j = 0; j < 4; j++) {
+            std::cout << m[j * 4 + i] << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
 }

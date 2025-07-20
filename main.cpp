@@ -141,6 +141,7 @@ int main(void)
         while (current_delta > dt) {
             current_delta -= dt;
             world.fixedUpdate(dt);
+            mouseTracker->resetDelta();
         }
 
         world.update();

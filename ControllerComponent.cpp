@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include "helper.h"
+
 ControllerComponent::ControllerComponent(
     std::shared_ptr<KeyTracker>& keyTracker,
     std::shared_ptr<MouseTracker>& mouseTracker
@@ -36,6 +38,9 @@ void ControllerComponent::fixedUpdateKey(float dt)
 void ControllerComponent::fixedUpdateMouse(float dt)
 {
     glm::vec2 delta = mouseTracker->getDelta();
+    
+    printVec2(delta, "delta");
+
     parent->rotate(delta.x * sensitivity, delta.y * sensitivity);
 
     parent->getComponent<CameraComponent>()->updateCameraVectors(parent->getRotation());
