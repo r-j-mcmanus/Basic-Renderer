@@ -19,14 +19,16 @@ public:
     }
 
 private:
-    double lastX = 0.0;
-    double lastY = 0.0;
-    double deltaX = 0.0;
-    double deltaY = 0.0;
+    int lastX = 0;
+    int lastY = 0;
+    int deltaX = 0;
+    double deltaY = 0;
     bool firstMouse = true;
 
 protected:
-    void onMouseMovement(double xpos, double ypos) {
+    void onMouseMovement(int xpos, int ypos) {
+        // todo normalise to screen size
+
         std::cout << "processing mouse event\n";
         if (firstMouse) {
             lastX = xpos;
