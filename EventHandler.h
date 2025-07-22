@@ -49,7 +49,6 @@ public:
     }
 
 private:
-    GLFWwindow* window = nullptr;
     bool hasFocus = true; // as a newly created window is given focus
 
     static void windowFocusCallback(GLFWwindow* window, int focused)

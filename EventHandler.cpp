@@ -12,7 +12,7 @@
 
 
 // todo change to Observer Pattern
-EventHandler::EventHandler(GLFWwindow* window):
+EventHandler::EventHandler(GLFWwindow* window)
 {
     glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, keyCallback);
