@@ -19,5 +19,5 @@ protected:
     virtual void onWindowResize(int width, int height) {}
 
     // Callback for mouse movement event
-    virtual void onMouseMovement(int xpos, int ypos) {}
+    virtual void onMouseMovement(double xpos, double ypos) {}
 };

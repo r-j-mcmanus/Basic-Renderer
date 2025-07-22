@@ -42,6 +42,11 @@ static GLFWwindow* InitializeWindow(int width, int height, const char* title)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable VSync
 
+    GLCall(glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED));
+    if (glfwRawMouseMotionSupported())
+        GLCall(glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE));
+
+
     /* can call glfwInit after creating valid context */
     if (glewInit() != GLEW_OK) {
         std::cerr << "Failed to initialize GLEW" << std::endl;
@@ -50,24 +55,6 @@ static GLFWwindow* InitializeWindow(int width, int height, const char* title)
 
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     return window;
-}
-
-void centerMouseCursor(GLFWwindow* window) {
-    // todo make this a class that 
-    if (!window) {
-        return; // Ensure the window is valid
-    }
-
-    // Get the window size
-    int width, height;
-    glfwGetWindowSize(window, &width, &height);
-
-    // Calculate the center of the window
-    double centerX = width / 2.0;
-    double centerY = height / 2.0;
-
-    // Set the cursor position to the center
-    glfwSetCursorPos(window, centerX, centerY);
 }
 
 
@@ -86,7 +73,6 @@ int main(void)
         GLsizei length, const GLchar* message, const void* userParam) {
             std::cerr << "OpenGL Debug: " << message << "\n";
         }, nullptr);
-
 
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
     std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
@@ -150,8 +136,6 @@ int main(void)
 
         glfwSwapBuffers(window); // Swap front and back buffers
         glfwPollEvents(); // Poll for and process events
-
-        centerMouseCursor(window);
     }
 
     glfwTerminate();

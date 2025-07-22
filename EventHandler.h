@@ -22,7 +22,7 @@ public:
 
     void notifyMouseEvent(int button, int action, int mods);
 
-    void notifyMouseMovement(int xpos, int ypos);
+    void notifyMouseMovement(double xpos, double ypos);
 
     void notifyWindowResize(int width, int height);
 
@@ -49,6 +49,7 @@ public:
     }
 
 private:
+    GLFWwindow* window = nullptr;
     bool hasFocus = true; // as a newly created window is given focus
 
     static void windowFocusCallback(GLFWwindow* window, int focused)

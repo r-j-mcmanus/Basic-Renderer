@@ -50,6 +50,7 @@ public:
     // camera Attributes
     glm::vec3 front;
     glm::vec3 up;
+    glm::mat4 rotationMatrix;
     // camera options
     float movementSpeed;
     float mouseSensitivity;

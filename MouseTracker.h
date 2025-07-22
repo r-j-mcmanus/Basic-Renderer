@@ -7,8 +7,8 @@
 class MouseTracker : public EventListenerInterface {
 public:
     // Get the mouse movement delta
-    double getDeltaX() const { return deltaX; }
-    double getDeltaY() const { return deltaY; }
+    float getDeltaX() const { return deltaX; }
+    float getDeltaY() const { return deltaY; }
     glm::vec2 getDelta() const { return glm::vec2(deltaX, deltaY); }
 
     // Reset delta after processing (optional)
@@ -18,14 +18,14 @@ public:
     }
 
 private:
-    int lastX = 0;
-    int lastY = 0;
-    int deltaX = 0;
+    double lastX = 0;
+    double lastY = 0;
+    double deltaX = 0;
     double deltaY = 0;
     bool firstMouse = true;
 
 protected:
-    void onMouseMovement(int xpos, int ypos) {
+    void onMouseMovement(double xpos, double ypos) {
         // todo normalise to screen size
 
         if (firstMouse) {

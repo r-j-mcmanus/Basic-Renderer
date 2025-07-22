@@ -12,7 +12,8 @@
 
 
 // todo change to Observer Pattern
-EventHandler::EventHandler(GLFWwindow* window) {
+EventHandler::EventHandler(GLFWwindow* window):
+{
     glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetMouseButtonCallback(window, mouseCallback);
@@ -61,7 +62,7 @@ void EventHandler::notifyMouseEvent(int button, int action, int mods) {
     }
 }
 
-void EventHandler::notifyMouseMovement(int xpos, int ypos) {
+void EventHandler::notifyMouseMovement(double xpos, double ypos) {
     if (!hasFocus) {
         return;
     }

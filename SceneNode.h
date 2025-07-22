@@ -11,6 +11,7 @@
 
 
 //#include "SceneNodeBuilder.h"
+#include "helper.h"
 #include "Component.h"
 
 class SceneNodeBuilder;
@@ -69,6 +70,7 @@ public:
 	void translate(const glm::vec3& delta) {
 		MarkDirty();
 		position += delta;
+		printVec3(position, "position");
 	}
 	
 	void rotate(const float yawDelta, float pitchDelta) {
@@ -85,6 +87,9 @@ public:
 		// Keep yaw within 0-360
 		if (rotation.y > 360) rotation.y -= 360;
 		if (rotation.y < 0) rotation.y += 360;
+
+
+		printVec3(rotation, "rotation");
 	}
 	//
 

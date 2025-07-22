@@ -31,14 +31,14 @@ void CameraComponent::updateCameraVectors(glm::vec3 rotation)
 {
     printVec3(rotation, "rotation");
 
-    glm::mat4 rotationMatrix = (
+    rotationMatrix = (
         glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) * // Rotation around Z-axis (pitch)
         glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) * // Rotation around Y-axis (yaw)
         glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) // Rotation around X-axis (roll)
         );
 
-    front = glm::vec3(rotationMatrix * glm::vec4(front, 1.0f));
-    up = glm::vec3(rotationMatrix * glm::vec4(up, 1.0f));
+    front = glm::vec3(rotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+    up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 void CameraComponent::onBuild(SceneNode& node) {
@@ -48,7 +48,6 @@ void CameraComponent::onBuild(SceneNode& node) {
 glm::mat4 CameraComponent::getViewMatrix() const
 {
     glm::vec3 position = parent->getGlobalPosition();
-    printVec3(position, "position");
     return glm::lookAt(position, position + front, up);
 }
 
