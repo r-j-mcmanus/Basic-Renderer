@@ -51,8 +51,6 @@ void RenderingEngine::renderFrame(World& world)
     GLCall(glClearColor(clearColorR, clearColorG, clearColorB, clearColorA));
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-    unsigned int currentShaderID = 0;
-
     // todo using the camera we can cull objects
     renderingQueue.clear();
     activeLights.clear();
@@ -86,17 +84,18 @@ void RenderingEngine::renderFrame(World& world)
         /////////
         // these are shader dependent, so we should come up with a better palce for them to live
         /////////
-        shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition()); // move to a ubo?
+        // shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition()); // move to a ubo?
+        // 
+        shader->setVec4("u_Color", glm::vec4(1));
         /////////
         glm::mat4 modelM4 = it.modelMatrix;
         shader->setMat4("u_Model", modelM4);
-        shader->setVec3("u_material.ambient", it.renderData.material.ambient);
+        /*shader->setVec3("u_material.ambient", it.renderData.material.ambient);
         shader->setVec3("u_material.diffuse", it.renderData.material.diffuse);
         shader->setVec3("u_material.specular", it.renderData.material.specular);
-        shader->setFloat("u_material.shininess", it.renderData.material.shininess);
+        shader->setFloat("u_material.shininess", it.renderData.material.shininess);*/
         /////////
 
         model->draw();
     }
-
 }

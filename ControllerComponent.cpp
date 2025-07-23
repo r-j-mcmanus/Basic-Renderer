@@ -41,7 +41,7 @@ void ControllerComponent::fixedUpdateMouse(float dt)
     
     if (delta.x != 0 or delta.y != 0)
     {
-        printVec2(delta, "mouse delta");
+        //printVec2(delta, "mouse delta");
         parent->rotate(delta.x * sensitivity, delta.y * sensitivity);
         parent->getComponent<CameraComponent>()->updateCameraVectors(parent->getRotation());
     }

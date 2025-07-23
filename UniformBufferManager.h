@@ -47,7 +47,7 @@ public:
         GLuint blockIndex;
         GLCall(blockIndex = glGetUniformBlockIndex(shaderID, blockName.c_str()));
         if (blockIndex == GL_INVALID_INDEX) {
-            std::cerr << "Uniform block " << blockName << " not found in shader.\n";
+            std::cerr << "Uniform block " << blockName << " not found in shader " << shaderID << ".\n";
             return;
         }
 
@@ -56,20 +56,20 @@ public:
 
     // Update data in a uniform buffer
     template <typename T>
-    void updateBuffer(const std::string& bufferName, const T& data, size_t offset) {
+    void updateBuffer(const std::string& bufferName, const T& data, const size_t offset) {
         auto it = buffers.find(bufferName);
         if (it == buffers.end()) {
             std::cerr << "Buffer with name " << bufferName << " not found.\n";
             return;
         }
 
-        const BufferInfo& bufferInfo = it->second;
-        if (offset + sizeof(T) > bufferInfo.size) {
+        if (offset + sizeof(T) > it->second.size) {
             std::cerr << "Data size exceeds remaining buffer size for buffer " << bufferName << ".\n";
             return;
         }
 
-        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, bufferInfo.bufferID));
+        // it->second() contains the buffer data 
+        GLCall(glBindBuffer(GL_UNIFORM_BUFFER, it->second.bufferID));
         GLCall(glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), glm::value_ptr(data)));
         GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
     }

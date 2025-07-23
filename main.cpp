@@ -75,8 +75,21 @@ int main(void)
         }, nullptr);
 
     std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
-    std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
     std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
+
+    /////
+    // Set up shader buffers
+    std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
+    uniformBufferManager->createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
+
+    //glm::perspective(fovRadians, aspect, near, far)
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
+    uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
+
+    unsigned int NUM_LIGHTS = 8;
+    uniformBufferManager->createBuffer("Lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
+
+    /////
 
     EventHandler eventHandler(window);
     std::shared_ptr<KeyTracker> keyTracker = std::make_shared<KeyTracker>();
@@ -88,6 +101,7 @@ int main(void)
 
     renderingEngine.registerModelManager(modelManager);
     renderingEngine.registerShaderManager(shaderManager);
+    renderingEngine.registerUniformBufferManager(uniformBufferManager);
 
     World world;
     world.buildWorld(1, modelManager, shaderManager, uniformBufferManager, keyTracker, mouseTracker);
@@ -95,27 +109,7 @@ int main(void)
     double previousTime = glfwGetTime(); // Get the initial time
     GLCall(glEnable(GL_DEPTH_TEST));
 
-    ///////
-    /* Abstract this away */
-    uniformBufferManager->createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
-    uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
-
-    unsigned int NUM_LIGHTS = 8;
-    uniformBufferManager->createBuffer("Lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
-
-    const unsigned int shaderID = shaderManager->getShader(ShaderName::SolidColor)->GetId();
-    uniformBufferManager->bindBlockToShader(shaderID, "Matrices", "ProjectionView");
-
-    const unsigned int shaderID2 = shaderManager->getShader(ShaderName::PhongShader)->GetId();
-    uniformBufferManager->bindBlockToShader(shaderID2, "Matrices", "ProjectionView");
-    uniformBufferManager->bindBlockToShader(shaderID2, "Lights", "Lights");
-
-    renderingEngine.registerUniformBufferManager(uniformBufferManager);
-
-    ///////
-
-    float dt = 1.0 / 120.0;
+    const float dt = 1.0 / 120.0;
     double current_delta = 0;
 
     /* Loop until the user closes the window */ 

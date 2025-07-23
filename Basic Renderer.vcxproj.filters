@@ -75,9 +75,6 @@
     <ClCompile Include="Errors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LightingShader.h">
-      <Filter>Header Files\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="LightingShader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
@@ -99,32 +96,17 @@
     <ClCompile Include="EventHandler.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="EventListenerInterface.h">
-      <Filter>Header Files\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="UniformBufferManager.h">
-      <Filter>Header Files\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingEngine.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="RenderingEngine.cpp">
       <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic5RenderingController.h">
-      <Filter>Header Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Basic5RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Basic6RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneNodeBuilder.h">
-      <Filter>Header Files\World\SceneNode</Filter>
     </ClCompile>
     <ClCompile Include="SceneNode.cpp">
       <Filter>Source Files\World\SceneNode</Filter>
@@ -209,9 +191,6 @@
     <ClInclude Include="ShaderData.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="InputListenerComponent.h">
-      <Filter>Header Files\World\SceneNode\Components</Filter>
-    </ClInclude>
     <ClInclude Include="ControllerComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
@@ -222,6 +201,21 @@
       <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNodeBuilder.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingEngine.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="EventListenerInterface.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic5RenderingController.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformBufferManager.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
@@ -285,6 +279,9 @@
     </None>
     <None Include="fetch_quest.lua">
       <Filter>Resource Files\lua</Filter>
+    </None>
+    <None Include="basic_1.shader">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ CameraComponent::CameraComponent(glm::vec3 front):
 
 void CameraComponent::updateCameraVectors(glm::vec3 rotation)
 {
-    printVec3(rotation, "rotation");
+    // printVec3(rotation, "rotation");
 
     rotationMatrix = (
         glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) * // Rotation around Z-axis (pitch)
@@ -47,6 +47,13 @@ void CameraComponent::onBuild(SceneNode& node) {
 
 glm::mat4 CameraComponent::getViewMatrix() const
 {
+    /*
+    Uses glm::lookAt(eye, center, up) to create a view matrix.
+    eye = camera position (position).
+    center = point the camera is looking at (position + front).
+    up = up direction for the camera (up).
+    */
+
     glm::vec3 position = parent->getGlobalPosition();
     return glm::lookAt(position, position + front, up);
 }

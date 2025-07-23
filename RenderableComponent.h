@@ -12,11 +12,10 @@ struct RenderData {
     unsigned int shaderID;
 };
 
-
 class RenderableComponent: public Component {
 
 public:
-    RenderableComponent(unsigned int modelID, unsigned int shaderID) : modelID(modelID), shaderID(shaderID) {};
+    RenderableComponent(unsigned int modelID, unsigned int shaderID) : modelID(modelID), shaderID(shaderID), material(defaultMaterial) {};
 
     const RenderData getDrawRequest()
     {

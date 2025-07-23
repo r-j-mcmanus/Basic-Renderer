@@ -63,33 +63,33 @@ public:
 	//
     void setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
         position = pos;
-        rotation = rot;
+        rotationDegrees = rot;
         scale = scl;
     }
 	
 	void translate(const glm::vec3& delta) {
 		MarkDirty();
 		position += delta;
-		printVec3(position, "position");
+		//printVec3(position, "position");
 	}
 	
 	void rotate(const float yawDelta, float pitchDelta) {
 		MarkDirty();
 		// Update rotation
-		rotation.y += yawDelta;   // Yaw (left/right)
-		rotation.x += pitchDelta; // Pitch (up/down)
+		rotationDegrees.y += yawDelta;   // Yaw (left/right)
+		rotationDegrees.x += pitchDelta; // Pitch (up/down)
 
 		// Clamp pitch to avoid flipping
 		const float pitchLimit = 89.0f;
-		if (rotation.x > pitchLimit) rotation.x = pitchLimit;
-		if (rotation.x < -pitchLimit) rotation.x = -pitchLimit;
+		if (rotationDegrees.x > pitchLimit) rotationDegrees.x = pitchLimit;
+		if (rotationDegrees.x < -pitchLimit) rotationDegrees.x = -pitchLimit;
 
 		// Keep yaw within 0-360
-		if (rotation.y > 360) rotation.y -= 360;
-		if (rotation.y < 0) rotation.y += 360;
+		if (rotationDegrees.y > 360) rotationDegrees.y -= 360;
+		if (rotationDegrees.y < 0) rotationDegrees.y += 360;
 
 
-		printVec3(rotation, "rotation");
+		//printVec3(rotationDegrees, "rotation");
 	}
 	//
 
@@ -124,14 +124,15 @@ public:
 
 		isDirty = false;
 		return globalMatrix;
-
 	}
 
-	glm::vec3 getGlobalPosition() {
-		return glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
+	const glm::vec3 getGlobalPosition() {
+		glm::vec3 globalPosition = glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
+		// printVec3(globalPosition, "GlobalPosition");
+		return globalPosition;
 	}
 
-	glm::vec3 getRotation() const { return rotation; }
+	glm::vec3 getRotation() const { return rotationDegrees; }
 
 private:
 	void MarkDirty() {
@@ -151,9 +152,9 @@ protected:
 	glm::mat4 TRSMatrix() const {
 		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
 		glm::mat4 rotationMatrix = (
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f))
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.x), glm::vec3(1.0f, 0.0f, 0.0f))
 			);
 		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
 
@@ -165,7 +166,7 @@ protected:
 
 private:
 	glm::vec3 position = glm::vec3(0, 0, 0);
-	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 rotationDegrees = glm::vec3(0, 0, 0);
 	glm::vec3 scale = glm::vec3(1, 1, 1);
 	bool isDirty = true;
 	glm::mat4 localMatrix;  // local TRS transform
