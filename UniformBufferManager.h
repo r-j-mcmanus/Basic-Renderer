@@ -3,6 +3,7 @@
 #include <gl/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <type_traits>  // for std::is_same
 
 #include <string>
 #include <unordered_map>
@@ -10,6 +11,7 @@
 #include <vector>
 
 #include "Errors.h"
+#include "helper.h"
 
 class UniformBufferManager {
 public:
@@ -71,6 +73,18 @@ public:
         // it->second() contains the buffer data 
         GLCall(glBindBuffer(GL_UNIFORM_BUFFER, it->second.bufferID));
         GLCall(glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), glm::value_ptr(data)));
+
+        
+        // check that the matrix is set correctly by reading back the buffer from the gpu
+        if (std::is_same<T, glm::mat4>::value) {
+            std::vector<float> dataReadBack(it->second.size / sizeof(float));
+            glGetBufferSubData(GL_UNIFORM_BUFFER, 0, it->second.size, dataReadBack.data());
+            std::cout << bufferName << std::endl;
+            printMat4(glm::mat4(glm::make_mat4(&dataReadBack[0])));
+            printMat4(glm::mat4(glm::make_mat4(&dataReadBack[16])));
+        }
+        
+
         GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
     }
 

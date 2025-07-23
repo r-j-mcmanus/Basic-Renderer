@@ -84,9 +84,7 @@ void RenderingEngine::renderFrame(World& world)
         /////////
         // these are shader dependent, so we should come up with a better palce for them to live
         /////////
-        // shader->setVec3("u_viewPos", world.activeCameraNode->getGlobalPosition()); // move to a ubo?
-        // 
-        shader->setVec4("u_Color", glm::vec4(1));
+        shader->setVec4("u_Color", glm::vec4(0.5));
         /////////
         glm::mat4 modelM4 = it.modelMatrix;
         shader->setMat4("u_Model", modelM4);

@@ -38,18 +38,18 @@ void World::buildWorld(
 	////////
 	// shaders we will be using
 	/* todo Abstract binding away */
-	unsigned int shaderPhongMapId = shaderManager->loadShader(ShaderData::PhongShader);
+	const unsigned int shaderPhongMapId = shaderManager->loadShader(ShaderData::PhongShader);
 	unsigned int shaderPhongId = shaderManager->getShader(shaderPhongMapId)->GetId();
 	uniformBufferManager->bindBlockToShader(shaderPhongId, "Matrices", "ProjectionView");
 	uniformBufferManager->bindBlockToShader(shaderPhongId, "Lights", "Lights");
 
-	unsigned int shaderSolidColorMapId = shaderManager->loadShader(ShaderData::SolidColor);
+	const unsigned int shaderSolidColorMapId = shaderManager->loadShader(ShaderData::SolidColor);
 	unsigned int shaderSolidColorId = shaderManager->getShader(shaderSolidColorMapId)->GetId();
 	uniformBufferManager->bindBlockToShader(shaderSolidColorId, "Matrices", "ProjectionView");
 
-	unsigned int shaderBasic2MapId = shaderManager->loadShader(ShaderData::Basic2);
-	unsigned int shaderBasic2Id = shaderManager->getShader(shaderBasic2MapId)->GetId();
-	uniformBufferManager->bindBlockToShader(shaderBasic2Id, "Matrices", "ProjectionView");
+	const unsigned int shaderBasic3MapId = shaderManager->loadShader(ShaderData::Basic3);
+	unsigned int shaderBasic3Id = shaderManager->getShader(shaderBasic3MapId)->GetId();
+	uniformBufferManager->bindBlockToShader(shaderBasic3Id, "Matrices", "ProjectionView");
 
 	////////
 
@@ -80,7 +80,7 @@ void World::buildWorld(
 	};
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10)) // we flaten it along the y axis and extend on the x and z
-			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic2MapId)
+			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic3MapId)
 			.build()
 	));
 	///
@@ -95,10 +95,9 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0, 1, 0), glm::vec3(0), glm::vec3(1))
-			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic2MapId)
+			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic3MapId)
 			.build()
 	));
-
 
 	///
 	Light light = {
@@ -110,7 +109,7 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(2, 2, 0), glm::vec3(0), glm::vec3(0.1))
-			.addComponent<RenderableComponent>(cubeModelId, shaderBasic2MapId)
+			.addComponent<RenderableComponent>(cubeModelId, shaderBasic3MapId)
 			.addComponent<LightComponent>(light)
 			.build()
 	));

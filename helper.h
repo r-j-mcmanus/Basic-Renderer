@@ -40,6 +40,11 @@ inline void printVec3(const glm::vec3& vec, const std::string& name = "") {
     std::cout << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")" << std::endl;
 }
 
+inline void printVec4(const glm::vec4& vec, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ": ";
+    std::cout << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")" << std::endl;
+}
+
 inline void printMat4(const glm::mat4& mat, const std::string& name = "") {
     if (!name.empty()) std::cout << name << ":" << std::endl;
     const float* m = glm::value_ptr(mat);

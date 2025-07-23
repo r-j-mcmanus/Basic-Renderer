@@ -39,7 +39,7 @@ private:
     *unsigned int type - openGL types are normally unsigned ints so we use this rather than the type to decouple from opengl
     */
     static unsigned int CompileShader(unsigned int type, const std::string& source);
-
+    GLint getUniformLocation(const std::string& name) const;
 
     /* We take in the sorce code for the shaders as strings.*/
     static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
