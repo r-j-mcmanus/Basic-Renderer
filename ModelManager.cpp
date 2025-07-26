@@ -21,7 +21,7 @@ unsigned int ModelManager::loadModel(const std::string& modelPath)
 		return modelIt->second;
 	}
 
-	 GltfParser gltfParser;
+	GltfParser gltfParser;
 
 	unsigned int renderID = nextRenderID++;
 	DrawableBufferMap[renderID] = gltfParser.parse(modelPath);

@@ -9,21 +9,21 @@
 struct RenderData {
     Material material;
     unsigned int modelID;
-    unsigned int shaderID;
+    unsigned int shaderMapID;
 };
 
 class RenderableComponent: public Component {
 
 public:
-    RenderableComponent(unsigned int modelID, unsigned int shaderID) : modelID(modelID), shaderID(shaderID), material(defaultMaterial) {};
+    RenderableComponent(unsigned int modelID, unsigned int shaderMapID) : modelID(modelID), shaderMapID(shaderMapID), material(defaultMaterial) {};
 
     const RenderData getDrawRequest()
     {
-        return RenderData { material , modelID, shaderID };
+        return RenderData { material , modelID, shaderMapID };
     }
 
 private:
     Material material;
     unsigned int modelID;
-    unsigned int shaderID;
+    unsigned int shaderMapID;
 };

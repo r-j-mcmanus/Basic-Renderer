@@ -35,6 +35,6 @@ private:
     std::unordered_map<std::string, unsigned int> shaderPathMap;
     std::unordered_map<ShaderName, unsigned int> shaderNameMap;
     std::unordered_map<unsigned int, std::shared_ptr<Shader>> shaderMap;
-    unsigned int nextShaderID;
+    unsigned int nextShaderID = 1000;
 
 };

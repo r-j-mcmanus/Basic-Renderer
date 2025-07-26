@@ -30,10 +30,10 @@ private:
     };
 
 private:
-    const std::vector<unsigned int> parseBuffers(json& data) const;
+    const std::vector<unsigned int> parseBuffers(const json& data) const;
 
-    const void setAttribute(int attribArray, int accessorIndex, json data, const std::vector<unsigned int> VBOs) const;
-    DrawableBuffer::BufferData setIndices(int indicesAccessorIndex, json data, const unsigned int VAO, const std::vector<unsigned int> VBOs) const;
+    void setAttribute(int attribArray, int accessorIndex, json& data, const std::vector<unsigned int>& VBOs) const;
+    DrawableBuffer::BufferData makeBufferData(int indicesAccessorIndex, json& data, const unsigned int VAO, const std::vector<unsigned int>& VBOs) const;
 
-    const VertexAttribData getVertexAttribData(int accessorIndex, json data) const;
+    const VertexAttribData getVertexAttribData(int accessorIndex, json& data) const;
 };

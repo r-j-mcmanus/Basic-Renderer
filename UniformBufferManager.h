@@ -79,9 +79,13 @@ public:
         if (std::is_same<T, glm::mat4>::value) {
             std::vector<float> dataReadBack(it->second.size / sizeof(float));
             glGetBufferSubData(GL_UNIFORM_BUFFER, 0, it->second.size, dataReadBack.data());
-            //std::cout << bufferName << std::endl;
-            //printMat4(glm::mat4(glm::make_mat4(&dataReadBack[0])));
-            //printMat4(glm::mat4(glm::make_mat4(&dataReadBack[16])));
+
+            bool printBack = true;
+            if (printBack) {
+                std::cout << bufferName << std::endl;
+                printMat4(glm::mat4(glm::make_mat4(&dataReadBack[0])));
+                printMat4(glm::mat4(glm::make_mat4(&dataReadBack[16])));
+            }
         }
         
 

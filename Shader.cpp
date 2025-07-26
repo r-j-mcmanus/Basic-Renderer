@@ -191,7 +191,7 @@ void Shader::setVec4(const std::string& name, const glm::vec4& value) const
 	{
 		GLfloat vals[4];
 		glGetUniformfv(ID, loc, vals);
-		// printVec4(glm::make_vec4(vals), name);
+		printVec4(glm::make_vec4(vals), name);
 	}
 }
 void Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
@@ -224,6 +224,6 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	{
 		GLfloat vals[16];
 		glGetUniformfv(ID, loc, vals);
-		// printMat4(glm::make_mat4(vals), name);
+		printMat4(glm::make_mat4(vals), name);
 	}
 }

@@ -39,7 +39,7 @@ void World::buildWorld(
 	// shaders we will be using
 	/* todo Abstract binding away */
 	const unsigned int shaderPhongMapId = shaderManager->loadShader(ShaderData::PhongShader);
-	unsigned int shaderPhongId = shaderManager->getShader(shaderPhongMapId)->GetId();
+	unsigned int shaderPhongId = shaderManager->getShader(shaderPhongMapId)->GetId(); // this should be moved into the shader manager...
 	uniformBufferManager->bindBlockToShader(shaderPhongId, "Matrices", "ProjectionView");
 	uniformBufferManager->bindBlockToShader(shaderPhongId, "Lights", "Lights");
 

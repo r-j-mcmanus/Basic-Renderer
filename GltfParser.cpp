@@ -12,7 +12,7 @@
 #include "Errors.h"
 #include "nlohmann/json.hpp"
 
-const int GLTF_FLAOT_COMPONENT_TYPE = 5126;
+const int GLTF_FLOAT_COMPONENT_TYPE = 5126;
 
 using json = nlohmann::json;
 
@@ -28,44 +28,42 @@ std::shared_ptr<DrawableBuffer> GltfParser::parse(const std::string& filename) {
         attributa data is bound and returned is a vector of IndexData, describing which vbo and the
         byte offset and the size of the index array.
     */
-    std::shared_ptr<DrawableBuffer> drawableBufer = std::make_shared<DrawableBuffer>();
+    std::shared_ptr<DrawableBuffer> drawableBuffer = std::make_shared<DrawableBuffer>();
 
     std::ifstream f(filename);
     json data = json::parse(f);
 
     const std::vector<unsigned int> VBOs = parseBuffers(data);
-    const std::vector<unsigned int> vecIndexData;
 
-    for (auto mesh : data["meshes"]) {
+    for (auto& mesh : data["meshes"]) {
         std::string name = mesh["name"];
         for (auto primative : mesh["primitives"]) {
             unsigned int VAO;
-            glGenVertexArrays(1, &VAO); // Generate a VAO for this primitive
-
+            GLCall(glGenVertexArrays(1, &VAO)); // Generate a VAO for this primitive
 
             // the accessor index for each of these properties of the mess
             // todo what if one of these is missing?
-            int position = primative["attributes"]["POSITION"];
-            int normal = primative["attributes"]["NORMAL"];
-            int texCoord_0 = primative["attributes"]["TEXCOORD_0"];
-            int indices = primative["indices"];
+            const int position = primative["attributes"]["POSITION"];
+            const int normal = primative["attributes"]["NORMAL"];
+            const int texCoord_0 = primative["attributes"]["TEXCOORD_0"];
+            const int indices = primative["indices"];
             //int material = primative["material"];
             GLCall(glBindVertexArray(VAO));
             setAttribute(0, position, data, VBOs);
             setAttribute(1, normal, data, VBOs);
             setAttribute(3, texCoord_0, data, VBOs);
             GLCall(glBindVertexArray(0));
-            DrawableBuffer::BufferData bufferData = setIndices(indices, data, VAO, VBOs);
+            DrawableBuffer::BufferData bufferData = makeBufferData(indices, data, VAO, VBOs);
 
-            drawableBufer->addBuffer(bufferData);
+            drawableBuffer->addBuffer(bufferData);
         }
     }
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // unbind buffer
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0)); // unbind buffer
 
-    return drawableBufer;
+    return drawableBuffer;
 }
 
-const GltfParser::VertexAttribData GltfParser::getVertexAttribData(int accessorIndex, json data) const {
+const GltfParser::VertexAttribData GltfParser::getVertexAttribData(int accessorIndex, json& data) const {
     /*
         combines data from the accessor corrisponding to the index, and the associated buffer view
     */
@@ -89,14 +87,15 @@ const GltfParser::VertexAttribData GltfParser::getVertexAttribData(int accessorI
     }
     const auto bufferView = data["bufferViews"][bufferViewIndex];
     vertexAttribData.bufferIndex = bufferView["buffer"].get<int>();
-    vertexAttribData.byteOffset = bufferView["byteOffset"].get<int>();
+    int accessorOffset = accessor.contains("byteOffset") ? accessor["byteOffset"].get<int>() : 0;
+    vertexAttribData.byteOffset = accessorOffset + bufferView["byteOffset"].get<int>();
     // byteStride = 0 when tightly packed
     vertexAttribData.byteStride = bufferView.contains("byteStride") ? bufferView["byteStride"].get<int>() : 0;
 
     return vertexAttribData;
 }
 
-const void GltfParser::setAttribute(int attribArray, int accessorIndex, json data, const std::vector<unsigned int> VBOs) const {
+void GltfParser::setAttribute(int attribArray, int accessorIndex, json& data, const std::vector<unsigned int>& VBOs) const {
     /*
         Sets the position attribute for the mesh given the accessor index for the position
     */
@@ -107,7 +106,7 @@ const void GltfParser::setAttribute(int attribArray, int accessorIndex, json dat
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBO));
 
     GLCall(glEnableVertexAttribArray(attribArray));
-    if (vertexAttribData.dataType == GLTF_FLAOT_COMPONENT_TYPE) {
+    if (vertexAttribData.dataType == GLTF_FLOAT_COMPONENT_TYPE) {
         GLCall(glVertexAttribPointer(
             attribArray,
             vertexAttribData.componentsPerVertex,
@@ -129,7 +128,7 @@ const void GltfParser::setAttribute(int attribArray, int accessorIndex, json dat
     }
 }
 
-DrawableBuffer::BufferData GltfParser::setIndices(int indicesAccessorIndex, json data, const unsigned int VAO, const std::vector<unsigned int> VBOs) const {
+DrawableBuffer::BufferData GltfParser::makeBufferData(int indicesAccessorIndex, json& data, const unsigned int VAO, const std::vector<unsigned int>& VBOs) const {
     /*
         Sets the index for the mesh given the accessor index for the indices
     */
@@ -148,7 +147,7 @@ DrawableBuffer::BufferData GltfParser::setIndices(int indicesAccessorIndex, json
     return bufferData;
 }
 
-const std::vector<unsigned int> GltfParser::parseBuffers(json& data) const{
+const std::vector<unsigned int> GltfParser::parseBuffers(const json& data) const{
     /*
         Here we load the buffers into memory so that we can pass them to opengl as part of the processing of the bufferViews
     */
@@ -162,7 +161,7 @@ const std::vector<unsigned int> GltfParser::parseBuffers(json& data) const{
         std::ifstream file("Resources/Models/" + uri, std::ios::binary);
         if (!file) {
             std::cerr << "Failed to open file: " << uri << std::endl;
-            throw;
+            throw std::runtime_error("Failed to open file: " + uri);
         }
 
         file.read(newCharArray.get(), buffer_size);

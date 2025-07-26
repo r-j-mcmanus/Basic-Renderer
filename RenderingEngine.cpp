@@ -66,10 +66,10 @@ void RenderingEngine::renderFrame(World& world)
 
     for (auto& it : renderingQueue) {
         const unsigned int modelId = it.renderData.modelID;
-        const unsigned int shaderId = it.renderData.shaderID;
+        const unsigned int shaderMapId = it.renderData.shaderMapID;
 
         std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
-        std::shared_ptr<Shader> shader = shaderManager->getShader(shaderId);
+        std::shared_ptr<Shader> shader = shaderManager->getShader(shaderMapId);
 
         if (!model || !shader) {
             std::cout << "Model or shader ID does not correspond to a reseource" << std::endl;
@@ -93,7 +93,6 @@ void RenderingEngine::renderFrame(World& world)
         shader->setVec3("u_material.specular", it.renderData.material.specular);
         shader->setFloat("u_material.shininess", it.renderData.material.shininess);*/
         /////////
-
 
         shader->validate();
         model->draw();
