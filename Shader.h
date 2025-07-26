@@ -16,6 +16,8 @@ public:
 
     int GetLocation(const std::string& name) const;
 
+    void validate();
+
     unsigned int GetId() const { return ID; };
 
     void setBool(const std::string& name, bool value) const;

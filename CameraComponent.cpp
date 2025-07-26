@@ -39,6 +39,10 @@ void CameraComponent::updateCameraVectors(glm::vec3 rotation)
 
     front = glm::vec3(rotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
     up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
+    printVec3(rotation, "rotation");
+    printVec3(front, "front");
+    printVec3(up, "up");
 }
 
 void CameraComponent::onBuild(SceneNode& node) {

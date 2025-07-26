@@ -4,6 +4,7 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 #include "errors.h"
 #include "Shader.h"
@@ -109,6 +110,28 @@ GLint Shader::getUniformLocation(const std::string& name) const
 	return location;
 }
 
+
+void Shader::validate()
+{
+	GLint status;
+	glGetProgramiv(ID, GL_VALIDATE_STATUS, &status);
+
+	if (status != GL_TRUE) {
+		GLint logLength = 0;
+		glGetProgramiv(ID, GL_INFO_LOG_LENGTH, &logLength);
+
+		if (logLength > 0) {
+			std::vector<char> log(logLength);
+			glGetProgramInfoLog(ID, logLength, nullptr, log.data());
+			std::cerr << "[OpenGL] Program validation failed:\n" << log.data() << std::endl;
+		}
+		else {
+			std::cerr << "[OpenGL] Program validation failed, but no log was returned." << std::endl;
+		}
+	}
+
+}
+
 // thanks learnopengl!
  // utility uniform functions
  // ------------------------------------------------------------------------
@@ -168,7 +191,7 @@ void Shader::setVec4(const std::string& name, const glm::vec4& value) const
 	{
 		GLfloat vals[4];
 		glGetUniformfv(ID, loc, vals);
-		printVec4(glm::make_vec4(vals), name);
+		// printVec4(glm::make_vec4(vals), name);
 	}
 }
 void Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
@@ -201,6 +224,6 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	{
 		GLfloat vals[16];
 		glGetUniformfv(ID, loc, vals);
-		printMat4(glm::make_mat4(vals), name);
+		// printMat4(glm::make_mat4(vals), name);
 	}
 }

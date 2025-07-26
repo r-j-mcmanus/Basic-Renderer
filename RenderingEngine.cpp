@@ -94,6 +94,8 @@ void RenderingEngine::renderFrame(World& world)
         shader->setFloat("u_material.shininess", it.renderData.material.shininess);*/
         /////////
 
+
+        shader->validate();
         model->draw();
     }
 }
