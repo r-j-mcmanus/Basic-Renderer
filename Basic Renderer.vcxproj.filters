@@ -67,6 +67,12 @@
     <Filter Include="Resource Files\lua">
       <UniqueIdentifier>{3ab5c752-377c-4878-a201-97d803dbe391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\World\SceneNode\AI">
+      <UniqueIdentifier>{af53b32e-6357-4a79-90a6-716c4e1a363e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\SceneNode\AI">
+      <UniqueIdentifier>{56ef98b7-c0c2-47e6-b71d-2e37ceb950e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -217,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="UniformBufferManager.h">
       <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="AIBehavior.h">
+      <Filter>Header Files\World\SceneNode\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomWanderBehavior.h">
+      <Filter>Header Files\World\SceneNode\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

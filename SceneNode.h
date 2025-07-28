@@ -127,9 +127,15 @@ public:
 	}
 
 	const glm::vec3 getGlobalPosition() {
-		glm::vec3 globalPosition = glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
-		// printVec3(globalPosition, "GlobalPosition");
-		return globalPosition;
+		if (pairentNode)
+		{
+			glm::vec3 globalPosition = glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
+			return globalPosition;
+		}
+		else
+		{
+			return position;
+		}
 	}
 
 	glm::vec3 getRotation() const { return rotationDegrees; }

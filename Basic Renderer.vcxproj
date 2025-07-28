@@ -161,11 +161,14 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIBehavior.h" />
+    <ClInclude Include="AIComponent.h" />
     <ClInclude Include="Basic5RenderingController.h" />
     <ClInclude Include="Basic6RenderingController.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ControllerComponent.h" />
+    <ClInclude Include="RandomWanderBehavior.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventListenerInterface.h" />

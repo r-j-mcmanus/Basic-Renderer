@@ -15,12 +15,15 @@
 #include "ShaderData.h"
 
 #include "LightComponent.h"
+#include "AIComponent.h"
 #include "RenderableComponent.h"
 #include "TransformationComponent.h"
 #include "CameraComponent.h"
 #include "ControllerComponent.h"
 #include "KeyTracker.h"
 #include "MouseTracker.h"
+
+#include "RandomWanderBehavior.h"
 
 #include "World.h"
 #include "SceneNodeBuilder.h"
@@ -112,6 +115,7 @@ void World::buildWorld(
 		builder.setTransform(glm::vec3(2, 2, 0), glm::vec3(0), glm::vec3(0.1))
 			.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
 			.addComponent<LightComponent>(light)
+			.addComponent<AIComponent>(std::make_unique<RandomWanderBehavior>())
 			.build()
 	));
 	///
