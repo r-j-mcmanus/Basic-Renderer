@@ -1,34 +1,78 @@
 #shader vertex
 #version 330 core
-layout(location = 0) in vec4 aPos;
+layout(location = 0) in vec4 a_Pos;
 layout (location = 1) in vec3 a_Normal;
 
 out vec3 v_Normal;
+out vec3 v_FragPos;
 
 layout (std140) uniform Matrices
 {
     mat4 lu_projection;
     mat4 lu_view;
 };
-
 uniform mat4 u_Model;
 
 void main()
 {
-    gl_Position = lu_projection * lu_view * u_Model * aPos;
-    v_Normal =  a_Normal; 
-}
-
+    v_FragPos = vec3(u_Model * a_Pos);
+    gl_Position = lu_projection * lu_view *  vec4(v_FragPos, 1.0);
+    v_Normal = mat3(transpose(inverse(u_Model))) * a_Normal; 
+};
 
 #shader fragment
 #version 330 core
-in vec3 v_Normal;
-
 out vec4 FragColor;
 
+// inputs from v shader
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+}; 
+
+#define NUM_LIGHTS 8
+
+struct Light {
+    vec4 position;
+    vec4 ambient;
+    vec4 diffuse;
+    vec4 specular;
+};
+
+
+in vec3 v_Normal;
+in vec3 v_FragPos;  
+
+uniform Light u_Light;
+uniform Material u_material;
+uniform vec3 u_ViewPos;
+
+
 void main()
-{    
-    vec4 color = vec4(1.0, 0.5, 0.2, 1.0); // Orange color
-    vec3 norm = normalize(v_Normal);
-    FragColor = color * norm[0];
+{
+    vec3 result = vec3(0.0);
+
+        Light light = u_Light;
+
+        // ambient
+        vec3 ambient = vec3(light.ambient) * u_material.ambient;
+  	
+        // diffuse 
+        vec3 norm = normalize(v_Normal);
+        vec3 lightDir = normalize(vec3(light.position) - v_FragPos);
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = diff * vec3(light.diffuse) * u_material.diffuse;
+
+        // specular
+        vec3 viewDir = normalize(u_ViewPos - v_FragPos);
+        vec3 reflectDir = reflect(-lightDir, norm); 
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
+        vec3 specular = vec3(light.specular) * (spec * u_material.specular); 
+
+        // combine light types
+        result += ambient + diffuse + specular;
+    
+    FragColor = vec4(result, 1.0);
 };

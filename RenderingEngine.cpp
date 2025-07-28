@@ -44,7 +44,6 @@ void RenderingEngine::getLights(SceneNode* node) {
     }
 }
 
-int COUNT = 0;
 
 // Main rendering function
 void RenderingEngine::renderFrame(World& world)
@@ -61,6 +60,7 @@ void RenderingEngine::renderFrame(World& world)
 
     // the buffers are shared between shaders and are linked elsewhere
     glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
+    glm::vec3 viewPosition = world.activeCameraNode->getGlobalPosition();
 
     uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(glm::mat4));
     uniformBufferManager->updateBuffer("Lights", activeLights, 0);
@@ -85,22 +85,22 @@ void RenderingEngine::renderFrame(World& world)
         /////////
         // these are shader dependent, so we should come up with a better palce for them to live
         /////////
-        //shader->setVec4("u_Color", glm::vec4(0.5));
-        /////////
-        glm::mat4 modelM4 = it.modelMatrix;
-        shader->setMat4("u_Model", modelM4);
-        /*shader->setVec3("u_material.ambient", it.renderData.material.ambient);
+        shader->setMat4("u_Model", it.modelMatrix);
+
+        shader->setVec3("u_ViewPos", viewPosition);
+
+        shader->setVec4("u_Light.position", activeLights[0].position);
+        shader->setVec4("u_Light.ambient", activeLights[0].ambient);
+        shader->setVec4("u_Light.diffuse", activeLights[0].diffuse);
+        shader->setVec4("u_Light.specular", activeLights[0].specular);
+
+        shader->setVec3("u_material.ambient", it.renderData.material.ambient);
         shader->setVec3("u_material.diffuse", it.renderData.material.diffuse);
         shader->setVec3("u_material.specular", it.renderData.material.specular);
-        shader->setFloat("u_material.shininess", it.renderData.material.shininess);*/
+        shader->setFloat("u_material.shininess", it.renderData.material.shininess);
         /////////
 
         shader->validate();
         model->draw();
-    }
-
-    COUNT++;
-    if (COUNT == 20) {
-        int a = 1;
     }
 }
