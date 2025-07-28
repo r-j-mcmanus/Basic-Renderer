@@ -24,11 +24,11 @@ unsigned int ShaderManager::loadShader(ShaderDataContainer shaderDataContainer)
     ShaderProgramSource source = PaseShader(shaderDataContainer.filePath);
     std::shared_ptr<Shader> shader_ptr = std::make_shared<Shader>(source.VertexSource, source.FragmentSource);
 
-    unsigned int renderMapID = nextShaderID++;
-    shaderMap[renderMapID] = shader_ptr;
-    shaderPathMap[shaderDataContainer.filePath] = renderMapID;
-    shaderNameMap[shaderDataContainer.name] = renderMapID;
-    return renderMapID;
+    unsigned int shaderId = shader_ptr->GetId();
+    shaderMap[shaderId] = shader_ptr;
+    shaderPathMap[shaderDataContainer.filePath] = shaderId;
+    shaderNameMap[shaderDataContainer.name] = shaderId;
+    return shaderId;
 }
 
 // Retrieve a shader by ID

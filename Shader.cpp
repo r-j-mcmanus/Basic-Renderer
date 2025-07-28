@@ -10,7 +10,7 @@
 #include "Shader.h"
 #include "helper.h"
 
-const bool READ_BACK_VALUE = true;
+const bool READ_BACK_VALUE = false;
 
 Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
 {
@@ -102,7 +102,7 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 // Used to test if the location exists
 GLint Shader::getUniformLocation(const std::string& name) const
 {
-	GLint location = glGetUniformLocation(ID, name.c_str());
+	GLCall(GLint location = glGetUniformLocation(ID, name.c_str()));
 	if (location == -1)
 	{
 		std::cout << "[Warning] Uniform '" << name << "' not found or optimized out in shader program " << ID << std::endl;
@@ -114,15 +114,15 @@ GLint Shader::getUniformLocation(const std::string& name) const
 void Shader::validate()
 {
 	GLint status;
-	glGetProgramiv(ID, GL_VALIDATE_STATUS, &status);
+	GLCall(glGetProgramiv(ID, GL_VALIDATE_STATUS, &status));
 
 	if (status != GL_TRUE) {
 		GLint logLength = 0;
-		glGetProgramiv(ID, GL_INFO_LOG_LENGTH, &logLength);
+		GLCall(glGetProgramiv(ID, GL_INFO_LOG_LENGTH, &logLength));
 
 		if (logLength > 0) {
 			std::vector<char> log(logLength);
-			glGetProgramInfoLog(ID, logLength, nullptr, log.data());
+			GLCall(glGetProgramInfoLog(ID, logLength, nullptr, log.data()));
 			std::cerr << "[OpenGL] Program validation failed:\n" << log.data() << std::endl;
 		}
 		else {
@@ -190,7 +190,7 @@ void Shader::setVec4(const std::string& name, const glm::vec4& value) const
 	if (READ_BACK_VALUE)
 	{
 		GLfloat vals[4];
-		glGetUniformfv(ID, loc, vals);
+		GLCall(glGetUniformfv(ID, loc, vals));
 		printVec4(glm::make_vec4(vals), name);
 	}
 }
@@ -223,7 +223,7 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	if (READ_BACK_VALUE)
 	{
 		GLfloat vals[16];
-		glGetUniformfv(ID, loc, vals);
+		GLCall(glGetUniformfv(ID, loc, vals));
 		printMat4(glm::make_mat4(vals), name);
 	}
 }

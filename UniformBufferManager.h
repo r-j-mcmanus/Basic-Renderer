@@ -13,6 +13,7 @@
 #include "Errors.h"
 #include "helper.h"
 
+
 class UniformBufferManager {
 public:
     struct BufferInfo {
@@ -54,6 +55,7 @@ public:
         }
 
         GLCall(glUniformBlockBinding(shaderID, blockIndex, it->second.bindingPoint));
+        GLCall(glBindBufferBase(GL_UNIFORM_BUFFER, it->second.bindingPoint, it->second.bufferID));
     }
 
     // Update data in a uniform buffer
@@ -80,15 +82,13 @@ public:
             std::vector<float> dataReadBack(it->second.size / sizeof(float));
             glGetBufferSubData(GL_UNIFORM_BUFFER, 0, it->second.size, dataReadBack.data());
 
-            bool printBack = true;
-            if (printBack) {
+            if (printBackUBM) {
                 std::cout << bufferName << std::endl;
                 printMat4(glm::mat4(glm::make_mat4(&dataReadBack[0])));
                 printMat4(glm::mat4(glm::make_mat4(&dataReadBack[16])));
             }
         }
         
-
         GLCall(glBindBuffer(GL_UNIFORM_BUFFER, 0));
     }
 
@@ -120,6 +120,7 @@ public:
     }
 
 private:
+    bool printBackUBM = true;
     std::unordered_map<std::string, BufferInfo> buffers;
 };
 

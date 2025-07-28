@@ -196,18 +196,17 @@
   <ItemGroup>
     <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.bin" />
     <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.gltf" />
-    <None Include="basic_1.shader" />
     <None Include="fetch_quest.lua" />
     <None Include="lighting.shader" />
     <None Include="prefabs.lua" />
     <None Include="Reasources\Models\cube.gltf" />
     <None Include="Reasources\Models\cube_and_sphere.gltf" />
     <None Include="Reasources\Models\Monkey.gltf" />
-    <None Include="Reasources\Shaders\basic.shader" />
     <None Include="Reasources\Shaders\lighting.shader" />
     <None Include="Reasources\Shaders\mvp_shader.shader" />
     <None Include="Reasources\Shaders\skybox.shader" />
     <None Include="Reasources\Shaders\textured.shader" />
+    <None Include="Resources\Shaders\basic_1.shader" />
     <None Include="Resources\Shaders\basic_2.shader" />
     <None Include="Resources\Shaders\basic_3.shader" />
     <None Include="Resources\Shaders\basic_4.shader" />

@@ -124,7 +124,7 @@ int main(void)
             mouseTracker->resetDelta();
         }
 
-        world.update();
+        //world.update();
 
         renderingEngine.renderFrame(world);
 

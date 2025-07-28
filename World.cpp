@@ -38,18 +38,19 @@ void World::buildWorld(
 	////////
 	// shaders we will be using
 	/* todo Abstract binding away */
-	const unsigned int shaderPhongMapId = shaderManager->loadShader(ShaderData::PhongShader);
-	unsigned int shaderPhongId = shaderManager->getShader(shaderPhongMapId)->GetId(); // this should be moved into the shader manager...
-	uniformBufferManager->bindBlockToShader(shaderPhongId, "Matrices", "ProjectionView");
-	uniformBufferManager->bindBlockToShader(shaderPhongId, "Lights", "Lights");
+	//const unsigned int shaderPhongId = shaderManager->loadShader(ShaderData::PhongShader);
+	//uniformBufferManager->bindBlockToShader(shaderPhongId, "Matrices", "ProjectionView");
+	//uniformBufferManager->bindBlockToShader(shaderPhongId, "Lights", "Lights");
 
-	const unsigned int shaderSolidColorMapId = shaderManager->loadShader(ShaderData::SolidColor);
-	unsigned int shaderSolidColorId = shaderManager->getShader(shaderSolidColorMapId)->GetId();
-	uniformBufferManager->bindBlockToShader(shaderSolidColorId, "Matrices", "ProjectionView");
+	//const unsigned int shaderSolidColorId = shaderManager->loadShader(ShaderData::SolidColor);
+	//uniformBufferManager->bindBlockToShader(shaderSolidColorId, "Matrices", "ProjectionView");
 
-	const unsigned int shaderBasic3MapId = shaderManager->loadShader(ShaderData::Basic3);
-	unsigned int shaderBasic3Id = shaderManager->getShader(shaderBasic3MapId)->GetId();
-	uniformBufferManager->bindBlockToShader(shaderBasic3Id, "Matrices", "ProjectionView");
+	//const unsigned int shaderBasic3Id = shaderManager->loadShader(ShaderData::Basic3);
+	//uniformBufferManager->bindBlockToShader(shaderBasic3Id, "Matrices", "ProjectionView");
+
+	const unsigned int shaderBasic1Id = shaderManager->loadShader(ShaderData::Basic1);
+	uniformBufferManager->bindBlockToShader(shaderBasic1Id, "Matrices", "ProjectionView");
+
 
 	////////
 
@@ -80,7 +81,7 @@ void World::buildWorld(
 	};
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0), glm::vec3(0), glm::vec3(10, 0, 10)) // we flaten it along the y axis and extend on the x and z
-			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic3MapId)
+			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic1Id)
 			.build()
 	));
 	///
@@ -95,7 +96,7 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0, 1, 0), glm::vec3(0), glm::vec3(1))
-			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic3MapId)
+			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic1Id)
 			.build()
 	));
 
@@ -109,7 +110,7 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(2, 2, 0), glm::vec3(0), glm::vec3(0.1))
-			.addComponent<RenderableComponent>(cubeModelId, shaderBasic3MapId)
+			.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
 			.addComponent<LightComponent>(light)
 			.build()
 	));

@@ -223,9 +223,6 @@
     <None Include="lighting.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="Reasources\Shaders\basic.shader">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
     <None Include="Reasources\Shaders\lighting.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
@@ -280,7 +277,7 @@
     <None Include="fetch_quest.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
-    <None Include="basic_1.shader">
+    <None Include="Resources\Shaders\basic_1.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -6,6 +6,7 @@ enum ShaderName
 {
 	PhongShader,
 	SolidColor,
+	Basic1,
 	Basic2,
 	Basic3,
 };
@@ -19,6 +20,7 @@ struct ShaderDataContainer
 namespace ShaderData {
 	const ShaderDataContainer PhongShader = { ShaderName::PhongShader, std::string("Resources/Shaders/phong.shader") };
 	const ShaderDataContainer SolidColor = { ShaderName::SolidColor, std::string("Resources/Shaders/mvp_uniform_buffer.shader") };
+	const ShaderDataContainer Basic1 = { ShaderName::Basic1, std::string("Resources/Shaders/basic_1.shader") };
 	const ShaderDataContainer Basic2 = { ShaderName::Basic2, std::string("Resources/Shaders/basic_2.shader") };
 	const ShaderDataContainer Basic3 = { ShaderName::Basic3, std::string("Resources/Shaders/basic_3.shader") };
 }

@@ -70,7 +70,7 @@ public:
 	void translate(const glm::vec3& delta) {
 		MarkDirty();
 		position += delta;
-		printVec3(position, "position");
+		//printVec3(position, "position");
 	}
 	
 	void rotate(const float yawDelta, float pitchDelta) {

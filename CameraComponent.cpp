@@ -29,25 +29,25 @@ CameraComponent::CameraComponent(glm::vec3 front):
 
 void CameraComponent::updateCameraVectors(glm::vec3 rotation)
 {
-    // printVec3(rotation, "rotation");
-
     rotationMatrix = (
-        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) * // Rotation around Z-axis (pitch)
-        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) * // Rotation around Y-axis (yaw)
-        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) // Rotation around X-axis (roll)
+        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(0.0f, 0.0f, 1.0f)) * // Rotation around Z-axis (pitch)
+        glm::rotate(glm::mat4(1.0f), glm::radians(-rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) * // Rotation around Y-axis (yaw)
+        glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(1.0f, 0.0f, 0.0f)) // Rotation around X-axis (roll)
         );
 
-    front = glm::vec3(rotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+    front = glm::vec3(rotationMatrix * glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f));
     up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
-    printVec3(rotation, "rotation");
-    printVec3(front, "front");
-    printVec3(up, "up");
+    //printVec3(rotation, "rotation");
+    //printVec3(front, "front");
+    //printVec3(up, "up");
 }
 
 void CameraComponent::onBuild(SceneNode& node) {
     parent = &node;
 }
+
+glm::mat4 first_view = glm::mat4({ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 });
 
 glm::mat4 CameraComponent::getViewMatrix() const
 {
@@ -59,7 +59,17 @@ glm::mat4 CameraComponent::getViewMatrix() const
     */
 
     glm::vec3 position = parent->getGlobalPosition();
-    return glm::lookAt(position, position + front, up);
+    glm::mat4 view = glm::lookAt(position, position + front, up);
+    /*if (first_view != view) {
+        int a = 1;
+        printVec3(position, "position");
+        printVec3(front, "front");
+        printVec3(up, "up");
+        printMat4(view, "view");
+        printMat4(view - first_view, "delta view");
+        first_view = view;
+    }*/
+    return view;
 }
 
 void CameraComponent::setAspectRatio(const int width, const int height) {

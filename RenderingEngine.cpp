@@ -44,6 +44,7 @@ void RenderingEngine::getLights(SceneNode* node) {
     }
 }
 
+int COUNT = 0;
 
 // Main rendering function
 void RenderingEngine::renderFrame(World& world)
@@ -84,7 +85,7 @@ void RenderingEngine::renderFrame(World& world)
         /////////
         // these are shader dependent, so we should come up with a better palce for them to live
         /////////
-        shader->setVec4("u_Color", glm::vec4(0.5));
+        //shader->setVec4("u_Color", glm::vec4(0.5));
         /////////
         glm::mat4 modelM4 = it.modelMatrix;
         shader->setMat4("u_Model", modelM4);
@@ -96,5 +97,10 @@ void RenderingEngine::renderFrame(World& world)
 
         shader->validate();
         model->draw();
+    }
+
+    COUNT++;
+    if (COUNT == 20) {
+        int a = 1;
     }
 }

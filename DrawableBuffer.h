@@ -25,6 +25,8 @@ public:
             GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer.VBO));
             GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.VBO));
 
+            // Combined buffer: VBO stores both vertex and index data
+            // this is as it is laied out as such in a gltf file
             GLCall(glDrawElements(
                 GL_TRIANGLES,
                 buffer.count,
