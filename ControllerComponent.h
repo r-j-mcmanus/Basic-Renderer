@@ -20,9 +20,16 @@ public:
 private:
     void fixedUpdateKey(float dt);
     void fixedUpdateMouse(float dt);
+    void updateVectors();
 
 private:
-    float sensitivity = 0.1f;
+    glm::vec3 forward = glm::vec3(1, 0, 0);
+    glm::vec3 up = glm::vec3(0, 1, 0);;
+    glm::vec3 right = glm::vec3(0, 0, 1);;
+
+    float movementSpeed = 5.0f;
+    float sensitivity = 0.05f;
+    float mouseSensitivity = 1.0f;
     float moveSpeed = 1.0f;
     std::shared_ptr<KeyTracker> keyTracker;
     std::shared_ptr<MouseTracker> mouseTracker;

@@ -27,8 +27,8 @@ public:
         return *this;
     }    
     
-    SceneNodeBuilder& setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
-        node->setTransform(pos, rot, scl);
+    SceneNodeBuilder& setTransform(const glm::vec3& pos, const glm::vec3& rotDeg, const glm::vec3& scl) {
+        node->setTransform(pos, rotDeg, scl);
         return *this;
     }
 

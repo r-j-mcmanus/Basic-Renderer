@@ -61,18 +61,41 @@ void World::buildWorld(
 	unsigned int modelIdFloor = modelManager->loadModel(std::string("Resources/Models/plain.gltf"));
 	unsigned int modelIdMonkey = modelManager->loadModel(std::string("Resources/Models/monkey.gltf"));
 	unsigned int cubeModelId = modelManager->loadModel(std::string("Resources/Models/cube.gltf"));
+	unsigned int robotModelId = modelManager->loadModel(std::string("Resources/Models/Robot.gltf"));
 
 	// for making nodes to add to our scene graph
 	SceneNodeBuilder builder;
 
+
+	glm::vec3 startingPos = glm::vec3(5, 5, 0);
+	glm::vec3 forward = glm::vec3(-1, 0, 0);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+	glm::vec3 cameraOffset = -3.0f * forward;
+	std::unique_ptr<SceneNode> character = builder.setTransform(startingPos, glm::vec3(0), glm::vec3(1))
+		.addComponent<ControllerComponent>(keyTracker, mouseTracker)
+		.build();
+	glm::vec3 modelOrientation = glm::vec3(260, 340, 80);
+	std::unique_ptr<SceneNode> robot = builder.setTransform(glm::vec3(0), modelOrientation, glm::vec3(0.1))
+		.addComponent<RenderableComponent>(robotModelId, shaderBasic1Id)
+		.build();
+	std::unique_ptr<SceneNode> camera = builder.setTransform(cameraOffset, glm::vec3(0), glm::vec3(0))
+		.addComponent<CameraComponent>(forward)
+		.build();
+
+	SceneNode* cameraNodeRawPtr = character->add_child(std::move(camera));
+	character->add_child(std::move(robot));
+	root.add_child(std::move(character));
+	activeCameraNode = cameraNodeRawPtr;
+	
+
 	///
-	SceneNode* cameraNode = root.add_child(std::move(
-		builder.setTransform(glm::vec3(5, 0, 0), glm::vec3(0), glm::vec3(0))
-			.addComponent<CameraComponent>(glm::vec3(-1, 0, 0))
-			.addComponent<ControllerComponent>(keyTracker, mouseTracker)
-			.build()
-	));
-	activeCameraNode = cameraNode;
+	//SceneNode* cameraNode = root.add_child(std::move(
+	//	builder.setTransform(glm::vec3(5, 0, 0), glm::vec3(0), glm::vec3(0))
+	//	.addComponent<CameraComponent>(glm::vec3(-1, 0, 0))
+	//		.addComponent<ControllerComponent>(keyTracker, mouseTracker)
+	//		.build()
+	//));
+	//activeCameraNode = cameraNode;
 	///
 
 	///
@@ -119,6 +142,37 @@ void World::buildWorld(
 			.build()
 	));
 	///
+
+
+	///
+	std::unique_ptr<SceneNode> body = builder.setTransform(glm::vec3(-2, 2, 2), glm::vec3(0), glm::vec3(1))
+		.addComponent<AIComponent>(std::make_unique<RandomWanderBehavior>())
+		.build();
+
+	std::unique_ptr<SceneNode> child = builder.setTransform(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0), glm::vec3(0.05))
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.build();
+	body->add_child(std::move(child));
+
+	body->add_child(std::move(
+		builder.setTransform(glm::vec3(0.1, -0.1, 0.1), glm::vec3(0), glm::vec3(0.05))
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.build()
+	));
+	body->add_child(std::move(
+		builder.setTransform(glm::vec3(-0.1, 0.1, 0.1), glm::vec3(0), glm::vec3(0.05))
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.build()
+	));
+	body->add_child(std::move(
+		builder.setTransform(glm::vec3(0.1, 0.1, -0.1), glm::vec3(0), glm::vec3(0.05))
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.build()
+	));
+
+	root.add_child(std::move(body));
+	///
+
 }
 
 void World::fixedUpdate(double dt)

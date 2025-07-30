@@ -57,9 +57,11 @@ glm::mat4 CameraComponent::getViewMatrix() const
     center = point the camera is looking at (position + front).
     up = up direction for the camera (up).
     */
+    // when turned into a cameraControl, pass node that we focus on to the component?
 
     glm::vec3 position = parent->getGlobalPosition();
-    glm::mat4 view = glm::lookAt(position, position + front, up);
+    glm::vec3 bodyNodePos = parent->getPairentNodePosition();
+    glm::mat4 view = glm::lookAt(position, bodyNodePos, glm::vec3(0,1,0));
     /*if (first_view != view) {
         int a = 1;
         printVec3(position, "position");

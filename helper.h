@@ -30,6 +30,11 @@ inline  glm::mat4 createRotationMatrix(const glm::vec3& rotation) {
     return rotationMatrix;
 }
 
+inline void printFloat(const float& f, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ": ";
+    std::cout << f << std::endl;
+}
+
 inline void printVec2(const glm::vec2& vec, const std::string& name = "") {
     if (!name.empty()) std::cout << name << ": ";
     std::cout << "(" << vec.x << ", " << vec.y << ")" << std::endl;

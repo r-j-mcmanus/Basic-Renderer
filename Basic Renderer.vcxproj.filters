@@ -73,6 +73,9 @@
     <Filter Include="Header Files\World\SceneNode\AI">
       <UniqueIdentifier>{56ef98b7-c0c2-47e6-b71d-2e37ceb950e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\World\SceneNode\Controls">
+      <UniqueIdentifier>{dcca6593-18e1-4db3-98a9-70e31746e403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -233,6 +236,15 @@
     <ClInclude Include="AIComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\World\SceneNode\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstCameraControls.h">
+      <Filter>Header Files\World\SceneNode\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateModelControls.h">
+      <Filter>Header Files\World\SceneNode\Controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">
@@ -283,17 +295,14 @@
     <None Include="village_scene.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
-    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.gltf">
-      <Filter>Resource Files\Models</Filter>
-    </None>
-    <None Include="..\..\..\Users\rmcma\Documents\blender\Robot.bin">
-      <Filter>Resource Files\Models</Filter>
-    </None>
     <None Include="fetch_quest.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
     <None Include="Resources\Shaders\basic_1.shader">
       <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Models\Robot.gltf">
+      <Filter>Resource Files\Models</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

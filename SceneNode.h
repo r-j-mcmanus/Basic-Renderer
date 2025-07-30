@@ -61,36 +61,77 @@ public:
     //
 	// motion related functions
 	//
-    void setTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scl) {
+    void setTransform(const glm::vec3& pos, const glm::vec3& rotDeg, const glm::vec3& scl) {
         position = pos;
-        rotationDegrees = rot;
+        eulerAnglesDegrees = rotDeg;
         scale = scl;
     }
 	
 	void translate(const glm::vec3& delta) {
 		MarkDirty();
 		position += delta;
-		//printVec3(position, "position");
 	}
 	
-	void rotate(const float yawDelta, float pitchDelta) {
+	void rotate(const float yawDeltaDeg, const float pitchDeltaDeg, const float rollDeltaDeg) {
 		MarkDirty();
 		// Update rotation
-		rotationDegrees.y += yawDelta;   // Yaw (left/right)
-		rotationDegrees.x += pitchDelta; // Pitch (up/down)
+		eulerAnglesDegrees.y += yawDeltaDeg;   // Yaw (left/right)
+		eulerAnglesDegrees.x += pitchDeltaDeg; // Pitch (up/down)
+		eulerAnglesDegrees.z += rollDeltaDeg; // Pitch (up/down)
 
 		// Clamp pitch to avoid flipping
 		const float pitchLimit = 89.0f;
-		if (rotationDegrees.x > pitchLimit) rotationDegrees.x = pitchLimit;
-		if (rotationDegrees.x < -pitchLimit) rotationDegrees.x = -pitchLimit;
+		if (eulerAnglesDegrees.x > pitchLimit) eulerAnglesDegrees.x = pitchLimit;
+		if (eulerAnglesDegrees.x < -pitchLimit) eulerAnglesDegrees.x = -pitchLimit;
 
 		// Keep yaw within 0-360
-		if (rotationDegrees.y > 360) rotationDegrees.y -= 360;
-		if (rotationDegrees.y < 0) rotationDegrees.y += 360;
+		if (eulerAnglesDegrees.y > 360) eulerAnglesDegrees.y -= 360;
+		if (eulerAnglesDegrees.y < 0) eulerAnglesDegrees.y += 360;
 
+		// Keep yaw within 0-360
+		if (eulerAnglesDegrees.z > 360) eulerAnglesDegrees.z -= 360;
+		if (eulerAnglesDegrees.z < 0) eulerAnglesDegrees.z += 360;
 
-		//printVec3(rotationDegrees, "rotation");
+		printVec3(eulerAnglesDegrees, "rotation");
 	}
+
+
+	void rotateYaw(const float yawDelta) {
+		MarkDirty();
+		// Update rotation
+		eulerAnglesDegrees.y += yawDelta * 50;
+
+		// Keep within 0-360
+		if (eulerAnglesDegrees.y > 360) eulerAnglesDegrees.y -= 360;
+		if (eulerAnglesDegrees.y < 0) eulerAnglesDegrees.y += 360;
+
+		printVec3(eulerAnglesDegrees, "rotationDegrees");
+	}
+
+	void rotatePitch(const float pitchDelta) {
+		MarkDirty();
+		// Update rotation
+		eulerAnglesDegrees.x += pitchDelta * 50;
+
+		// Keep within 0-360
+		if (eulerAnglesDegrees.x > 360) eulerAnglesDegrees.x -= 360;
+		if (eulerAnglesDegrees.x < 0) eulerAnglesDegrees.x += 360;
+
+		printVec3(eulerAnglesDegrees, "rotationDegrees");
+	}
+
+	void rotateRoll(const float rollDelta) {
+		MarkDirty();
+		// Update rotation
+		eulerAnglesDegrees.z += rollDelta * 50;
+
+		// Keep within 0-360
+		if (eulerAnglesDegrees.z > 360) eulerAnglesDegrees.z -= 360;
+		if (eulerAnglesDegrees.z < 0) eulerAnglesDegrees.z += 360;
+
+		printVec3(eulerAnglesDegrees, "rotationDegrees");
+	}
+
 	//
 
 	template<typename T>
@@ -129,8 +170,13 @@ public:
 	const glm::vec3 getGlobalPosition() {
 		if (pairentNode)
 		{
+			glm::mat4 globalMatrix = pairentNode->getGlobalMatrix();
 			glm::vec3 globalPosition = glm::vec3(pairentNode->getGlobalMatrix()[3]) + position;
-			return globalPosition;
+			glm::vec3 globalAlt = glm::vec3(pairentNode->getGlobalMatrix() * glm::vec4(position, 1));
+			//printMat4(globalMatrix, "globalMatrix");
+			//printVec3(globalPosition, "globalPosition");
+			//printVec3(globalAlt, "globalAlt");
+			return globalAlt;
 		}
 		else
 		{
@@ -138,7 +184,9 @@ public:
 		}
 	}
 
-	glm::vec3 getRotation() const { return rotationDegrees; }
+	glm::vec3 getRotation() const { return eulerAnglesDegrees; }
+
+	glm::vec3 getPairentNodePosition() const { return pairentNode->getGlobalPosition(); }
 
 private:
 	void MarkDirty() {
@@ -158,9 +206,9 @@ protected:
 	glm::mat4 TRSMatrix() const {
 		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
 		glm::mat4 rotationMatrix = (
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegrees.x), glm::vec3(1.0f, 0.0f, 0.0f))
+			glm::rotate(glm::mat4(1.0f), glm::radians(eulerAnglesDegrees.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(eulerAnglesDegrees.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(eulerAnglesDegrees.x), glm::vec3(1.0f, 0.0f, 0.0f))
 			);
 		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
 
@@ -172,7 +220,7 @@ protected:
 
 private:
 	glm::vec3 position = glm::vec3(0, 0, 0);
-	glm::vec3 rotationDegrees = glm::vec3(0, 0, 0);
+	glm::vec3 eulerAnglesDegrees = glm::vec3(0, 0, 0);
 	glm::vec3 scale = glm::vec3(1, 1, 1);
 	bool isDirty = true;
 	glm::mat4 localMatrix;  // local TRS transform
