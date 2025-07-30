@@ -43,7 +43,7 @@ public:
             dir.x * speed * dt,
             dir.y * speed * dt,
             dir.z * speed * dt
-        });  
+        });
     }
 
 private:

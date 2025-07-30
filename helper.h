@@ -35,6 +35,11 @@ inline void printFloat(const float& f, const std::string& name = "") {
     std::cout << f << std::endl;
 }
 
+inline void printQuat(const glm::quat q, const std::string& name = "") {
+    if (!name.empty()) std::cout << name << ": ";
+    std::cout << "(" << q.x << ", " << q.y << ", " << q.z << "," << q.w << ")" << std::endl;
+}
+
 inline void printVec2(const glm::vec2& vec, const std::string& name = "") {
     if (!name.empty()) std::cout << name << ": ";
     std::cout << "(" << vec.x << ", " << vec.y << ")" << std::endl;

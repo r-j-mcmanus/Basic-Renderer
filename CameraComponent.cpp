@@ -37,10 +37,6 @@ void CameraComponent::updateCameraVectors(glm::vec3 rotation)
 
     front = glm::vec3(rotationMatrix * glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f));
     up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-
-    //printVec3(rotation, "rotation");
-    //printVec3(front, "front");
-    //printVec3(up, "up");
 }
 
 void CameraComponent::onBuild(SceneNode& node) {
@@ -59,18 +55,9 @@ glm::mat4 CameraComponent::getViewMatrix() const
     */
     // when turned into a cameraControl, pass node that we focus on to the component?
 
-    glm::vec3 position = parent->getGlobalPosition();
-    glm::vec3 bodyNodePos = parent->getPairentNodePosition();
-    glm::mat4 view = glm::lookAt(position, bodyNodePos, glm::vec3(0,1,0));
-    /*if (first_view != view) {
-        int a = 1;
-        printVec3(position, "position");
-        printVec3(front, "front");
-        printVec3(up, "up");
-        printMat4(view, "view");
-        printMat4(view - first_view, "delta view");
-        first_view = view;
-    }*/
+    const glm::vec3 position = parent->getGlobalPosition();
+    const glm::vec3 bodyNodePos = parent->getPairentNodePosition();
+    const glm::mat4 view = glm::lookAt(position, bodyNodePos, glm::vec3(0,1,0));
     return view;
 }
 

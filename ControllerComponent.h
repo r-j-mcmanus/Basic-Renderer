@@ -27,10 +27,11 @@ private:
     glm::vec3 up = glm::vec3(0, 1, 0);;
     glm::vec3 right = glm::vec3(0, 0, 1);;
 
+    float pitch = 0;
     float movementSpeed = 5.0f;
-    float sensitivity = 0.05f;
+    float sensitivity = 0.01f;
     float mouseSensitivity = 1.0f;
-    float moveSpeed = 1.0f;
+    const float pitchClamp = glm::radians(70.0f);
     std::shared_ptr<KeyTracker> keyTracker;
     std::shared_ptr<MouseTracker> mouseTracker;
 };

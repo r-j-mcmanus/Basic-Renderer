@@ -65,5 +65,4 @@ private:
 
     glm::mat4 viewMatrix;
 
-    CameraDirectionContainer directionContainer = { false, false, false, false };
 };

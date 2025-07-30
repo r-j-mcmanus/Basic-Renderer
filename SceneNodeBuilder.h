@@ -2,6 +2,11 @@
 
 #include <memory>
 #include <unordered_map>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 #include "SceneNode.h"
 #include "Component.h"
 
@@ -27,7 +32,7 @@ public:
         return *this;
     }    
     
-    SceneNodeBuilder& setTransform(const glm::vec3& pos, const glm::vec3& rotDeg, const glm::vec3& scl) {
+    SceneNodeBuilder& setTransform(const glm::vec3& pos, const glm::quat& rotDeg, const glm::vec3& scl) {
         node->setTransform(pos, rotDeg, scl);
         return *this;
     }
