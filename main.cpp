@@ -3,6 +3,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include <AL/al.h>
+#include <AudioFile/AudioFile.h>
+
 #include <iostream>
 #include <memory>
 

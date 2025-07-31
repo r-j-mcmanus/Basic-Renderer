@@ -39,3 +39,5 @@
 /x64/Debug
 Basic Renderer.aps
 Basic Renderer.rc
+/libs_built
+/libs_includes
