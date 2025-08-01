@@ -16,3 +16,13 @@ This can become and issue as this is a long opperation.
 reaplce with a map of locations initialised on shader creation.
 
 Move u_viewPos to UBO?
+
+Audio
+https://indiegamedev.net/2020/02/15/the-complete-guide-to-openal-with-c-part-1-playing-a-sound/
+https://www.youtube.com/watch?v=WvND0djMcfE&t=916s
+https://gamedevbeginner.com/create-looping-sound-effects-for-games-for-free-with-audacity/
+
+
+Audio from 
+https://sonniss.com/gameaudiogdc/
+https://freesound.org/
