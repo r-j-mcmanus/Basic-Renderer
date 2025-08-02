@@ -5,19 +5,18 @@
 
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AudioFile/AudioFile.h>
 #include <glm/glm.hpp>
 
 
 struct SourceInfo {
 	ALuint id;
 	bool inUse = false; // used by audio component to indicate it has releced it
-	bool playing = false; // used by audio manager to say the sound has ended
+	ALint state = AL_INITIAL; // used by audio manager to say the sound has ended
 	bool dirty = false; // used by audio component to indicate position needs updating in openAL
 	glm::vec3 position = glm::vec3(0,0,0); // the position of the source
 	glm::vec3 velocity = glm::vec3(0,0,0); // the position of the source
-	float pitch;
-	float gain;
+	float pitch = 1.0f;
+	float gain = 1.0f;
 
 	void setPosition(glm::vec3 position) {
 		this->position = position;
@@ -50,14 +49,13 @@ public:
 	void loadWavFile(std::string name, std::string path);
 	void streamWavFile(std::string name, std::string path) {};
 
-	void playSource(ALuint source);
+	void playSource(SourceInfo* source);
 	SourceInfo* getFreeSource();
 
 private:
 
 	ALCdevice* getDefaultDevice();
 	void createCurrentContext(ALCdevice* device);
-	bool convertFileToOpenALFormat(AudioFile<float>& audioFile);
 	void makeSources();
 	void cleanUp();
 
@@ -65,6 +63,7 @@ private:
 	const int maxSources = 8;
 	ALCcontext* context;
 	ALCdevice* device;
+	// todo LRU cache to track old buffers and remove them!
 	std::unordered_map<std::string, ALuint> soundBuffers;
 	std::vector<SourceInfo> sources;
 };

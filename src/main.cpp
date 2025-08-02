@@ -117,10 +117,15 @@ int main(void)
     AudioManager audioManager;
 
     audioManager.createListener({ 0,0,0 }, { 0,0,0 });
+    std::cout << "audio manager made" << std::endl;
     audioManager.loadWavFile("zap", "Resources/Sounds/320853__eloimarin__hello-world-chirp.wav");
+    std::cout << "wav loaded" << std::endl;
     SourceInfo* source = audioManager.getFreeSource();
+    std::cout << "got free source" << std::endl;
     audioManager.bindBufferToMonoSource("zap", source);
-    audioManager.playSource(source->id);
+    std::cout << "bound sound buffer to source" << std::endl;
+    audioManager.playSource(source);
+    std::cout << "played sound" << std::endl;
 
 
     /* Loop until the user closes the window */ 

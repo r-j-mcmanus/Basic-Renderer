@@ -1,9 +1,11 @@
 #include <vector>
 #include <string>
+#include <thread>
 
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AudioFile/AudioFile.h>
+#define DR_WAV_IMPLEMENTATION
+#include <dr_libs/dr_wav.h>
 #include <glm/glm.hpp>
 
 #include "Errors.h"
@@ -87,43 +89,58 @@ void AudioManager::bindBufferToSterioSource(std::string bufferName, SourceInfo* 
 
 
 void AudioManager::loadWavFile(std::string name, std::string path) {
-	AudioFile<float> soundFile;
-	if (!soundFile.load(path))
-	{
-		std::cerr << "failed to load " << name << " sound file " << path << std::endl;
+	drwav wav;
+	if (!drwav_init_file(&wav, path.c_str(), nullptr)) {
+		std::cerr << "Failed to open WAV file: " << path << std::endl;
 		return;
 	}
-	std::vector<uint8_t> PCMDataBytes;
-	soundFile.writePCMToBuffer(PCMDataBytes); //remember, we added this function to the AudioFile library
 
+
+	size_t totalSampleCount = wav.totalPCMFrameCount * wav.channels;
+	std::vector<drwav_int16> pcmData(totalSampleCount);
+	drwav_read_pcm_frames_s16(&wav, wav.totalPCMFrameCount, pcmData.data());
+
+
+	// Determine OpenAL format
+	ALenum format;
+	if (wav.channels == 1) format = AL_FORMAT_MONO16;
+	else if (wav.channels == 2) format = AL_FORMAT_STEREO16;
+	else {
+		std::cerr << "Unsupported channel count: " << wav.channels << std::endl;
+		drwav_uninit(&wav);
+		return;
+	}
+
+	// Generate OpenAL buffer
 	ALuint soundBuffer;
-	ALCall(alGenBuffers(1, &soundBuffer));
-	ALCall(alBufferData(soundBuffer, convertFileToOpenALFormat(soundFile), PCMDataBytes.data(), PCMDataBytes.size(), soundFile.getSampleRate()));
+	alGenBuffers(1, &soundBuffer);
+	alBufferData(
+		soundBuffer,
+		format, 
+		pcmData.data(),
+		static_cast<ALsizei>(pcmData.size() * sizeof(drwav_int16)),
+		wav.sampleRate
+	);
+
+	// Clean up
+	drwav_uninit(&wav);
 
 	soundBuffers[name] = soundBuffer;
 }
 
 
-bool AudioManager::convertFileToOpenALFormat(AudioFile<float>& audioFile) {
-	int bitDepth = audioFile.getBitDepth();
-	if (bitDepth == 16)
-		return audioFile.isStereo() ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-	else if (bitDepth == 8)
-		return audioFile.isStereo() ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;
-	else
-		return false; // this shouldn't happen!
-};
 
+void AudioManager::playSource(SourceInfo* source) {
+	ALCall(alSourcePlay(source->id));
 
-void AudioManager::playSource(ALuint source) {
-	ALCall(alSourcePlay(source));
-	ALint sourceState;
-	ALCall(alGetSourcei(source, AL_SOURCE_STATE, &sourceState));
-	while (sourceState == AL_PLAYING)
-	{
-		//basically loop until we're done playing the sound source
-		ALCall(alGetSourcei(source, AL_SOURCE_STATE, &sourceState));
-	}
+	// make a thread that tracks the state of the source
+	std::thread([source]() {
+		// loop untill the source is no longer playing, no need to check often
+		do {
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			ALCall(alGetSourcei(source->id, AL_SOURCE_STATE, &source->state));
+		} while (source->state == AL_PLAYING);
+	}).detach(); // detash as we do not need the main thread to wait
 }
 
 

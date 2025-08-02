@@ -6,6 +6,10 @@
 #include <iostream>
 
 
+// ==================================================================
+// OpenGL
+// ==================================================================
+
 // macros for error logging openGL
 // #x returns the litteral string eg #h = "foo"
 #define ASSERT(x) if (!(x)) __debugbreak();
@@ -23,15 +27,15 @@ CleLogs any errors in the GL error buffer
 */
 bool GLLogCall(const char* function, const char* file, int line);
 
-#define OpenAL_ErrorCheck(message)\
-{\
-    ALenum error = glGetError();\
-    if (error != AL_NO_ERROR)\
-    {\
-        std::cerr << "OpenAL Error: " << error << std::endl;\
-    }\
-}
 
-#define ALCall(x)\
-x;\
-OpenAL_ErrorCheck(x);
+// ==================================================================
+// OpenAL
+// ==================================================================
+#define ASSERT(x) if (!(x)) __debugbreak();
+#define ALCall(x) ALClearError();\
+    x;\
+    ASSERT(ALLogCall(#x, __FILE__, __LINE__))
+
+
+void ALClearError();
+bool ALLogCall(const char* function, const char* file, int line);
