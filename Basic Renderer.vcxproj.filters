@@ -76,174 +76,180 @@
     <Filter Include="Header Files\World\SceneNode\Controls">
       <UniqueIdentifier>{dcca6593-18e1-4db3-98a9-70e31746e403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Sound">
+      <UniqueIdentifier>{4f6b6313-fd3a-495a-b894-e6a41e62b65e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Errors.cpp">
+    <ClCompile Include="src\Errors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LightingShader.cpp">
+    <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelManager.cpp">
+    <ClCompile Include="src\ModelManager.cpp">
       <Filter>Source Files\ModelManager</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
+    <ClCompile Include="src\ShaderManager.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="GltfParser.cpp">
+    <ClCompile Include="src\GltfParser.cpp">
       <Filter>Source Files\ModelManager</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
+    <ClCompile Include="src\World.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
+    <ClCompile Include="src\EventHandler.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="physics.cpp">
+    <ClCompile Include="src\physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingEngine.cpp">
+    <ClCompile Include="src\RenderingEngine.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Basic5RenderingController.cpp">
+    <ClCompile Include="src\Basic5RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Basic6RenderingController.cpp">
+    <ClCompile Include="src\Basic6RenderingController.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="SceneNode.cpp">
+    <ClCompile Include="src\SceneNode.cpp">
       <Filter>Source Files\World\SceneNode</Filter>
     </ClCompile>
-    <ClCompile Include="SceneNodeBuilder.cpp">
+    <ClCompile Include="src\SceneNodeBuilder.cpp">
       <Filter>Source Files\World\SceneNode</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
+    <ClCompile Include="src\CameraComponent.cpp">
       <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformationComponent.cpp">
+    <ClCompile Include="src\TransformationComponent.cpp">
       <Filter>Source Files\World\SceneNode\Components</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerComponent.cpp">
+    <ClCompile Include="src\ControllerComponent.cpp">
       <Filter>Source Files\World\SceneNode\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Errors.h">
+    <ClInclude Include="src\Errors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
+    <ClInclude Include="src\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="helper.h">
+    <ClInclude Include="src\helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="src\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelManager.h">
+    <ClInclude Include="src\ModelManager.h">
       <Filter>Header Files\ModelManager</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableBuffer.h">
+    <ClInclude Include="src\DrawableBuffer.h">
       <Filter>Header Files\ModelManager</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderManager.h">
+    <ClInclude Include="src\ShaderManager.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="GltfParser.h">
+    <ClInclude Include="src\GltfParser.h">
       <Filter>Header Files\ModelManager</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
+    <ClInclude Include="src\World.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="Transformer.h">
+    <ClInclude Include="src\Transformer.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
+    <ClInclude Include="src\EventHandler.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
+    <ClInclude Include="src\light.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="RenderingController.h">
+    <ClInclude Include="src\RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Basic6RenderingController.h">
+    <ClInclude Include="src\Basic6RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="SceneNode.h">
+    <ClInclude Include="src\SceneNode.h">
       <Filter>Header Files\World\SceneNode</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="src\Component.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CameraComponent.h">
+    <ClInclude Include="src\CameraComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="LightComponent.h">
+    <ClInclude Include="src\LightComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="RenderableComponent.h">
+    <ClInclude Include="src\RenderableComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TransformationComponent.h">
+    <ClInclude Include="src\TransformationComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="PhongRenderingData.h">
+    <ClInclude Include="src\PhongRenderingData.h">
       <Filter>Header Files\Shaders\Data</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderData.h">
+    <ClInclude Include="src\ShaderData.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerComponent.h">
+    <ClInclude Include="src\ControllerComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="KeyTracker.h">
+    <ClInclude Include="src\KeyTracker.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="MouseTracker.h">
+    <ClInclude Include="src\MouseTracker.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
+    <ClInclude Include="src\Shader.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="SceneNodeBuilder.h">
+    <ClInclude Include="src\SceneNodeBuilder.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="RenderingEngine.h">
+    <ClInclude Include="src\RenderingEngine.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="EventListenerInterface.h">
+    <ClInclude Include="src\EventListenerInterface.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Basic5RenderingController.h">
+    <ClInclude Include="src\Basic5RenderingController.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="UniformBufferManager.h">
+    <ClInclude Include="src\UniformBufferManager.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="AIBehavior.h">
+    <ClInclude Include="src\AIBehavior.h">
       <Filter>Header Files\World\SceneNode\AI</Filter>
     </ClInclude>
-    <ClInclude Include="RandomWanderBehavior.h">
+    <ClInclude Include="src\RandomWanderBehavior.h">
       <Filter>Header Files\World\SceneNode\AI</Filter>
     </ClInclude>
-    <ClInclude Include="AIComponent.h">
+    <ClInclude Include="src\AIComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Controls.h">
+    <ClInclude Include="src\Controls.h">
       <Filter>Header Files\World\SceneNode\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="FirstCameraControls.h">
+    <ClInclude Include="src\FirstCameraControls.h">
       <Filter>Header Files\World\SceneNode\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="RotateModelControls.h">
+    <ClInclude Include="src\RotateModelControls.h">
       <Filter>Header Files\World\SceneNode\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -289,13 +295,13 @@
     <None Include="Resources\Shaders\phong.shader">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="prefabs.lua">
+    <None Include="Resources\Lua\prefabs.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
-    <None Include="village_scene.lua">
+    <None Include="Resources\Lua\village_scene.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
-    <None Include="fetch_quest.lua">
+    <None Include="src\fetch_quest.lua">
       <Filter>Resource Files\lua</Filter>
     </None>
     <None Include="Resources\Shaders\basic_1.shader">
@@ -304,10 +310,18 @@
     <None Include="Resources\Models\Robot.gltf">
       <Filter>Resource Files\Models</Filter>
     </None>
+    <None Include="Resources\sources.csv">
+      <Filter>Resource Files\Sound</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="todo.txt">
+    <Text Include="Resources\todo.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\320853__eloimarin__hello-world-chirp.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

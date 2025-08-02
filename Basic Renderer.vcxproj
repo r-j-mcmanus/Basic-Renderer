@@ -121,12 +121,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Libraries\glfw-3.3.6.bin.WIN64\lib-vc2022;C:\Libraries\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;OpenAl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -138,6 +139,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,72 +147,73 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Libraries\glfw-3.3.6.bin.WIN64\lib-vc2022;C:\Libraries\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;OpenAl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Basic5RenderingController.cpp" />
-    <ClCompile Include="Basic6RenderingController.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="ControllerComponent.cpp" />
-    <ClCompile Include="Errors.cpp" />
-    <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="GltfParser.cpp" />
-    <ClCompile Include="LightingShader.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ModelManager.cpp" />
-    <ClCompile Include="physics.cpp" />
-    <ClCompile Include="RenderingEngine.cpp" />
-    <ClCompile Include="SceneNode.cpp" />
-    <ClCompile Include="SceneNodeBuilder.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderManager.cpp" />
-    <ClCompile Include="TransformationComponent.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClCompile Include="src\Audio.cpp" />
+    <ClCompile Include="src\Basic5RenderingController.cpp" />
+    <ClCompile Include="src\Basic6RenderingController.cpp" />
+    <ClCompile Include="src\CameraComponent.cpp" />
+    <ClCompile Include="src\ControllerComponent.cpp" />
+    <ClCompile Include="src\Errors.cpp" />
+    <ClCompile Include="src\EventHandler.cpp" />
+    <ClCompile Include="src\GltfParser.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ModelManager.cpp" />
+    <ClCompile Include="src\physics.cpp" />
+    <ClCompile Include="src\RenderingEngine.cpp" />
+    <ClCompile Include="src\SceneNode.cpp" />
+    <ClCompile Include="src\SceneNodeBuilder.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\ShaderManager.cpp" />
+    <ClCompile Include="src\TransformationComponent.cpp" />
+    <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIBehavior.h" />
-    <ClInclude Include="AIComponent.h" />
-    <ClInclude Include="Basic5RenderingController.h" />
-    <ClInclude Include="Basic6RenderingController.h" />
-    <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ControllerComponent.h" />
-    <ClInclude Include="Controls.h" />
-    <ClInclude Include="FirstCameraControls.h" />
-    <ClInclude Include="RandomWanderBehavior.h" />
-    <ClInclude Include="Errors.h" />
-    <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="EventListenerInterface.h" />
-    <ClInclude Include="GltfParser.h" />
-    <ClInclude Include="helper.h" />
-    <ClInclude Include="KeyTracker.h" />
-    <ClInclude Include="light.h" />
-    <ClInclude Include="LightComponent.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="DrawableBuffer.h" />
-    <ClInclude Include="ModelManager.h" />
-    <ClInclude Include="MouseTracker.h" />
-    <ClInclude Include="PhongRenderingData.h" />
-    <ClInclude Include="RenderableComponent.h" />
-    <ClInclude Include="RenderingController.h" />
-    <ClInclude Include="RenderingEngine.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="RotateModelControls.h" />
-    <ClInclude Include="SceneNode.h" />
-    <ClInclude Include="SceneNodeBuilder.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderManager.h" />
-    <ClInclude Include="ShaderData.h" />
-    <ClInclude Include="TransformationComponent.h" />
-    <ClInclude Include="Transformer.h" />
-    <ClInclude Include="UniformBufferManager.h" />
-    <ClInclude Include="World.h" />
+    <ClInclude Include="src\AIBehavior.h" />
+    <ClInclude Include="src\AIComponent.h" />
+    <ClInclude Include="src\Audio.h" />
+    <ClInclude Include="src\Basic5RenderingController.h" />
+    <ClInclude Include="src\Basic6RenderingController.h" />
+    <ClInclude Include="src\CameraComponent.h" />
+    <ClInclude Include="src\Component.h" />
+    <ClInclude Include="src\ControllerComponent.h" />
+    <ClInclude Include="src\Controls.h" />
+    <ClInclude Include="src\FirstCameraControls.h" />
+    <ClInclude Include="src\RandomWanderBehavior.h" />
+    <ClInclude Include="src\Errors.h" />
+    <ClInclude Include="src\EventHandler.h" />
+    <ClInclude Include="src\EventListenerInterface.h" />
+    <ClInclude Include="src\GltfParser.h" />
+    <ClInclude Include="src\helper.h" />
+    <ClInclude Include="src\KeyTracker.h" />
+    <ClInclude Include="src\light.h" />
+    <ClInclude Include="src\LightComponent.h" />
+    <ClInclude Include="src\Material.h" />
+    <ClInclude Include="src\DrawableBuffer.h" />
+    <ClInclude Include="src\ModelManager.h" />
+    <ClInclude Include="src\MouseTracker.h" />
+    <ClInclude Include="src\PhongRenderingData.h" />
+    <ClInclude Include="src\RenderableComponent.h" />
+    <ClInclude Include="src\RenderingController.h" />
+    <ClInclude Include="src\RenderingEngine.h" />
+    <ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\RotateModelControls.h" />
+    <ClInclude Include="src\SceneNode.h" />
+    <ClInclude Include="src\SceneNodeBuilder.h" />
+    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\ShaderManager.h" />
+    <ClInclude Include="src\ShaderData.h" />
+    <ClInclude Include="src\TransformationComponent.h" />
+    <ClInclude Include="src\Transformer.h" />
+    <ClInclude Include="src\UniformBufferManager.h" />
+    <ClInclude Include="src\World.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fetch_quest.lua" />
+    <None Include="src\fetch_quest.lua" />
     <None Include="lighting.shader" />
-    <None Include="prefabs.lua" />
+    <None Include="Resources\Lua\prefabs.lua" />
     <None Include="Reasources\Models\cube.gltf" />
     <None Include="Reasources\Models\cube_and_sphere.gltf" />
     <None Include="Reasources\Models\Monkey.gltf" />
@@ -226,10 +229,14 @@
     <None Include="Resources\Shaders\basic_5.shader" />
     <None Include="Resources\Shaders\phong.shader" />
     <None Include="Resources\Shaders\mvp_uniform_buffer.shader" />
-    <None Include="village_scene.lua" />
+    <None Include="Resources\sources.csv" />
+    <None Include="Resources\Lua\village_scene.lua" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="todo.txt" />
+    <Text Include="Resources\todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\320853__eloimarin__hello-world-chirp.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

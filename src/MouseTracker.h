@@ -7,8 +7,8 @@
 class MouseTracker : public EventListenerInterface {
 public:
     // Get the mouse movement delta
-    float getDeltaX() const { return deltaX; }
-    float getDeltaY() const { return deltaY; }
+    double getDeltaX() const { return deltaX; }
+    double getDeltaY() const { return deltaY; }
     glm::vec2 getDelta() const { return glm::vec2(deltaX, deltaY); }
 
     // Reset delta after processing (optional)

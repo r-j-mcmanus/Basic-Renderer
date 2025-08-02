@@ -3,8 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include <AL/al.h>
-#include <AudioFile/AudioFile.h>
 
 #include <iostream>
 #include <memory>
@@ -12,6 +10,7 @@
 #include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
 #include "ShaderData.h"
 #include "ShaderManager.h"
+#include "Audio.h"
 #include "EventHandler.h"
 #include "KeyTracker.h"
 #include "MouseTracker.h"
@@ -114,6 +113,15 @@ int main(void)
 
     const float dt = 1.0 / 120.0;
     double current_delta = 0;
+
+    AudioManager audioManager;
+
+    audioManager.createListener({ 0,0,0 }, { 0,0,0 });
+    audioManager.loadWavFile("zap", "Resources/Sounds/320853__eloimarin__hello-world-chirp.wav");
+    SourceInfo* source = audioManager.getFreeSource();
+    audioManager.bindBufferToMonoSource("zap", source);
+    audioManager.playSource(source->id);
+
 
     /* Loop until the user closes the window */ 
     while (!glfwWindowShouldClose(window))

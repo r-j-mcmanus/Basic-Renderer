@@ -11,5 +11,5 @@ public:
     virtual void fixedUpdate(float dt) {};
 
 protected:
-    SceneNode* parent;
+    SceneNode* parent = nullptr;
 };

@@ -113,7 +113,7 @@ void GltfParser::setAttribute(int attribArray, int accessorIndex, json& data, co
             vertexAttribData.dataType,
             vertexAttribData.normalized ? GL_TRUE : GL_FALSE,
             vertexAttribData.byteStride,
-            (void*)vertexAttribData.byteOffset
+            (void*)(uintptr_t)vertexAttribData.byteOffset
         ));
     }
     else {
@@ -123,7 +123,7 @@ void GltfParser::setAttribute(int attribArray, int accessorIndex, json& data, co
             vertexAttribData.componentsPerVertex,
             vertexAttribData.dataType,
             vertexAttribData.byteStride,
-            (void*)(vertexAttribData.byteOffset)
+            (void*)(uintptr_t)(vertexAttribData.byteOffset)
         ));
     }
 }

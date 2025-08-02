@@ -31,7 +31,8 @@ public:
                 GL_TRIANGLES,
                 buffer.count,
                 buffer.dataType,
-                reinterpret_cast<void*>(buffer.byteOffset)
+                reinterpret_cast<void*>(static_cast<uintptr_t>(buffer.byteOffset))
+                //reinterpret_cast<void*>(buffer.byteOffset)
             ));
 
             GLCall(glBindVertexArray(0)); // Unbind the VAO
