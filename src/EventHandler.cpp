@@ -20,7 +20,6 @@ EventHandler::EventHandler(GLFWwindow* window)
     glfwSetCursorPosCallback(window, mouseMovement);
     glfwSetWindowSizeCallback(window, windowResizeCallback);
     glfwSetWindowFocusCallback(window, windowFocusCallback);
-
 }
 
 void EventHandler::registerObserver(std::shared_ptr<EventListenerInterface> observer) {

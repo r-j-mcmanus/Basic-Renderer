@@ -16,6 +16,7 @@ class RenderableComponent: public Component {
 
 public:
     RenderableComponent(unsigned int modelID, unsigned int shaderMapID) : modelID(modelID), shaderMapID(shaderMapID), material(defaultMaterial) {};
+    RenderableComponent(unsigned int modelID, unsigned int shaderMapID, Material material) : modelID(modelID), shaderMapID(shaderMapID), material(material) {};
 
     const RenderData getDrawRequest()
     {

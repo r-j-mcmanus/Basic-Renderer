@@ -28,6 +28,8 @@
 #include "World.h"
 #include "SceneNodeBuilder.h"
 
+#include "Material.h"
+
 void World::buildWorld(
 	unsigned int worldId, 
 	const std::shared_ptr<ModelManager>& modelManager, 
@@ -75,7 +77,8 @@ void World::buildWorld(
 	std::unique_ptr<SceneNode> character = builder.setTransform(startingPos, noRotation, glm::vec3(1.0f))
 		.addComponent<ControllerComponent>(keyTracker, mouseTracker)
 		.build();
-	const glm::quat modelOrientation = glm::quat(1,0,0,0);
+	// const glm::quat modelOrientation = glm::quat(1, 0, 0, 0);
+	const glm::quat modelOrientation = glm::angleAxis(3.14159f / 2, glm::vec3(0, 1, 0)) * glm::angleAxis(3.14159f / 2, glm::vec3( 0,0,1 ));
 	const glm::vec3 modelPosition = glm::vec3(0, 0, 0);
 	std::unique_ptr<SceneNode> robot = builder.setTransform(modelPosition, modelOrientation, glm::vec3(0.1f))
 		.addComponent<RenderableComponent>(robotModelId, shaderBasic1Id)
@@ -123,7 +126,7 @@ void World::buildWorld(
 
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0, 1, 0), noRotation, glm::vec3(1))
-			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic1Id)
+			.addComponent<RenderableComponent>(modelIdMonkey, shaderBasic1Id, Materials::orange)
 			.build()
 	));
 
@@ -151,23 +154,23 @@ void World::buildWorld(
 		.build();
 
 	std::unique_ptr<SceneNode> child = builder.setTransform(glm::vec3(0.1f, 0.1f, 0.1f), noRotation, glm::vec3(0.05f))
-		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id, Materials::green)
 		.build();
 	body->add_child(std::move(child));
 
 	body->add_child(std::move(
 		builder.setTransform(glm::vec3(0.1, -0.1, 0.1), noRotation, glm::vec3(0.05f))
-		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id, Materials::green)
 		.build()
 	));
 	body->add_child(std::move(
 		builder.setTransform(glm::vec3(-0.1, 0.1, 0.1), noRotation, glm::vec3(0.05f))
-		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id, Materials::green)
 		.build()
 	));
 	body->add_child(std::move(
 		builder.setTransform(glm::vec3(0.1, 0.1, -0.1), noRotation, glm::vec3(0.05f))
-		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id)
+		.addComponent<RenderableComponent>(cubeModelId, shaderBasic1Id, Materials::green)
 		.build()
 	));
 

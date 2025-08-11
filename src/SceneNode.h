@@ -128,6 +128,7 @@ public:
 	}
 
 	glm::quat getRotation() const { return rotationRad; }
+	void setRotation(glm::quat rotRad) { rotationRad = rotRad; }
 
 	glm::vec3 getPairentNodePosition() const { return pairentNode->getGlobalPosition(); }
 

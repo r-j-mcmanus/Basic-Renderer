@@ -122,7 +122,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +141,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +153,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollsionDetector.cpp" />
+    <ClCompile Include="Ribbon.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\Basic5RenderingController.cpp" />
     <ClCompile Include="src\Basic6RenderingController.cpp" />
@@ -171,8 +173,13 @@
     <ClCompile Include="src\ShaderManager.cpp" />
     <ClCompile Include="src\TransformationComponent.cpp" />
     <ClCompile Include="src\World.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollsionDetector.h" />
+    <ClInclude Include="Ribbon.h" />
     <ClInclude Include="src\AIBehavior.h" />
     <ClInclude Include="src\AIComponent.h" />
     <ClInclude Include="src\Audio.h" />
@@ -211,6 +218,7 @@
     <ClInclude Include="src\Transformer.h" />
     <ClInclude Include="src\UniformBufferManager.h" />
     <ClInclude Include="src\World.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\fetch_quest.lua" />
