@@ -122,7 +122,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +141,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\json-develop\include;C:\Libraries\glew-2.1.0\include;C:\Libraries\glfw-3.3.6.bin.WIN64\include;C:\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,28 +157,33 @@
     <ClCompile Include="src\Basic5RenderingController.cpp" />
     <ClCompile Include="src\Basic6RenderingController.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
+    <ClCompile Include="src\CollsionDetector.cpp" />
     <ClCompile Include="src\ControllerComponent.cpp" />
     <ClCompile Include="src\Errors.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\GltfParser.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ModelManager.cpp" />
-    <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\RenderingEngine.cpp" />
+    <ClCompile Include="src\RibbonManager.cpp" />
     <ClCompile Include="src\SceneNode.cpp" />
     <ClCompile Include="src\SceneNodeBuilder.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\TransformationComponent.cpp" />
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AABB.h" />
     <ClInclude Include="src\AIBehavior.h" />
     <ClInclude Include="src\AIComponent.h" />
     <ClInclude Include="src\Audio.h" />
     <ClInclude Include="src\Basic5RenderingController.h" />
     <ClInclude Include="src\Basic6RenderingController.h" />
     <ClInclude Include="src\CameraComponent.h" />
+    <ClInclude Include="src\CollisionComponent.h" />
+    <ClInclude Include="src\CollsionDetector.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ControllerComponent.h" />
     <ClInclude Include="src\Controls.h" />
@@ -201,18 +206,23 @@
     <ClInclude Include="src\RenderingController.h" />
     <ClInclude Include="src\RenderingEngine.h" />
     <ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\RibbonBufferData.h" />
+    <ClInclude Include="src\RibbonComponent.h" />
+    <ClInclude Include="src\RibbonManager.h" />
     <ClInclude Include="src\RotateModelControls.h" />
     <ClInclude Include="src\SceneNode.h" />
     <ClInclude Include="src\SceneNodeBuilder.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\ShaderManager.h" />
     <ClInclude Include="src\ShaderData.h" />
+    <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\TransformationComponent.h" />
     <ClInclude Include="src\Transformer.h" />
     <ClInclude Include="src\UniformBufferManager.h" />
     <ClInclude Include="src\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Shaders\ribbon.shader" />
     <None Include="src\fetch_quest.lua" />
     <None Include="lighting.shader" />
     <None Include="Resources\Lua\prefabs.lua" />

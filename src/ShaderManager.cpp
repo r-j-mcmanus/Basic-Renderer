@@ -67,9 +67,17 @@ const ShaderProgramSource ShaderManager::PaseShader(const std::string& filepath)
 
     // Note file should not have a new line at the end
     std::fstream stream(filepath);
+
+    if (!stream.is_open()) {
+        std::cerr << "ERROR: Could not open shader file: " << filepath << std::endl;
+        throw std::runtime_error("Failed to open shader file: " + filepath);
+        return { "", "" }; // Return empty shaders to avoid undefined behavior
+    }
+
     std::string line;
     std::stringstream ss[2];
     ShaderType type = ShaderType::NONE;
+
     while (getline(stream, line))
     {
         if (line.find("#shader") != std::string::npos)

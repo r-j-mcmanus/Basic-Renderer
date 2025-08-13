@@ -88,14 +88,36 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 	//two files, need to link them 
 	GLCall(glAttachShader(program, vs));
 	GLCall(glAttachShader(program, fs));
-	GLCall(glLinkProgram(program));
-	GLCall(glValidateProgram(program));
+	link(program);
+	validate(program);
 
 	//we have linked the shaders stored in a program, so we can delete the shader.
 	GLCall(glDeleteShader(vs));
 	GLCall(glDeleteShader(fs));
 
 	return program;
+}
+
+void Shader::link(unsigned int program) {
+	GLCall(glLinkProgram(program));
+	GLint success;
+	GLCall(glGetProgramiv(program, GL_LINK_STATUS, &success));
+	if (!success) {
+		GLchar infoLog[1024];
+		GLCall(glGetProgramInfoLog(program, sizeof(infoLog), nullptr, infoLog));
+		std::cerr << "ERROR: Shader program linking failed:\n" << infoLog << std::endl;
+	}
+}
+
+void Shader::validate(unsigned int program) {
+	GLCall(glValidateProgram(program));
+	GLint success;
+	glGetProgramiv(program, GL_VALIDATE_STATUS, &success);
+	if (!success) {
+		GLchar infoLog[1024];
+		GLCall(glGetProgramInfoLog(program, sizeof(infoLog), nullptr, infoLog));
+		std::cerr << "ERROR: Shader program validation failed:\n" << infoLog << std::endl;
+	}
 }
 
 

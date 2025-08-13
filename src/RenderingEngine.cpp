@@ -15,7 +15,10 @@
 #include "SceneNode.h"
 #include "RenderableComponent.h"
 #include "LightComponent.h"
+#include "RibbonComponent.h"
 #include "CameraComponent.h"
+#include "RibbonBufferData.h"
+#include "ShaderData.h"
 
 #include "World.h"
 
@@ -44,7 +47,6 @@ void RenderingEngine::getLights(SceneNode* node) {
     }
 }
 
-
 // Main rendering function
 void RenderingEngine::renderFrame(World& world)
 {
@@ -55,22 +57,32 @@ void RenderingEngine::renderFrame(World& world)
     renderingQueue.clear();
     activeLights.clear();
 
+    // fill vectors with nodes needed for rendering
     world.root.traverse([this](SceneNode* node) { submitRenderRequests(node); });
     world.root.traverse([this](SceneNode* node) { getLights(node); });
 
     // the buffers are shared between shaders and are linked elsewhere
     glm::mat4 view = world.activeCameraNode->getComponent<CameraComponent>()->getViewMatrix();
+    glm::vec3 cammeraDirection = world.activeCameraNode->getComponent<CameraComponent>()->getForward();
     glm::vec3 viewPosition = world.activeCameraNode->getGlobalPosition();
 
-    uniformBufferManager->updateBuffer("ProjectionView", view, sizeof(glm::mat4));
-    uniformBufferManager->updateBuffer("Lights", activeLights, 0);
+    uniformBufferManager.updateBuffer("ProjectionView", view, sizeof(glm::mat4));
+    uniformBufferManager.updateBuffer("Lights", activeLights, 0);
+    //
 
+    renderStaticMesh(viewPosition);
+
+    world.root.traverse([this, &viewPosition, &cammeraDirection](SceneNode* node) { renderRibbon(node, viewPosition, cammeraDirection); });
+}
+
+void RenderingEngine::renderStaticMesh(glm::vec3& viewPosition)
+{
     for (auto& it : renderingQueue) {
         const unsigned int modelId = it.renderData.modelID;
         const unsigned int shaderMapId = it.renderData.shaderMapID;
 
-        std::shared_ptr<DrawableBuffer> model = modelManager->getBuffer(modelId);
-        std::shared_ptr<Shader> shader = shaderManager->getShader(shaderMapId);
+        std::shared_ptr<DrawableBuffer> model = modelManager.getBuffer(modelId);
+        std::shared_ptr<Shader> shader = shaderManager.getShader(shaderMapId);
 
         if (!model || !shader) {
             std::cout << "Model or shader ID does not correspond to a reseource" << std::endl;
@@ -83,24 +95,38 @@ void RenderingEngine::renderFrame(World& world)
         // set uniforms for the shader
 
         /////////
-        // these are shader dependent, so we should come up with a better palce for them to live
+        // these are shader dependent, so we should come up with a better palce for them to live, like each shader enum coming with a func for this?
         /////////
         shader->setMat4("u_Model", it.modelMatrix);
 
-        shader->setVec3("u_ViewPos", viewPosition);
 
-        shader->setVec4("u_Light.position", activeLights[0].position);
-        shader->setVec4("u_Light.ambient", activeLights[0].ambient);
-        shader->setVec4("u_Light.diffuse", activeLights[0].diffuse);
-        shader->setVec4("u_Light.specular", activeLights[0].specular);
+        if (shaderMapId != 4) {
+            shader->setVec3("u_ViewPos", viewPosition);
 
-        shader->setVec3("u_material.ambient", it.renderData.material.ambient);
-        shader->setVec3("u_material.diffuse", it.renderData.material.diffuse);
-        shader->setVec3("u_material.specular", it.renderData.material.specular);
-        shader->setFloat("u_material.shininess", it.renderData.material.shininess);
+            shader->setVec4("u_Light.position", activeLights[0].position);
+            shader->setVec4("u_Light.ambient", activeLights[0].ambient);
+            shader->setVec4("u_Light.diffuse", activeLights[0].diffuse);
+            shader->setVec4("u_Light.specular", activeLights[0].specular);
+
+            shader->setVec3("u_material.ambient", it.renderData.material.ambient);
+            shader->setVec3("u_material.diffuse", it.renderData.material.diffuse);
+            shader->setVec3("u_material.specular", it.renderData.material.specular);
+            shader->setFloat("u_material.shininess", it.renderData.material.shininess);
+        }
         /////////
 
         shader->validate();
         model->draw();
+    }
+}
+
+
+void RenderingEngine::renderRibbon(SceneNode* node, glm::vec3& cameraPosition, glm::vec3& cameraDirection) {
+    std::shared_ptr<Shader> shader = shaderManager.getShader(ribbonManager.shaderRibbonId);
+
+    if (std::shared_ptr<RibbonComponent> ribbonComponent = node->getComponent<RibbonComponent>()) {
+        shader->Bind();
+        shader->setMat4("u_Model", node->getPairentGlobalMatrix());
+        ribbonManager.draw(ribbonComponent->ribbonBufferData, ribbonComponent->makeRibbonMesh(cameraDirection));
     }
 }

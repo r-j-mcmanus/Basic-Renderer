@@ -23,4 +23,5 @@ namespace ShaderData {
 	const ShaderDataContainer Basic1 = { ShaderName::Basic1, std::string("Resources/Shaders/basic_1.shader") };
 	const ShaderDataContainer Basic2 = { ShaderName::Basic2, std::string("Resources/Shaders/basic_2.shader") };
 	const ShaderDataContainer Basic3 = { ShaderName::Basic3, std::string("Resources/Shaders/basic_3.shader") };
+	const ShaderDataContainer Ribbon = { ShaderName::Basic3, std::string("Resources/Shaders/Ribbon.shader") };
 }

@@ -18,9 +18,7 @@ class World
 public:
 	void buildWorld(
 		unsigned int worldId,
-		const std::shared_ptr<ModelManager>& modelManager,
-		const std::shared_ptr<ShaderManager>& shaderManager,
-		const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
+		RenderingEngine& renderingEngine,
 		std::shared_ptr<KeyTracker>& keyTracker,
 		std::shared_ptr<MouseTracker>& mouseTracker
 	);
