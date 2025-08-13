@@ -1,12 +1,7 @@
 #include <string>
 
-#include "ModelManager.h"
-#include "ShaderManager.h"
-#include "UniformBufferManager.h"
-
 // movement
 // #include "CircularMovement.h"
-
 
 // rendering
 // #include "Basic5RenderingController.h"
@@ -19,6 +14,7 @@
 #include "RenderableComponent.h"
 #include "TransformationComponent.h"
 #include "CameraComponent.h"
+#include "RibbonComponent.h"
 #include "ControllerComponent.h"
 #include "KeyTracker.h"
 #include "MouseTracker.h"
@@ -32,14 +28,11 @@
 
 void World::buildWorld(
 	unsigned int worldId, 
-	const std::shared_ptr<ModelManager>& modelManager, 
-	const std::shared_ptr<ShaderManager>& shaderManager, 
-	const std::shared_ptr<UniformBufferManager>& uniformBufferManager,
+	RenderingEngine& renderingEngine,
 	std::shared_ptr<KeyTracker>& keyTracker,
 	std::shared_ptr<MouseTracker>& mouseTracker
 	)
 {
-
 	////////
 	// shaders we will be using
 	/* todo Abstract binding away */
@@ -53,35 +46,40 @@ void World::buildWorld(
 	//const unsigned int shaderBasic3Id = shaderManager->loadShader(ShaderData::Basic3);
 	//uniformBufferManager->bindBlockToShader(shaderBasic3Id, "Matrices", "ProjectionView");
 
-	const unsigned int shaderBasic1Id = shaderManager->loadShader(ShaderData::Basic1);
-	uniformBufferManager->bindBlockToShader(shaderBasic1Id, "Matrices", "ProjectionView");
+	const unsigned int shaderBasic1Id = renderingEngine.shaderManager.loadShader(ShaderData::Basic1);
+	renderingEngine.uniformBufferManager.bindBlockToShader(shaderBasic1Id, "Matrices", "ProjectionView");
 
-
+	const unsigned int shaderRibbonId = renderingEngine.shaderManager.loadShader(ShaderData::Ribbon);
+	renderingEngine.uniformBufferManager.bindBlockToShader(shaderRibbonId, "Matrices", "ProjectionView");
+	renderingEngine.ribbonManager.shaderRibbonId = shaderRibbonId;
 	////////
 
 	// models we will be using
-	unsigned int modelIdFloor = modelManager->loadModel(std::string("Resources/Models/plain.gltf"));
-	unsigned int modelIdMonkey = modelManager->loadModel(std::string("Resources/Models/monkey.gltf"));
-	unsigned int cubeModelId = modelManager->loadModel(std::string("Resources/Models/cube.gltf"));
-	unsigned int robotModelId = modelManager->loadModel(std::string("Resources/Models/Robot.gltf"));
+	unsigned int modelIdFloor = renderingEngine.modelManager.loadModel(std::string("Resources/Models/plain.gltf"));
+	unsigned int modelIdMonkey = renderingEngine.modelManager.loadModel(std::string("Resources/Models/monkey.gltf"));
+	unsigned int cubeModelId = renderingEngine.modelManager.loadModel(std::string("Resources/Models/cube.gltf"));
+	unsigned int robotModelId = renderingEngine.modelManager.loadModel(std::string("Resources/Models/Robot.gltf"));
 
 	// for making nodes to add to our scene graph
 	SceneNodeBuilder builder;
 
 	const glm::quat noRotation = glm::quat(1, 0, 0, 0);
 
+	// Main character
+
 	const glm::vec3 startingPos = glm::vec3(5, 2, 0);
 	const glm::vec3 forward = glm::vec3(-1, 0, 0);
 	const glm::vec3 up = glm::vec3(0, 1, 0);
 	const glm::vec3 cameraOffset = -3.0f * forward;
+
 	std::unique_ptr<SceneNode> character = builder.setTransform(startingPos, noRotation, glm::vec3(1.0f))
 		.addComponent<ControllerComponent>(keyTracker, mouseTracker)
 		.build();
-	// const glm::quat modelOrientation = glm::quat(1, 0, 0, 0);
 	const glm::quat modelOrientation = glm::angleAxis(3.14159f / 2, glm::vec3(0, 1, 0)) * glm::angleAxis(3.14159f / 2, glm::vec3( 0,0,1 ));
 	const glm::vec3 modelPosition = glm::vec3(0, 0, 0);
 	std::unique_ptr<SceneNode> robot = builder.setTransform(modelPosition, modelOrientation, glm::vec3(0.1f))
 		.addComponent<RenderableComponent>(robotModelId, shaderBasic1Id)
+		//.addComponent<RibbonComponent>(renderingEngine.ribbonManager.getRibbonBuffer())
 		.build();
 	std::unique_ptr<SceneNode> camera = builder.setTransform(cameraOffset, noRotation, glm::vec3(0.0f))
 		.addComponent<CameraComponent>(forward)
@@ -90,17 +88,6 @@ void World::buildWorld(
 	activeCameraNode = character->add_child(std::move(camera));
 	character->add_child(std::move(robot));
 	root.add_child(std::move(character));
-	
-
-	///
-	//SceneNode* cameraNode = root.add_child(std::move(
-	//	builder.setTransform(glm::vec3(5, 0, 0), glm::vec3(0), glm::vec3(0))
-	//	.addComponent<CameraComponent>(glm::vec3(-1, 0, 0))
-	//		.addComponent<ControllerComponent>(keyTracker, mouseTracker)
-	//		.build()
-	//));
-	//activeCameraNode = cameraNode;
-	///
 
 	///
 	Material floorMaterial = {
@@ -177,6 +164,16 @@ void World::buildWorld(
 	root.add_child(std::move(body));
 	///
 
+	// Ribbon
+	
+	root.add_child(std::move(
+		builder.setTransform(glm::vec3(3, 2, 3), noRotation, glm::vec3(1.0f))
+		//.addComponent<RenderableComponent>(cubeModelId, shaderRibbonId)
+		.addComponent<RibbonComponent>(renderingEngine.ribbonManager.getRibbonBuffer())
+		.addComponent<AIComponent>(std::make_unique<RandomWanderBehavior>(5.0f, 5.0f))
+		.build()
+	));
+	
 }
 
 void World::fixedUpdate(double dt)

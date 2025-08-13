@@ -10,6 +10,8 @@
 
 class RandomWanderBehavior : public AIBehavior {
 public:
+    RandomWanderBehavior(float halfDistributionWidth = 1.0f, float speed = 0.5f): halfDistributionWidth(halfDistributionWidth), speed(speed) {};
+
     void onEnter(SceneNode* node) override {
         if (node) {
             originalPosition = node->getGlobalPosition();
@@ -22,7 +24,6 @@ public:
 
         glm::vec3 pos = node->getGlobalPosition();
 
-        const float speed = 0.5f;
         glm::vec3 dir = {
             targetPosition.x - pos.x,
             targetPosition.y - pos.y,
@@ -47,12 +48,15 @@ public:
     }
 
 private:
-    glm::vec3 originalPosition;
-    glm::vec3 targetPosition;
+    glm::vec3 originalPosition = glm::vec3(0);
+    glm::vec3 targetPosition = glm::vec3(0);;
+    float halfDistributionWidth = 1.0f;
+    float speed = 0.5f;
+
 
     void generateNewTarget() {
         static std::default_random_engine eng(std::random_device{}());
-        static std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+        static std::uniform_real_distribution<float> dist(-halfDistributionWidth, halfDistributionWidth);
 
         float dx = dist(eng), dy = dist(eng), dz = dist(eng);
         float lenSq = dx * dx + dy * dy + dz * dz;

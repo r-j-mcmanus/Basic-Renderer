@@ -12,6 +12,21 @@
 #include "Errors.h"
 
 
+int channelsToGLType(int chanels) {
+	switch (chanels) {
+	case 1: // Greyscale
+		return GL_RED;
+	case 2: // Greyscale + Alpha
+		return GL_RG;
+	case 3: // RGB
+		return GL_RGB;
+	case 4: // RGBA
+		return GL_RGBA;
+	default:
+		return 0;
+	}
+}
+
 void loadTexture(std::string filename, bool flip = true) {
 	stbi_set_flip_vertically_on_load(flip);
 	int width, height, channels;
@@ -55,20 +70,6 @@ void loadTexture(std::string filename, bool flip = true) {
 	stbi_image_free(data);
 }
 
-int channelsToGLType(int chanels) {
-	switch (chanels) {
-	case 1: // Greyscale
-		return GL_RED;
-	case 2: // Greyscale + Alpha
-		return GL_RG;
-	case 3: // RGB
-		return GL_RGB;
-	case 4: // RGBA
-		return GL_RGBA;
-	default:
-		return 0;
-	}
-}
 
 // Basic usage (see HDR discussion below for HDR usage):
 //    int x,y,n;

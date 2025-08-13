@@ -17,16 +17,16 @@ public:
 
 	std::vector<CollisionComponent*> getCollision(CollisionComponent* objects);
 
-	std::vector<std::pair<CollisionComponent*, CollisionComponent*>> getCollisionPairs(std::vector<CollisionComponent*> objects);
+	std::vector<std::pair<CollisionComponent*, CollisionComponent*>> getCollisionPairs(std::vector<CollisionComponent*>& objects);
 
 private:
 	std::vector<std::pair<CollisionComponent*, CollisionComponent*>> getCollisionPairsFromHash();
 
-	bool colides(AABB& a, AABB& b);
+	bool colides(const AABB a, const AABB b);
 
 	void addObjectsToHash(std::vector<CollisionComponent*> objects);
 
-	const size_t HashCell(int x, int y, int z) const;
+	const size_t HashCell(const int x, const int y, const int z) const;
 
 private:
 	std::map<size_t, std::vector<CollisionComponent*>> hashMap;

@@ -8,7 +8,7 @@
 #include "CollisionComponent.h"
 
 
-std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CollsionDetector::getCollisionPairs(std::vector<CollisionComponent*> objects) {
+std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CollsionDetector::getCollisionPairs(std::vector<CollisionComponent*>& objects) {
 	hashMap.clear();
 	addObjectsToHash(objects);
 	std::vector<std::pair<CollisionComponent*, CollisionComponent*>> collisionPairs = getCollisionPairsFromHash();
@@ -20,12 +20,12 @@ std::vector<CollisionComponent*> CollsionDetector::getCollision(CollisionCompone
 	std::vector<CollisionComponent*> collisions;
 	
 	AABB box = obj->getBoundingBox();
-	int minX = floor(box.min.x / cellSize.x);
-	int minY = floor(box.min.y / cellSize.y);
-	int minZ = floor(box.min.z / cellSize.z);
-	int maxX = floor(box.max.x / cellSize.x);
-	int maxY = floor(box.max.y / cellSize.y);
-	int maxZ = floor(box.max.z / cellSize.z);
+	int minX = int(floor(box.min.x / cellSize.x));
+	int minY = int(floor(box.min.y / cellSize.y));
+	int minZ = int(floor(box.min.z / cellSize.z));
+	int maxX = int(floor(box.max.x / cellSize.x));
+	int maxY = int(floor(box.max.y / cellSize.y));
+	int maxZ = int(floor(box.max.z / cellSize.z));
 
 	// add to all boxes that the AABB colides with
 	for (int x = minX; x <= maxX; x++) {
@@ -40,6 +40,7 @@ std::vector<CollisionComponent*> CollsionDetector::getCollision(CollisionCompone
 			}
 		}
 	}
+	return collisions;
 }
 
 std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CollsionDetector::getCollisionPairsFromHash() {
@@ -64,7 +65,7 @@ std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CollsionDetecto
 	return collisionPairs;
 }
 
-bool CollsionDetector::colides(AABB& a, AABB& b) {
+bool CollsionDetector::colides(const AABB a, const AABB b) {
 	// No overlap if one is completely to the left/right
 	if (a.max.x < b.min.x || a.min.x > b.max.x) return false;
 	// No overlap if one is completely above/below
@@ -98,7 +99,7 @@ void CollsionDetector::addObjectsToHash(std::vector<CollisionComponent*> objects
 	}
 }
 
-const size_t CollsionDetector::HashCell(int x, int y, int z) const {
+const size_t CollsionDetector::HashCell(const int x, const int y, const int z) const {
 	// Large primes reduce collisions in hash space
 	return size_t((x * 73856093) ^ (y * 19349663) ^ (z * 83492791));
 }

@@ -16,6 +16,17 @@
 
 class UniformBufferManager {
 public:
+    UniformBufferManager() {
+        createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
+
+        //glm::perspective(fovRadians, aspect, near, far)
+        const glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
+        updateBuffer("ProjectionView", projection, 0);
+
+        const unsigned int NUM_LIGHTS = 8;
+        createBuffer("Lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
+    }
+
     struct BufferInfo {
         GLuint bufferID;
         GLuint bindingPoint;

@@ -115,6 +115,16 @@ public:
 		return globalMatrix;
 	}
 
+	// returns the Pairents global matrix, or an identy matrix
+	glm::mat4 getPairentGlobalMatrix() {
+		if (pairentNode) {
+			return pairentNode->getGlobalMatrix();
+		}
+		else {
+			return glm::mat4();
+		}
+	}
+
 	const glm::vec3 getGlobalPosition() {
 		if (pairentNode)
 		{
@@ -129,6 +139,8 @@ public:
 
 	glm::quat getRotation() const { return rotationRad; }
 	void setRotation(glm::quat rotRad) { rotationRad = rotRad; }
+
+	glm::vec3 getPosition() const { return position; };
 
 	glm::vec3 getPairentNodePosition() const { return pairentNode->getGlobalPosition(); }
 

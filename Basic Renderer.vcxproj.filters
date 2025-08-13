@@ -79,6 +79,9 @@
     <Filter Include="Resource Files\Sound">
       <UniqueIdentifier>{4f6b6313-fd3a-495a-b894-e6a41e62b65e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\RAII">
+      <UniqueIdentifier>{741c5e38-77c9-4117-a98a-afe359f6a011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -104,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="src\EventHandler.cpp">
       <Filter>Source Files\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\physics.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RenderingEngine.cpp">
       <Filter>Source Files\Rendering</Filter>
@@ -135,13 +135,13 @@
     <ClCompile Include="src\Audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
+    <ClCompile Include="src\CollsionDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ribbon.cpp">
+    <ClCompile Include="src\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CollsionDetector.cpp">
+    <ClCompile Include="src\RibbonManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,9 +212,6 @@
     <ClInclude Include="src\ShaderData.h">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="src\ControllerComponent.h">
-      <Filter>Header Files\World\SceneNode\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\KeyTracker.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
@@ -260,20 +257,29 @@
     <ClInclude Include="src\Audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ribbon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CollsionDetector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AABB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionComponent.h">
+    <ClInclude Include="src\ControllerComponent.h">
       <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollsionDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollisionComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RibbonComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RibbonBufferData.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RibbonManager.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureManager.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +342,9 @@
     </None>
     <None Include="Resources\sources.csv">
       <Filter>Resource Files\Sound</Filter>
+    </None>
+    <None Include="Resources\Shaders\ribbon.shader">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

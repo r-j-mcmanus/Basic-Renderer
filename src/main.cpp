@@ -8,18 +8,12 @@
 #include <memory>
 
 #include "Shader.h" // shit place to put this, but is causing build errors somewhere if removed
-#include "ShaderData.h"
-#include "ShaderManager.h"
 #include "Audio.h"
 #include "EventHandler.h"
 #include "KeyTracker.h"
 #include "MouseTracker.h"
-#include "ModelManager.h"
 #include "RenderingEngine.h"
 #include "World.h"
-#include "UniformBufferManager.h"
-
-#include "Light.h"
 
 #include "Errors.h"
 
@@ -76,21 +70,6 @@ int main(void)
             std::cerr << "OpenGL Debug: " << message << "\n";
         }, nullptr);
 
-    std::shared_ptr<ShaderManager> shaderManager = std::make_shared<ShaderManager>();
-    std::shared_ptr<ModelManager> modelManager = std::make_shared<ModelManager>();
-
-    /////
-    // Set up shader buffers
-    std::shared_ptr<UniformBufferManager> uniformBufferManager = std::make_shared<UniformBufferManager>();
-    uniformBufferManager->createBuffer("ProjectionView", 2 * sizeof(glm::mat4), 0);
-
-    //glm::perspective(fovRadians, aspect, near, far)
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f);
-    uniformBufferManager->updateBuffer("ProjectionView", projection, 0);
-
-    unsigned int NUM_LIGHTS = 8;
-    uniformBufferManager->createBuffer("Lights", NUM_LIGHTS * sizeof(glm::uvec4) * 4, 0);
-
     /////
 
     EventHandler eventHandler(window);
@@ -101,12 +80,8 @@ int main(void)
 
     RenderingEngine renderingEngine;
 
-    renderingEngine.registerModelManager(modelManager);
-    renderingEngine.registerShaderManager(shaderManager);
-    renderingEngine.registerUniformBufferManager(uniformBufferManager);
-
     World world;
-    world.buildWorld(1, modelManager, shaderManager, uniformBufferManager, keyTracker, mouseTracker);
+    world.buildWorld(1, renderingEngine, keyTracker, mouseTracker);
 
     double previousTime = glfwGetTime(); // Get the initial time
     GLCall(glEnable(GL_DEPTH_TEST));
@@ -121,11 +96,11 @@ int main(void)
     audioManager.loadWavFile("zap", "Resources/Sounds/320853__eloimarin__hello-world-chirp.wav");
     std::cout << "wav loaded" << std::endl;
     SourceInfo* source = audioManager.getFreeSource();
-    std::cout << "got free source" << std::endl;
+    std::cout << "got a free source" << std::endl;
     audioManager.bindBufferToMonoSource("zap", source);
     std::cout << "bound sound buffer to source" << std::endl;
     audioManager.playSource(source);
-    std::cout << "played sound" << std::endl;
+    std::cout << "finished playing sound" << std::endl;
 
 
     /* Loop until the user closes the window */ 
@@ -140,7 +115,7 @@ int main(void)
             mouseTracker->resetDelta();
         }
 
-        //world.update();
+        world.update();
 
         renderingEngine.renderFrame(world);
 

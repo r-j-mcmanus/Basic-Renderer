@@ -42,6 +42,8 @@ private:
     */
     static unsigned int CompileShader(unsigned int type, const std::string& source);
     GLint getUniformLocation(const std::string& name) const;
+    static void link(unsigned int program);
+    static void validate(unsigned int program);
 
     /* We take in the sorce code for the shaders as strings.*/
     static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
