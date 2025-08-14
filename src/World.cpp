@@ -98,7 +98,7 @@ void World::buildWorld(
 	};
 	root.add_child(std::move(
 		builder.setTransform(glm::vec3(0), noRotation, glm::vec3(10, 0, 10)) // we flaten it along the y axis and extend on the x and z
-			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic1Id)
+			.addComponent<RenderableComponent>(modelIdFloor, shaderBasic1Id, Materials::red)
 			.build()
 	));
 	///

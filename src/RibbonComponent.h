@@ -22,8 +22,8 @@ public:
 	};
 
     void fixedUpdate(const float dt) {
-		glm::vec3 frontPos = parent->getPosition();
-		printVec3(frontPos);
+		glm::vec3 frontPos = parent->getGlobalPosition();
+		//printVec3(frontPos - parent->getGlobalPosition());
 		// only update the ribbon position if it has moved a sufficent amount
 		if (trail.empty() || glm::distance(frontPos, trail.back().pos) > minTrailDif) {
 			trail.push_back({ frontPos, 0.f });
@@ -45,6 +45,8 @@ public:
 	std::vector<glm::vec3> makeRibbonMesh(glm::vec3 cameraDirection) {
 		// todo use smoother update step
 		// given velocities, we can fit a curve and check for the gradient , and add itermediate steps if needed
+
+		//printVec3(cameraDirection);
 
 		// todo we dont need the whole thing each step, we can store what was made and remove older edges
 		std::vector<glm::vec3> verts;

@@ -29,7 +29,7 @@ public:
     CameraComponent(glm::vec3 front);
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
-    glm::mat4 getViewMatrix() const;
+    glm::mat4 getViewMatrix();
 
     void setAspectRatio(const int width, const int height);
 
@@ -41,7 +41,7 @@ public:
 
     void onBuild(SceneNode& node);
 
-    glm::vec3 getForward() const { return front; }
+    glm::vec3 getForward();
     glm::vec3 getUp() const { return up; }
 
     void updateCameraVectors(glm::vec3 rotation);
@@ -63,6 +63,6 @@ private:
     float nearPlane;
     float farPlane;
 
-    glm::mat4 viewMatrix;
+    glm::mat4 view;
 
 };

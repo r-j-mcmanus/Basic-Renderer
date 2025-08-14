@@ -36,6 +36,8 @@ void CameraComponent::updateCameraVectors(glm::vec3 rotation)
         );
 
     front = glm::vec3(rotationMatrix * glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f));
+    printVec3(front);
+
     up = glm::vec3(rotationMatrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
@@ -43,9 +45,7 @@ void CameraComponent::onBuild(SceneNode& node) {
     parent = &node;
 }
 
-glm::mat4 first_view = glm::mat4({ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 });
-
-glm::mat4 CameraComponent::getViewMatrix() const
+glm::mat4 CameraComponent::getViewMatrix()
 {
     /*
     Uses glm::lookAt(eye, center, up) to create a view matrix.
@@ -57,8 +57,12 @@ glm::mat4 CameraComponent::getViewMatrix() const
 
     const glm::vec3 position = parent->getGlobalPosition();
     const glm::vec3 bodyNodePos = parent->getPairentNodePosition();
-    const glm::mat4 view = glm::lookAt(position, bodyNodePos, glm::vec3(0,1,0));
+    view = glm::lookAt(position, bodyNodePos, glm::vec3(0, 1, 0));
     return view;
+}
+
+glm::vec3 CameraComponent::getForward() {
+    return { -view[0][2] , -view[1][2] , -view[2][2] };
 }
 
 void CameraComponent::setAspectRatio(const int width, const int height) {
