@@ -187,6 +187,7 @@
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ControllerComponent.h" />
     <ClInclude Include="src\Controls.h" />
+    <ClInclude Include="src\EnemyComponent.h" />
     <ClInclude Include="src\FirstCameraControls.h" />
     <ClInclude Include="src\RandomWanderBehavior.h" />
     <ClInclude Include="src\Errors.h" />

@@ -281,6 +281,9 @@
     <ClInclude Include="src\TextureManager.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\EnemyComponent.h">
+      <Filter>Header Files\World\SceneNode\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.shader">

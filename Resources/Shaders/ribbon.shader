@@ -7,12 +7,11 @@ layout (std140) uniform Matrices
     mat4 lu_projection;
     mat4 lu_view;
 };
-uniform mat4 u_Model;
 
 void main()
-{
-    vec4 worldPos = u_Model * a_Pos;
-    gl_Position = lu_projection * lu_view * worldPos;
+{   
+    // the ribbon stores the world positon so we do not need a model matrix
+    gl_Position = lu_projection * lu_view * a_Pos;
 };
 
 #shader fragment

@@ -126,7 +126,6 @@ void RenderingEngine::renderRibbon(SceneNode* node, glm::vec3& cameraPosition, g
 
     if (std::shared_ptr<RibbonComponent> ribbonComponent = node->getComponent<RibbonComponent>()) {
         shader->Bind();
-        shader->setMat4("u_Model", node->getPairentGlobalMatrix());
         ribbonManager.draw(ribbonComponent->ribbonBufferData, ribbonComponent->makeRibbonMesh(cameraDirection));
     }
 }

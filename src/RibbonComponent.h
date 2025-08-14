@@ -14,7 +14,7 @@
 class RibbonComponent : public Component {
 
 public:
-    RibbonComponent(RibbonBufferData* ribbonBufferdata = nullptr) {
+    RibbonComponent(RibbonBufferData* ribbonBufferdata = nullptr, float maxLifetime = 1.0f): maxLifetime(maxLifetime) {
 		this->ribbonBufferData = ribbonBufferdata;
 	};
     ~RibbonComponent() {
@@ -23,7 +23,7 @@ public:
 
     void fixedUpdate(const float dt) {
 		glm::vec3 frontPos = parent->getGlobalPosition();
-		//printVec3(frontPos - parent->getGlobalPosition());
+		//printVec3(frontPos);
 		// only update the ribbon position if it has moved a sufficent amount
 		if (trail.empty() || glm::distance(frontPos, trail.back().pos) > minTrailDif) {
 			trail.push_back({ frontPos, 0.f });
@@ -55,7 +55,7 @@ public:
 			const glm::vec3 segmentDirection = glm::normalize(trail[i + 1].pos - trail[i].pos);
 			// we take the right so that the quad faces the camera unless segmentDirection is parallels
 			const glm::vec3 right = glm::normalize(glm::cross(cameraDirection, segmentDirection));
-			const glm::vec3 offset = width * right;
+			const glm::vec3 offset = width * right * trail[i].timeAlive / maxLifetime;
 			verts.push_back(trail[i].pos - offset);
 			verts.push_back(trail[i].pos + offset);
 		}
